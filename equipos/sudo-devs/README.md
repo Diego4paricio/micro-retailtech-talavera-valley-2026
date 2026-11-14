@@ -42,6 +42,6 @@ El precio propuesto para validar el plan Pro es de **$39 MXN por semana**, sujet
 
 ## Ligas
 
-- Código: [Repositorio del proyecto — rama main](https://github.com/Diego4paricio/mrt-2026-sudo-devs).
+- Código: [Repositorio del proyecto — rama main](https://github.com/aztrc10/Hackathon-v1/tree/main).
 - Demo: [Controla tu Tiendita — web interactiva opcional del proyecto en vivo](https://patatoestec.com/).
-- Presentación: En carpeta sudo-devs
+- Presentación: [Diapositivas interactivas](./Presentaci%C3%B3n.html).
