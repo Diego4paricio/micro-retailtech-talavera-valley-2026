@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Controla tu tiendita · Talavera Valley Hackathon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#264a7c; --navy-2:#1c3a63; --navy-3:#132b4b; --ink:#0b1a2f;
+  --green:#1e7a55; --green-2:#27a36f; --mint:#3ddc97;
+  --card:#edf2f9; --line:#d5e0ef; --muted:#4f6a92; --sky:#a9c3e6;
+  --red:#e0614f; --white:#fff;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --head:"Anton","Impact","Haettenschweiler","Arial Narrow Bold",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#07111f;overflow:hidden;font-family:var(--body);-webkit-font-smoothing:antialiased}
+.viewport{position:fixed;inset:0}
+.stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center;overflow:hidden;border-radius:6px;box-shadow:0 40px 120px rgba(0,0,0,.55)}
+
+/* ---------- Slides ---------- */
+.slide{position:absolute;inset:0;padding:58px 90px 0;opacity:0;visibility:hidden;transform:scale(1.035);filter:blur(10px);
+  transition:opacity .75s var(--ease),transform .9s var(--ease),filter .75s var(--ease),visibility 0s .9s;isolation:isolate}
+.slide.active{opacity:1;visibility:visible;transform:none;filter:none;transition:opacity .75s var(--ease),transform .9s var(--ease),filter .75s var(--ease)}
+.slide.leaving{transform:scale(.97)}
+
+.dark{color:#fff;background:
+  radial-gradient(900px 620px at 92% -8%,rgba(61,220,151,.16),transparent 62%),
+  radial-gradient(800px 560px at -8% 112%,rgba(169,195,230,.16),transparent 62%),
+  linear-gradient(158deg,#2a5591 0%,#22477a 48%,#18355d 100%)}
+.dark::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(1100px 700px at 70% 30%,#000 30%,transparent 80%)}
+.light{color:var(--navy);background:#fff}
+.light::before{content:"";position:absolute;inset:0;z-index:-1;
+  background-image:radial-gradient(rgba(38,74,124,.10) 1.4px,transparent 1.4px);background-size:28px 28px;
+  mask-image:radial-gradient(900px 600px at 85% 20%,#000 20%,transparent 75%)}
+.footbar{position:absolute;left:0;right:0;bottom:0;height:60px;background:var(--navy);overflow:hidden}
+.footbar::after{content:"";position:absolute;top:0;bottom:0;width:240px;left:-260px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent)}
+.active .footbar::after{animation:sweep 2.6s 1s var(--ease) both}
+
+/* ---------- Typography ---------- */
+.kicker{font-weight:800;font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:var(--green)}
+.dark .kicker{color:var(--mint)}
+.title{font-family:var(--head);font-weight:400;font-size:104px;line-height:.98;letter-spacing:.005em;margin-top:6px}
+.dark .title{color:#fff}.light .title{color:var(--navy)}
+.bar{width:150px;height:6px;border-radius:3px;background:var(--green);margin-top:26px;transform-origin:left}
+.dark .bar{background:var(--mint)}
+.sub{font-size:25px;margin-top:22px;color:var(--muted);font-weight:500}
+.dark .sub{color:var(--sky)}
+.label{font-weight:800;font-size:14px;letter-spacing:.24em;text-transform:uppercase;color:var(--green)}
+.panel .label,.dark .label.mint{color:var(--mint)}
+.h{font-family:var(--head);font-weight:400;color:var(--navy);line-height:1.02}
+.big{font-family:var(--head);font-weight:400;line-height:.9;color:var(--navy);font-variant-numeric:tabular-nums}
+
+/* title words reveal */
+.title .w,.quote .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.04em;margin-bottom:-.04em}
+.title .w>span,.quote .w>span{display:inline-block;transform:translateY(108%)}
+.active .title .w>span,.active .quote .w>span{animation:wordUp 1s var(--ease) both;animation-delay:calc(var(--i)*65ms + 160ms)}
+
+/* ---------- Cards ---------- */
+.card{background:var(--card);border-radius:18px;padding:30px 32px;position:relative;overflow:hidden}
+.card.topline::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--green);transform-origin:left}
+.active .card.topline::before{animation:grow .9s var(--ease) both;animation-delay:calc(var(--d,0s) + .25s)}
+.panel{background:rgba(9,25,47,.42);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:34px 40px;position:relative;overflow:hidden;color:#fff}
+.light .panel{background:linear-gradient(150deg,#1f3f6d,#16304f);border:0}
+.panel::after{content:"";position:absolute;inset:0;background:radial-gradient(500px 220px at 85% 0%,rgba(61,220,151,.16),transparent 70%);pointer-events:none}
+.grid{display:grid;gap:28px}
+
+/* ---------- Animation primitives ---------- */
+.an{opacity:0}
+.active .an{animation:var(--a,rise) var(--t,.95s) var(--ease) var(--d,0s) both}
+@keyframes rise{from{opacity:0;transform:translateY(46px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes left{from{opacity:0;transform:translateX(-56px)}to{opacity:1;transform:none}}
+@keyframes right{from{opacity:0;transform:translateX(70px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.55)}60%{opacity:1;transform:scale(1.07)}100%{opacity:1;transform:scale(1)}}
+@keyframes kick{from{opacity:0;letter-spacing:.7em}to{opacity:1;letter-spacing:.32em}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes wordUp{to{transform:none}}
+@keyframes sweep{to{left:110%}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,151,.55)}70%{box-shadow:0 0 0 18px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
+@keyframes pulseRed{0%{box-shadow:0 0 0 0 rgba(224,97,79,.6)}70%{box-shadow:0 0 0 16px rgba(224,97,79,0)}100%{box-shadow:0 0 0 0 rgba(224,97,79,0)}}
+@keyframes float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-22px,0)}}
+@keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes shine{from{background-position:-200% 0}to{background-position:200% 0}}
+.kicker.an{--a:kick;--t:1.2s}
+.bar.an{--a:growIn;--t:1s}
+@keyframes growIn{from{opacity:1;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+
+/* ---------- Slide 1 · Portada ---------- */
+.s1{display:flex;flex-direction:column;justify-content:center;padding-top:0}
+.s1 .kicker{color:var(--sky);font-size:21px}
+.s1 .title{font-size:208px;line-height:.93;margin-top:22px}
+.s1 .bar{margin-top:44px;width:190px}
+.s1 .sub{font-size:36px;color:var(--sky);margin-top:34px;font-weight:400}
+.orb{position:absolute;border-radius:50%;filter:blur(2px);z-index:-1;animation:float 9s ease-in-out infinite}
+.orb.a{width:520px;height:520px;right:-120px;top:120px;background:radial-gradient(circle at 35% 35%,rgba(61,220,151,.28),rgba(61,220,151,0) 68%)}
+.orb.b{width:360px;height:360px;right:260px;top:-120px;background:radial-gradient(circle at 50% 50%,rgba(169,195,230,.22),rgba(169,195,230,0) 70%);animation-delay:-3s}
+.ring-deco{position:absolute;right:120px;top:50%;width:420px;height:420px;margin-top:-210px;z-index:-1}
+.ring-deco circle{fill:none;stroke:rgba(255,255,255,.10);stroke-width:1.5}
+.ring-deco .spin{transform-origin:210px 210px;animation:spin 40s linear infinite}
+.ring-deco .dash{stroke:rgba(61,220,151,.55);stroke-width:3;stroke-dasharray:6 18}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- Slide 2 · Problema ---------- */
+.s2 .layout{display:grid;grid-template-columns:770px 1fr;gap:34px;margin-top:44px}
+.stat-card{padding:30px 38px 34px}
+.stat-card .solo{font-size:29px;color:var(--muted)}
+.stat-card .big{font-size:218px;margin-top:-4px}
+.stat-card .desc{font-size:29px;color:var(--muted);line-height:1.3;margin-top:6px}
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:12px;margin-top:26px}
+.shop{height:52px;border-radius:10px;background:#d7e2f1;position:relative;overflow:hidden}
+.shop svg{position:absolute;inset:0;margin:auto;width:28px;height:28px;color:#9db0cc}
+.shop.on{background:var(--navy)}
+.shop.on svg{color:#fff}
+.gap-note{display:flex;align-items:baseline;gap:14px;margin-top:20px}
+.gap-note .big{font-size:64px;color:var(--red)}
+.gap-note>span{font-size:22px;color:var(--muted);font-weight:600;line-height:1.25}
+.client{border:1.5px solid var(--line);border-radius:18px;padding:30px 34px;position:relative;background:#fff;overflow:hidden}
+.client::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--green);transform-origin:top}
+.active .client::before{animation:growY .8s var(--ease) both;animation-delay:calc(var(--d,0s) + .2s)}
+.client .h{font-size:64px;margin-top:14px}
+
+/* ---------- Slide 3 · Producto ---------- */
+.s3 .cards{grid-template-columns:repeat(3,1fr);margin-top:46px}
+.pain{min-height:330px;display:flex;flex-direction:column}
+.pain .q{font-size:30px;color:var(--muted);line-height:1.35;background:linear-gradient(var(--red),var(--red)) 0 58%/0% 3px no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.active .pain .q{animation:strikeBg .9s var(--ease) both;animation-delay:calc(var(--d,0s) + .9s)}
+@keyframes strikeBg{to{background-size:100% 3px}}
+.pain .arrow{margin:22px 0 14px;width:46px;height:46px;border-radius:50%;background:var(--green);display:grid;place-items:center;color:#fff;font-weight:800}
+.pain .h{font-size:56px;margin-top:auto}
+
+/* ---------- Slide 4 · Adopción ---------- */
+.s4 .cards{grid-template-columns:repeat(3,1fr);margin-top:44px}
+.ring-card{display:flex;flex-direction:column;min-height:330px;padding:30px 34px}
+.ring-row{display:flex;align-items:center;gap:20px}
+.ring{width:92px;height:92px;flex:none}
+.ring circle{fill:none;stroke-width:12}
+.ring .bg{stroke:#d3dff0}
+.ring .fg{stroke:var(--green);stroke-linecap:round;transform:rotate(-90deg);transform-origin:60px 60px;stroke-dasharray:314.16;stroke-dashoffset:314.16;transition:stroke-dashoffset 1.6s var(--ease)}
+.ring-card .big{font-size:124px}
+.ring-card .desc{font-size:28px;color:var(--muted);line-height:1.3;margin-top:16px}
+.s4 .strip{margin-top:32px;padding:40px}
+.strip .words{display:flex;flex-wrap:nowrap;gap:0 20px;font-weight:800;font-size:31px;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap}
+.strip .sep{color:var(--mint)}
+.strip .src{margin-top:34px;font-size:21px;color:var(--sky)}
+
+/* ---------- Slide 5 · Flujo ---------- */
+.s5 .sub b{color:var(--green);font-weight:800}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:40px;position:relative}
+.steps .track{position:absolute;left:60px;right:60px;top:50%;height:4px;background:var(--line);z-index:0;border-radius:2px}
+.steps .track i{position:absolute;inset:0;background:var(--green);transform-origin:left;transform:scaleX(0);border-radius:2px}
+.active .steps .track i{animation:grow 2.2s var(--ease) .5s both}
+.step{position:relative;z-index:1;background:var(--card);border-radius:18px;padding:26px 26px 30px;border:2px solid #fff}
+.step .n{width:56px;height:62px;border-radius:30px;background:var(--navy);color:#fff;font-family:var(--head);font-size:38px;display:grid;place-items:center}
+.step .h{font-size:42px;margin-top:14px}
+.formula{margin-top:32px;padding:36px 40px 44px;min-height:300px}
+.formula .eq{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin-top:40px;font-family:var(--head);font-size:66px;color:#fff;line-height:1.1}
+.formula .op{color:var(--mint)}
+.formula .term{position:relative}
+.formula .term::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:4px;border-radius:2px;background:var(--mint);transform:scaleX(0);transform-origin:left}
+.active .formula .term::after{animation:grow .7s var(--ease) both;animation-delay:calc(var(--d,0s) + .35s)}
+
+/* ---------- Slide 6 · Modelo ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:40px}
+.kpi{padding:38px 30px 30px}
+.kpi .big{font-size:100px;white-space:nowrap}
+.kpi .desc{font-size:27px;color:var(--muted);margin-top:16px}
+.costs{margin-top:28px;padding:28px 38px 32px}
+.costs .row{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:22px}
+.costs .v{font-family:var(--head);font-size:52px;color:#fff;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.costs .k{font-size:24px;color:var(--sky);margin-top:6px}
+.costs .meter{height:8px;border-radius:4px;background:rgba(255,255,255,.12);margin-top:22px;overflow:hidden}
+.costs .meter i{display:block;height:100%;width:var(--w);background:linear-gradient(90deg,var(--mint),#9ff2c9);border-radius:4px;transform-origin:left;transform:scaleX(0)}
+.active .costs .meter i{animation:grow 1.4s var(--ease) both;animation-delay:calc(var(--d,0s) + .5s)}
+
+/* ---------- Slide 7 · Mercado ---------- */
+.s7 .cards{grid-template-columns:repeat(4,1fr);margin-top:46px;position:relative}
+.go{min-height:360px;display:flex;flex-direction:column;padding:34px 32px}
+.go .num{font-family:var(--head);font-size:86px;color:var(--green);line-height:1}
+.go .h{font-size:50px;margin-top:6px}
+.go .desc{font-size:27px;color:var(--muted);line-height:1.3;margin-top:auto}
+.path{position:absolute;left:0;right:0;top:-24px;height:4px;border-radius:2px;background:rgba(255,255,255,.14)}
+.path i{position:absolute;inset:0;background:var(--mint);transform-origin:left;transform:scaleX(0);border-radius:2px}
+.active .path i{animation:grow 2.4s var(--ease) .6s both}
+.path b{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--mint);opacity:0}
+.active .path b{animation:pop .6s var(--ease) both}
+
+/* ---------- Slide 8 · Demo ---------- */
+.live{display:inline-flex;align-items:center;gap:12px;margin-left:26px;vertical-align:middle;font-family:var(--body);font-weight:800;font-size:18px;letter-spacing:.2em;color:#fff;background:rgba(224,97,79,.18);border:1px solid rgba(224,97,79,.6);padding:10px 18px;border-radius:40px}
+.live i{width:12px;height:12px;border-radius:50%;background:var(--red);animation:pulseRed 1.6s infinite}
+.s8 .cards{grid-template-columns:repeat(3,1fr);margin-top:46px;position:relative}
+.demo{min-height:270px;display:flex;flex-direction:column;justify-content:flex-end}
+.demo .num{font-family:var(--head);font-size:112px;color:var(--green);line-height:.9}
+.demo .h{font-size:50px;white-space:nowrap}
+.planb{margin-top:28px;padding:34px 40px;min-height:230px}
+.planb .h{color:#fff;font-size:66px;margin-top:10px}
+.planb .clock{position:absolute;right:48px;top:50%;width:150px;height:150px;margin-top:-75px}
+.planb .clock circle{fill:none;stroke-width:8}
+.planb .clock .bg{stroke:rgba(255,255,255,.12)}
+.planb .clock .fg{stroke:var(--mint);stroke-linecap:round;stroke-dasharray:439.8;stroke-dashoffset:439.8;transform:rotate(-90deg);transform-origin:75px 75px}
+.active .planb .clock .fg{animation:clock 2.4s var(--ease) .9s both}
+@keyframes clock{to{stroke-dashoffset:0}}
+.planb .clock text{fill:#fff;font-family:var(--head);font-size:44px}
+
+/* ---------- Slide 9 · Tecnología ---------- */
+.s9 .sub{color:#fff}
+.s9 .cards{grid-template-columns:repeat(4,1fr);margin-top:46px}
+.tech{min-height:300px;display:flex;flex-direction:column;padding:38px 32px 34px}
+.tech .ic{width:64px;height:64px;border-radius:16px;background:var(--navy);display:grid;place-items:center;color:#fff;margin-bottom:22px}
+.tech .ic svg{width:34px;height:34px}
+.tech .h{font-size:50px}
+.tech .desc{font-size:27px;color:var(--muted);line-height:1.3;margin-top:auto;padding-top:18px}
+
+/* ---------- Slide 10 · Prueba de campo ---------- */
+.s10 .layout{display:grid;grid-template-columns:780px 1fr;gap:42px;margin-top:46px}
+.field{padding:56px 40px 46px;min-height:356px}
+.field .big{font-size:148px}
+.field .desc{font-size:30px;color:var(--muted);line-height:1.35;margin-top:10px}
+.result{display:flex;flex-direction:column;gap:20px}
+.res{background:rgba(9,25,47,.5);border-radius:14px;padding:22px 30px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.res::before{content:"";position:absolute;left:0;top:0;bottom:0;width:7px;background:var(--red);transform-origin:top}
+.res.ok::before{background:var(--mint)}
+.active .res::before{animation:growY .7s var(--ease) both;animation-delay:calc(var(--d,0s) + .3s)}
+.res .tag{font-weight:800;font-size:17px;letter-spacing:.24em;color:#f09484;display:flex;align-items:center;gap:10px}
+.res.ok .tag{color:var(--mint)}
+.res.ok .tag i{width:10px;height:10px;border-radius:50%;background:var(--mint);animation:pulse 1.8s infinite}
+.res .h{color:#fff;font-size:46px;margin-top:4px}
+
+/* ---------- Slide 11 · Cierre ---------- */
+.s11{padding-top:110px}
+.quote{font-family:var(--head);font-size:116px;line-height:1.02;color:var(--navy);max-width:1150px}
+.quote .hl>span{color:var(--green)}
+.s11 .cards{grid-template-columns:repeat(3,1fr);margin-top:48px}
+.ask{padding:30px 32px 30px}
+.ask .h{font-size:46px;margin-top:10px}
+.pending{margin-top:26px;font-size:24px;color:var(--muted)}
+
+
+/* Problema hero */
+.hero-red{color:var(--red)!important}
+.stat-card .big.hero-red{font-size:230px}
+.stat-card .desc b{color:var(--red)}
+.minor{margin-top:22px;font-size:24px;color:var(--muted);font-weight:500}
+.minor b{color:var(--navy);font-weight:800}
+.shop.on{background:var(--red)}
+/* Problema: mercado */
+.client.mkt{padding:26px 34px 28px}
+.client.mkt .num{font-family:var(--head);font-size:116px;line-height:1;color:var(--green);margin-top:10px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.client.mkt .desc{font-size:24px;color:var(--muted);margin-top:8px;line-height:1.3}
+/* Del conteo a la respuesta */
+.s-count .title{font-size:84px}
+.phones{display:flex;align-items:flex-end;justify-content:center;gap:22px;margin-top:30px}
+.ph{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px}
+.ph figcaption{display:flex;align-items:center;gap:12px;font-family:var(--head);font-size:32px;color:#fff;white-space:nowrap}
+.ph figcaption span{width:38px;height:38px;border-radius:50%;background:var(--mint);color:var(--ink);display:grid;place-items:center;font-size:22px}
+.ph .frame{height:520px;border-radius:30px;border:7px solid #0a1424;background:#000;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.ph .frame{position:relative}
+.ph .frame img{height:100%;width:auto;display:block}
+.spot{position:absolute;left:4%;top:61.5%;width:70%;height:14.5%;border:3px solid var(--mint);border-radius:14px;background:rgba(61,220,151,.08);box-shadow:0 0 24px rgba(61,220,151,.55)}
+.calc-box .label{white-space:nowrap}
+.ph.result .frame{height:560px;border-color:var(--mint);box-shadow:0 0 0 6px rgba(61,220,151,.18),0 26px 70px rgba(61,220,151,.28)}
+.active .ph.result .frame{animation:pulse 2.4s ease-out 3.4s 2}
+.ph.result figcaption{color:var(--mint)}
+.arr{align-self:center;display:block;width:44px;height:3px;background:var(--mint);position:relative;flex:none;margin-top:60px}
+.arr::after{content:"";position:absolute;right:-2px;top:50%;width:13px;height:13px;border-top:3px solid var(--mint);border-right:3px solid var(--mint);transform:translateY(-50%) rotate(45deg)}
+.calc{align-self:center;display:flex;align-items:center;gap:18px;margin-top:60px}
+.calc-box{background:rgba(9,25,47,.6);border:1.5px solid rgba(61,220,151,.45);border-radius:18px;padding:20px 22px}
+.calc-box .f{font-family:var(--head);font-size:27px;line-height:1.3;color:#fff;margin-top:8px;white-space:nowrap}
+.calc-box .f b{color:var(--mint);font-weight:400}
+/* Por qué funciona */
+.s-why .title{font-size:112px}
+.why-lead{font-size:44px;color:var(--sky);margin-top:14px;font-weight:500}
+.why-lead b{color:#fff;font-weight:800}
+.why-cards{grid-template-columns:repeat(3,1fr);margin-top:40px}
+.why{padding:30px 32px;min-height:220px}
+.why .x{width:46px;height:46px;border-radius:50%;background:rgba(224,97,79,.14);color:var(--red);display:grid;place-items:center;font-weight:800;font-size:20px}
+.why .h{font-size:48px;margin-top:16px}
+.why .desc{font-size:24px;color:var(--muted);margin-top:10px;line-height:1.3}
+.ladder{display:flex;align-items:center;gap:0;margin-top:34px}
+.rung{flex:none;display:flex;flex-direction:column;background:rgba(9,25,47,.45);border:1px solid rgba(61,220,151,.35);border-radius:16px;padding:16px 24px 18px 70px;position:relative;font-family:var(--head);font-size:32px;color:#fff;line-height:1.05}
+.rung span{position:absolute;left:18px;top:50%;margin-top:-20px;width:40px;height:40px;border-radius:50%;background:var(--mint);color:var(--ink);display:grid;place-items:center;font-size:24px}
+.rung small{font-family:var(--body);font-size:18px;color:var(--sky);margin-top:4px;font-weight:500}
+.ladder .link{flex:1;height:3px;background:var(--mint);min-width:40px;transform-origin:left;display:block}
+/* Adopción */
+.adopt{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;margin-top:40px}
+.wa{display:flex;align-items:center;gap:40px;padding:40px 44px;min-height:360px}
+.wa .big-ring{width:210px;height:210px}
+.wa .ring .fg{stroke:#25d366}
+.wa .big{font-size:190px}
+.wa .desc{font-size:32px;color:var(--muted);margin-top:8px}
+.wa .desc b{color:var(--navy)}
+.src-dark{margin-top:14px;font-size:18px;font-weight:700;letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+.side{display:grid;gap:28px}
+.mini{padding:26px 32px}
+.mini .big{font-size:104px}
+.mini .desc{font-size:26px;color:var(--muted);margin-top:8px}
+/* Modelo */
+.kpis2{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;margin-top:34px}
+.kpis2 .kpi{display:flex;align-items:baseline;gap:30px;padding:40px 44px 34px}
+.kpis2 .kpi .big{font-size:150px;white-space:nowrap}
+.kpis2 .kpi .desc{font-size:30px;color:var(--muted);margin:0;white-space:nowrap}
+/* Cierre */
+.s11{padding-top:230px}
+.s11 .quote{font-size:124px;margin-top:14px;max-width:none;white-space:nowrap}
+.s11 .cards{margin-top:36px}
+.close-sub{font-size:30px;color:var(--muted);margin-top:22px;font-weight:500}
+
+/* ---------- HUD ---------- */
+.progress{position:absolute;left:0;top:0;height:5px;background:var(--mint);z-index:20;transition:width .8s var(--ease);box-shadow:0 0 18px rgba(61,220,151,.6)}
+.counter{position:absolute;right:28px;bottom:16px;z-index:20;font-weight:700;font-size:15px;letter-spacing:.16em;color:rgba(255,255,255,.75);font-variant-numeric:tabular-nums}
+.stage.on-light .counter{color:rgba(255,255,255,.85)}
+.stage.hide-hud .counter,.stage.hide-hud .progress{opacity:0}
+.notes{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(140%);width:min(1100px,94vw);max-height:46vh;overflow:auto;
+  background:rgba(8,18,33,.94);color:#e7eef8;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px 26px;z-index:50;
+  font-size:17px;line-height:1.55;transition:transform .5s var(--ease);backdrop-filter:blur(10px)}
+.notes.open{transform:translateX(-50%) translateY(0)}
+.notes header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-weight:800;letter-spacing:.12em;font-size:13px;text-transform:uppercase;color:var(--mint)}
+.notes .timer{font-variant-numeric:tabular-nums;color:#fff;font-size:20px;letter-spacing:.04em}
+.notes p{margin:6px 0}
+.notes .cue{color:#9fb4d1;font-style:italic}
+.help{position:fixed;right:16px;top:14px;z-index:60;color:rgba(255,255,255,.45);font-size:12px;letter-spacing:.06em;transition:opacity .6s}
+
+@media (prefers-reduced-motion:reduce){
+  .slide,.slide.active{transition:opacity .2s linear;transform:none;filter:none}
+  .active .an,.active .title .w>span,.active .quote .w>span{animation-duration:.01s!important;animation-delay:0s!important}
+}
+</style>
+</head>
+<body>
+<div class="viewport">
+<div class="stage" id="stage">
+  <div class="progress" id="progress"></div>
+
+  <!-- 1 · PORTADA -->
+  <section class="slide dark s1" data-title="Portada">
+    <div class="orb a"></div><div class="orb b"></div>
+    <svg class="ring-deco" viewBox="0 0 420 420" aria-hidden="true">
+      <circle cx="210" cy="210" r="208"/><circle cx="210" cy="210" r="150"/>
+      <g class="spin"><circle class="dash" cx="210" cy="210" r="180"/></g>
+    </svg>
+    <div class="kicker an" style="--d:.05s">Tec Puebla · Micro-RetailTech</div>
+    <h1 class="title split">Controla<br>tu tiendita</h1>
+    <div class="bar an" style="--d:.9s"></div>
+    <p class="sub an" style="--d:1.1s">Todo el control de tu tiendita en WhatsApp</p>
+  </section>
+
+  <!-- 2 · PROBLEMA Y CLIENTE -->
+  <section class="slide light s2" data-title="Problema y cliente">
+    <div class="kicker an">01 · Problema y cliente</div>
+    <h2 class="title split">Problema y cliente</h2>
+    <div class="bar an" style="--d:.6s"></div>
+    <div class="layout">
+      <div class="card stat-card an" style="--d:.45s">
+        <div class="big hero-red"><span class="count" data-to="71.2" data-dec="1" data-delay="700">0.0</span>%</div>
+        <div class="desc">de los micronegocios <b>no</b> usó un sistema contable en 2023</div>
+        <div class="dots" id="shops"></div>
+        <div class="minor an" style="--a:fade;--d:2.4s">Solo el <b>28.8%</b> sí lo usó: 7 de cada 10 llevan su negocio de memoria.</div>
+      </div>
+      <div class="grid" style="align-content:start">
+        <div class="client mkt an" style="--a:right;--d:.75s"><div class="label">Cliente ideal · Tiendita de barrio</div><div class="num">+<span class="count" data-to="600000" data-sep="1" data-delay="1000">0</span></div><div class="desc">tiendas de abarrotes tradicionales en México</div></div>
+        <div class="client mkt an" style="--a:right;--d:.95s"><div class="label">Nuestro mercado · Puebla</div><div class="num"><span class="count" data-to="87075" data-sep="1" data-delay="1250">0</span></div><div class="desc">tienditas en Puebla · empezamos en mercados y colonias populares</div></div>
+      </div>
+    </div>
+    <div class="footbar"></div>
+  </section>
+
+  <!-- 3 · PRODUCTO -->
+  <section class="slide dark s3" data-title="Producto">
+    <div class="kicker an">02 · Producto</div>
+    <h2 class="title split">Producto</h2>
+    <div class="bar an" style="--d:.45s"></div>
+    <p class="sub an" style="--d:.6s">Un asistente en WhatsApp y una app web ligera.</p>
+    <div class="grid cards">
+      <div class="card pain an" style="--d:.75s"><div class="q-wrap"><span class="q">No sé qué se vendió</span></div><div class="arrow">↓</div><div class="h">Estimación automática</div></div>
+      <div class="card pain an" style="--d:.95s"><div class="q-wrap"><span class="q">No quiero registrar cada venta</span></div><div class="arrow">↓</div><div class="h">Cero captura diaria</div></div>
+      <div class="card pain an" style="--d:1.15s"><div class="q-wrap"><span class="q">No sé si me deja ganancia</span></div><div class="arrow">↓</div><div class="h">Márgenes claros</div></div>
+    </div>
+  </section>
+
+  <!-- 4 · ADOPCIÓN -->
+  <section class="slide dark s4" data-title="Adopción">
+    <div class="kicker an">03 · Adopción</div>
+    <h2 class="title split">Adopción</h2>
+    <div class="bar an" style="--d:.45s"></div>
+    <div class="adopt">
+      <div class="card wa an" style="--d:.55s">
+        <svg class="ring big-ring" viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" cx="60" cy="60" r="50" data-pct="90.6"/></svg>
+        <div>
+          <div class="big"><span class="count" data-to="90.6" data-dec="1" data-delay="800">0.0</span>%</div>
+          <div class="desc">de los micronegocios <b>ya usa WhatsApp</b></div>
+          <div class="src-dark">ENDUTIH 2024</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card mini an" style="--a:right;--d:.8s"><div class="big"><span class="count" data-to="76" data-delay="1100">0</span>%</div><div class="desc">de los tenderos tiene smartphone</div></div>
+        <div class="card mini an" style="--a:right;--d:1s"><div class="big"><span class="count" data-to="78" data-delay="1300">0</span>%</div><div class="desc">tiene entre 30 y 60 años</div></div>
+      </div>
+    </div>
+    <div class="panel strip an" style="--d:1.3s">
+      <div class="words">
+        <span class="an" style="--a:rise;--d:1.6s">Cero captura manual</span><span class="sep an" style="--a:fade;--d:1.8s">·</span>
+        <span class="an" style="--a:rise;--d:1.9s">Acceso inmediato</span><span class="sep an" style="--a:fade;--d:2.1s">·</span>
+        <span class="an" style="--a:rise;--d:2.2s">Ingreso natural</span>
+      </div>
+      <div class="src an" style="--a:fade;--d:2.5s">Fuentes: ENDUTIH 2024 · ANPEC #22</div>
+    </div>
+  </section>
+
+  <!-- 5 · POR QUÉ FUNCIONA -->
+  <section class="slide dark s-why" data-title="Por qué funciona">
+    <div class="kicker an">04 · Por qué funciona</div>
+    <h2 class="title split">No es otro ERP pequeño.</h2>
+    <p class="why-lead an" style="--d:.7s">Es una <b>puerta de entrada al control digital.</b></p>
+    <div class="grid why-cards">
+      <div class="card why an" style="--d:.95s"><div class="x">✕</div><div class="h">Sin capacitación</div><div class="desc">Usa el WhatsApp que ya abre todo el día.</div></div>
+      <div class="card why an" style="--d:1.15s"><div class="x">✕</div><div class="h">Sin hardware adicional</div><div class="desc">Ni computadora, ni lector, ni terminal.</div></div>
+      <div class="card why an" style="--d:1.35s"><div class="x">✕</div><div class="h">Sin captura constante</div><div class="desc">Una foto de la nota y un conteo por periodo.</div></div>
+    </div>
+    <div class="ladder">
+      <div class="rung an" style="--a:pop;--d:1.7s"><span>1</span>Pocos productos<small>5 a 15</small></div>
+      <i class="link an" style="--a:growIn;--d:2s"></i>
+      <div class="rung an" style="--a:pop;--d:2.2s"><span>2</span>Valor demostrado<small>qué vende y cuánto gana</small></div>
+      <i class="link an" style="--a:growIn;--d:2.5s"></i>
+      <div class="rung an" style="--a:pop;--d:2.7s"><span>3</span>Herramientas más completas<small>cuando entiende sus datos</small></div>
+    </div>
+  </section>
+
+  <!-- 5 · FLUJO DE PRODUCTO -->
+  <section class="slide light s5" data-title="Flujo de producto">
+    <div class="kicker an">05 · Flujo de producto</div>
+    <h2 class="title split">Flujo de producto</h2>
+    <div class="bar an" style="--d:.55s"></div>
+    <p class="sub an" style="--d:.7s">WhatsApp: <b><span class="count" data-to="90.6" data-dec="1" data-delay="900">0.0</span>%</b> de los micronegocios lo usa (ENDUTIH 2024).</p>
+    <div class="steps">
+      <div class="track"><i></i></div>
+      <div class="step an" style="--a:pop;--d:.7s"><div class="n">1</div><div class="h">Foto de la nota</div></div>
+      <div class="step an" style="--a:pop;--d:1.15s"><div class="n">2</div><div class="h">Nota de voz</div></div>
+      <div class="step an" style="--a:pop;--d:1.6s"><div class="n">3</div><div class="h">Conteo semanal</div></div>
+      <div class="step an" style="--a:pop;--d:2.05s"><div class="n">4</div><div class="h">Resultado</div></div>
+    </div>
+    <div class="panel formula an" style="--d:2.2s">
+      <div class="label">Ventas estimadas</div>
+      <div class="eq">
+        <span class="term an" style="--a:pop;--d:2.6s">inventario inicial</span><span class="op an" style="--a:pop;--d:2.9s">+</span>
+        <span class="term an" style="--a:pop;--d:3.1s">compras</span><span class="op an" style="--a:pop;--d:3.4s">−</span>
+        <span class="term an" style="--a:pop;--d:3.6s">conteo final</span><span class="op an" style="--a:pop;--d:3.9s">−</span>
+        <span class="term an" style="--a:pop;--d:4.1s">mermas</span>
+      </div>
+    </div>
+    <div class="footbar"></div>
+  </section>
+
+  <!-- 7 · DEL CONTEO A LA RESPUESTA -->
+  <section class="slide dark s-count" data-title="Del conteo a la respuesta">
+    <div class="kicker an">06 · Conteo y resultado</div>
+    <h2 class="title split">Contar es lo que da la respuesta.</h2>
+    <div class="phones">
+      <figure class="ph an" style="--a:rise;--d:.7s">
+        <figcaption><span>1</span>Elige qué contar</figcaption>
+        <div class="frame"><img src="img/conteo-elegir.webp" alt="WhatsApp: ¿contamos los productos que elegiste o quieres elegir otros?"></div>
+      </figure>
+      <i class="arr an" style="--a:fade;--d:1.15s"></i>
+      <figure class="ph an" style="--a:rise;--d:1.3s">
+        <figcaption><span>2</span>Marca con un toque</figcaption>
+        <div class="frame"><img src="img/conteo-marcar.webp" alt="WhatsApp: lista para marcar los productos a contar"></div>
+      </figure>
+      <div class="calc">
+        <div class="calc-box an" style="--a:pop;--d:1.9s">
+          <div class="label">Ventas estimadas</div>
+          <div class="f">inventario inicial<br><b>+</b> compras<br><b>−</b> conteo final<br><b>−</b> mermas</div>
+        </div>
+        <i class="arr long an" style="--a:fade;--d:2.3s"></i>
+      </div>
+      <figure class="ph result an" style="--a:right;--d:2.5s">
+        <figcaption><span>3</span>¿Cómo va mi negocio?</figcaption>
+        <div class="frame"><img src="img/resumen-negocio.webp" alt="WhatsApp: vendiste unas 29 piezas, ventas $348, ganancia $33"><i class="spot an" style="--a:pop;--d:3.2s"></i></div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 8 · MODELO DE NEGOCIO -->
+  <section class="slide light s6" data-title="Modelo de negocio">
+    <div class="kicker an">07 · Economía unitaria</div>
+    <h2 class="title split">Modelo de negocio</h2>
+    <div class="bar an" style="--d:.6s"></div>
+    <p class="sub an" style="--d:.75s">Escenario de validación: $39 MXN por semana.</p>
+    <div class="kpis2">
+      <div class="card kpi topline an" style="--d:.8s"><div class="big">$<span class="count" data-to="39" data-delay="1000">0</span></div><div class="desc">MXN por semana</div></div>
+      <div class="card kpi topline an" style="--d:.95s"><div class="big"><span class="count" data-to="80.8" data-dec="1" data-delay="1150">0.0</span>%</div><div class="desc">Margen bruto</div></div>
+      <div class="card kpi topline an" style="--d:1.1s"><div class="big">$<span class="count" data-to="126" data-delay="1300">0</span></div><div class="desc">MXN/mes de utilidad</div></div>
+      <div class="card kpi topline an" style="--d:1.25s"><div class="big">~$<span class="count" data-to="0" data-delay="1450">0</span></div><div class="desc">CAC</div></div>
+    </div>
+    <div class="footbar"></div>
+  </section>
+
+  <!-- 7 · SALIDA AL MERCADO -->
+  <section class="slide dark s7" data-title="Salida al mercado">
+    <div class="kicker an">08 · Salida al mercado</div>
+    <h2 class="title split">Salida al mercado</h2>
+    <div class="bar an" style="--d:.6s"></div>
+    <div class="grid cards">
+      <div class="path"><i></i><b style="left:0%;animation-delay:.6s"></b><b style="left:33.3%;animation-delay:1.4s"></b><b style="left:66.6%;animation-delay:2.2s"></b><b style="left:100%;animation-delay:3s"></b></div>
+      <div class="card go an" style="--d:.7s"><div class="num">1</div><div class="h">Venta de campo</div><div class="desc">El fundador vende en persona</div></div>
+      <div class="card go an" style="--d:1.3s"><div class="num">2</div><div class="h">Contenido y grupos</div><div class="desc">WhatsApp y Facebook</div></div>
+      <div class="card go an" style="--d:1.9s"><div class="num">3</div><div class="h">Publicidad pagada</div><div class="desc">Después de casos de éxito</div></div>
+      <div class="card go an" style="--d:2.5s"><div class="num">4</div><div class="h">Retención</div><div class="desc">Valor semanal</div></div>
+    </div>
+  </section>
+
+
+
+
+  <!-- 9 · CIERRE -->
+  <section class="slide light s11" data-title="Cierre">
+    <div class="kicker an">Controla tu tiendita</div>
+    <h2 class="quote split">Sin apps. Sin capacitación.<br><span class="hl-start"></span>Todo en WhatsApp.</h2>
+    <div class="bar an" style="--d:1.1s"></div>
+    <div class="footbar"></div>
+  </section>
+
+  <div class="counter" id="counter">01 / 11</div>
+</div>
+</div>
+
+<aside class="notes" id="notes" aria-live="polite">
+  <header><span id="notesTitle">Guion</span><span class="timer" id="timer">00:00</span></header>
+  <div id="notesBody"></div>
+</aside>
+<div class="help" id="help">← → avanzar · F pantalla completa · N notas · T reiniciar tiempo · H ocultar contador · número + Enter para saltar</div>
+
+<script>
+(() => {
+  const stage = document.getElementById('stage');
+  const slides = [...document.querySelectorAll('.slide')];
+  const progress = document.getElementById('progress');
+  const counter = document.getElementById('counter');
+  const notes = document.getElementById('notes');
+  const notesTitle = document.getElementById('notesTitle');
+  const notesBody = document.getElementById('notesBody');
+  const timerEl = document.getElementById('timer');
+  let current = 0, timers = [], typed = '', startedAt = null;
+
+  /* Guion del equipo, sin cambios, asociado a cada diapositiva. */
+  const script = [
+    {t:'Slide 1 — Portada · 0:00–0:20', p:['Imaginen una tiendita de barrio.','Su dueño sabe que vende todos los días. Compra producto, ve cómo se vacían los estantes y vuelve a surtir.','Pero si le preguntamos: “¿cuánto ganaste realmente esta semana con tus productos más importantes?”, muchas veces no tiene una respuesta clara.','No porque no quiera tener control, sino porque las herramientas que existen le piden algo que no está dispuesto a hacer: cambiar completamente la manera en la que trabaja.','Nosotros creamos Controla tu Tiendita.']},
+    {t:'Slide 2 — Problema · 0:20–0:50', p:['En 2023, solamente el 28.8% de los micronegocios utilizaba un sistema contable.','Y nuestro descubrimiento fue que el problema no es solamente acceso a tecnología.','Es fricción de adopción.','Un tendero no quiere capturar cada venta, aprender un ERP o contar cientos de productos para empezar a obtener valor.','Así que nos hicimos una pregunta:','¿Y si en vez de pedirle al tendero que se adapte al software, hacemos que el software se adapte a cómo ya trabaja?']},
+    {t:'Solución / Insight · 0:50–1:20', p:['Por eso no intentamos controlar toda la tienda desde el primer día.','Empezamos únicamente con sus 5 a 15 productos más importantes.','El tendero hace un conteo inicial una sola vez.','Después, cuando compra mercancía, no llena formularios: manda la foto de su nota o simplemente nos lo dice por WhatsApp.','Y al terminar el periodo hace otro conteo.','Con esos pocos datos estimamos qué se vendió, cuánto margen generó y qué debería resurtir.','No buscamos convertirlo en contador.','Buscamos darle información que pueda utilizar.']},
+    {t:'Adopción (datos) · apoyo de 2:30–2:55', p:['[Datos de apoyo para el bloque Por qué funciona: 90.6% ya usa WhatsApp, 76% con smartphone.]']},
+    {t:'Por qué funciona / Adopción · 2:30–2:55', p:['Esta parte es importante.','Nosotros no estamos construyendo otro ERP pequeño.','Estamos construyendo una puerta de entrada al control digital.','WhatsApp ya forma parte de la operación diaria de estos negocios.','Por eso eliminamos capacitación, hardware adicional y captura constante.','Primero demostramos valor con pocos productos.','Y cuando el tendero entiende qué puede hacer con sus datos, podemos darle herramientas más completas.']},
+    {t:'Flujo · después pasa a la demo en vivo (1:20–2:30)', p:['[Guion de Solución] Y al terminar el periodo hace otro conteo. Con esos pocos datos estimamos qué se vendió, cuánto margen generó y qué debería resurtir.','[Guion de Demo] Y con inventario inicial, compras, conteo final y mermas obtenemos una estimación de las ventas.','[Aquí cambia al celular y hace la demo en vivo]']},
+    {t:'Conteo y resultado · apoyo visual de la demo (1:20–2:30)', p:['Al final únicamente vuelve a contar sus productos principales.','Y con inventario inicial, compras, conteo final y mermas obtenemos una estimación de las ventas.','Ahora el tendero sí puede saber algo accionable:','cuánto vendió, cuánto margen obtuvo y qué productos debería resurtir.','Todo esto sin registrar venta por venta.']},
+    {t:'Modelo de negocio · 2:55–3:25', p:['El modelo es freemium.','El tendero puede empezar gratuitamente controlando sus primeros productos y después pasar al plan Pro.','Además, es un producto barato de operar porque el procesamiento con inteligencia artificial y la mensajería tienen un costo bajo por tienda.','Eso nos permite mantener márgenes altos sin pedir una inversión inicial en hardware.']},
+    {t:'Mercado / Entrada · 3:25–3:50', p:['Y no queremos comenzar intentando llegar a todo México.','Nuestra entrada es hiperlocal.','Empezamos en Puebla visitando directamente tienditas, haciendo el onboarding con el tendero y demostrando el producto utilizando incluso su propia nota del proveedor.','Después utilizamos referidos, grupos locales y asociaciones de comerciantes.','Primero buscamos probar retención.','Después escalar adquisición.']},
+    {t:'Validación (sin diapositiva) · Impacto · Cierre', p:['[Validación 3:50–4:15]','Y ya encontramos una señal importante durante las pruebas.','Cuando una nota no puede leerse, el sistema puede pedir otra fotografía.','Pero encontramos algo todavía más importante:','el tendero no quiere contar todo su inventario.','Y eso no contradice nuestra solución.','La confirma.','Por eso dejamos de intentar digitalizar toda la tienda desde el primer día y nos concentramos únicamente en los productos que realmente le importan.','[Impacto — no tiene diapositiva propia]','Porque cuando estos negocios no tienen información sobre sus propias ventas, no solamente pierden control de inventario.','Pierden capacidad para saber qué producto realmente les deja dinero, cuándo resurtir y cómo está funcionando su negocio.','Nuestra oportunidad es comenzar con algo extremadamente sencillo y construir, semana tras semana, un historial que hoy prácticamente no existe.','[Slide final]','Controla tu Tiendita parte de una idea muy sencilla:','no le pedimos al tendero que cambie. Le hablamos en su idioma.','No queremos que mañana administre un ERP.','Queremos que mañana pueda abrir WhatsApp y responder una pregunta que hoy no puede responder:','“¿Cómo le fue a mi negocio esta semana?”','Eso es Controla tu Tiendita.']}
+  ];
+
+  /* Split titles into words for the mask reveal. */
+  function splitWords(el){
+    let i = 0;
+    const walk = node => {
+      [...node.childNodes].forEach(child => {
+        if (child.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          child.textContent.split(/(\s+)/).forEach(part => {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+            const w = document.createElement('span'); w.className = 'w';
+            const inner = document.createElement('span'); inner.textContent = part; inner.style.setProperty('--i', i++);
+            w.appendChild(inner); frag.appendChild(w);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === 1 && child.tagName !== 'BR' && !child.classList.contains('live')) {
+          walk(child);
+        }
+      });
+    };
+    walk(el);
+  }
+  document.querySelectorAll('.split, .splitwords').forEach(splitWords);
+
+  /* Highlight "Le hablamos en su idioma." on the closing quote. */
+  const q = document.querySelector('.quote');
+  if (q) { let on = false; q.querySelectorAll('.w, .hl-start').forEach(n => { if (n.classList.contains('hl-start')) { on = true; return; } if (on) n.classList.add('hl'); }); }
+
+  /* 10 shops = the 71.2% (≈7 of 10) without an accounting system. */
+  const shops = document.getElementById('shops');
+  const shopIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M10 20v-5h4v5"/></svg>';
+  for (let k = 0; k < 10; k++) { const s = document.createElement('div'); s.className = 'shop an'; s.style.setProperty('--a','pop'); s.style.setProperty('--d', (1.1 + k * .08) + 's'); s.dataset.on = k < 7 ? '1' : '0'; s.innerHTML = shopIcon; shops.appendChild(s); }
+
+  const ease = t => 1 - Math.pow(1 - t, 4);
+  function runCounters(slide){
+    slide.querySelectorAll('.count').forEach(el => {
+      const to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec || '0', 10), delay = parseInt(el.dataset.delay || '0', 10), dur = 1600;
+      const fmt = v => el.dataset.sep ? Math.round(v).toLocaleString('en-US') : v.toFixed(dec);
+      el.textContent = fmt(0);
+      timers.push(setTimeout(() => {
+        const t0 = performance.now();
+        const tick = now => { const p = Math.min(1, (now - t0) / dur); el.textContent = fmt(to * ease(p)); if (p < 1 && slide.classList.contains('active')) requestAnimationFrame(tick); else el.textContent = fmt(to); };
+        requestAnimationFrame(tick);
+      }, delay));
+    });
+    slide.querySelectorAll('.ring .fg').forEach((c, idx) => {
+      c.style.transition = 'none'; c.style.strokeDashoffset = 314.16; c.getBoundingClientRect();
+      timers.push(setTimeout(() => { c.style.transition = ''; c.style.strokeDashoffset = 314.16 * (1 - parseFloat(c.dataset.pct) / 100); }, 800 + idx * 200));
+    });
+    slide.querySelectorAll('.shop').forEach(s => { s.classList.remove('on'); if (s.dataset.on === '1') timers.push(setTimeout(() => s.classList.add('on'), 1900)); });
+  }
+
+  function renderNotes(){
+    const s = script[current];
+    notesTitle.textContent = `Diapositiva ${current + 1} · ${s.t}`;
+    notesBody.innerHTML = s.p.map(line => `<p class="${/^\[/.test(line) ? 'cue' : ''}">${line}</p>`).join('');
+  }
+
+  function go(index){
+    index = Math.max(0, Math.min(slides.length - 1, index));
+    timers.forEach(clearTimeout); timers = [];
+    slides.forEach((s, i) => { s.classList.toggle('leaving', i === current && i !== index); s.classList.remove('active'); });
+    current = index;
+    const slide = slides[current];
+    void slide.offsetWidth; // restart CSS animations
+    slide.classList.add('active');
+    stage.classList.toggle('on-light', slide.classList.contains('light'));
+    progress.style.width = ((current + 1) / slides.length * 100) + '%';
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (current + 1));
+    runCounters(slide);
+    renderNotes();
+    if (startedAt === null) startedAt = Date.now();
+  }
+
+  function fit(){ const s = Math.min(innerWidth / 1600, innerHeight / 900); stage.style.transform = `translate(-50%,-50%) scale(${s})`; }
+  addEventListener('resize', fit); fit();
+
+  addEventListener('keydown', e => {
+    if (/^\d$/.test(e.key)) { typed += e.key; return; }
+    if (e.key === 'Enter' && typed) { go(parseInt(typed, 10) - 1); typed = ''; return; }
+    typed = '';
+    if (['ArrowRight','PageDown',' ','ArrowDown'].includes(e.key)) { e.preventDefault(); go(current + 1); }
+    else if (['ArrowLeft','PageUp','ArrowUp','Backspace'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (e.key.toLowerCase() === 'n') notes.classList.toggle('open');
+    else if (e.key.toLowerCase() === 't') startedAt = Date.now();
+    else if (e.key.toLowerCase() === 'h') stage.classList.toggle('hide-hud');
+    else if (e.key.toLowerCase() === 'r') go(current);
+  });
+  stage.addEventListener('click', e => { const r = stage.getBoundingClientRect(); (e.clientX - r.left) > r.width / 3 ? go(current + 1) : go(current - 1); });
+
+  setInterval(() => { if (startedAt === null) return; const s = Math.floor((Date.now() - startedAt) / 1000); timerEl.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }, 500);
+  setTimeout(() => document.getElementById('help').style.opacity = 0, 5000);
+
+  const start = parseInt(location.hash.slice(1), 10);
+  go(Number.isFinite(start) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>
