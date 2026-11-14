@@ -1,0 +1,254 @@
+/* The top of an Experience's real page, cut to its box. */
+.link-thumb {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  display: block;
+  flex: none;
+  overflow: hidden;
+  position: relative;
+}
+.link-thumb .es-thumb {
+  border-radius: 0;
+  box-shadow: none;
+}
+.link-thumb-icon {
+  align-items: center;
+  background: var(--tint);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+.link-thumb-icon .fsi {
+  height: auto;
+  max-height: 70%;
+  width: 60%;
+}
+
+/* «¿Qué muestra?»: every Experience as a tile with its real page. */
+.xp-pick {
+  display: grid;
+  gap: 0.85rem;
+  min-width: 0;
+}
+.xp-pick-head {
+  align-items: center;
+  display: grid;
+  gap: 0.6rem 1rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.xp-pick-title {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: 0;
+}
+.xp-search {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  color: var(--text-soft);
+  display: flex;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 0.7rem;
+  width: min(18rem, 100%);
+}
+.xp-search:focus-within {
+  border-color: var(--teal);
+}
+.xp-pick .xp-search input {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  outline: none;
+  padding: 0.45rem 0;
+}
+.xp-chips,
+.xp-tiles-group {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+.xp-chips {
+  display: flex;
+  gap: 0.4rem;
+  grid-column: 1 / -1;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+.xp-chip {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  cursor: pointer;
+  flex: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.35rem 0.8rem;
+}
+.xp-chip[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.xp-tiles {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.xp-tiles > li {
+  min-width: 0;
+}
+.xp-tile {
+  background: var(--surface);
+  border: 1.5px solid var(--line-warm);
+  border-radius: 14px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-align: left;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+  width: 100%;
+}
+.xp-tile:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+.xp-tile:focus-visible,
+.xp-tile:has(input:focus-visible) {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+.xp-tile.is-checked {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-wash-strong);
+}
+.xp-tile .xp-tile-thumb {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  height: 8.5rem;
+  width: 100%;
+}
+.xp-tile-meta {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.55rem 0.65rem 0.65rem;
+}
+.xp-tile-icon .fsi {
+  display: block;
+  height: 1.6rem;
+  width: 1.6rem;
+}
+.xp-tile-text {
+  min-width: 0;
+}
+.xp-tile-text strong {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xp-tile-text small {
+  color: var(--text-soft);
+  display: block;
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xp-tile-check {
+  align-items: center;
+  background: var(--teal);
+  border-radius: 50%;
+  color: var(--paper);
+  display: none;
+  height: 1.5rem;
+  justify-content: center;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 1.5rem;
+}
+.xp-tile.is-checked .xp-tile-check {
+  display: flex;
+}
+.xp-tile-now {
+  background: var(--ink);
+  border-radius: var(--radius-pill);
+  color: var(--paper);
+  font-size: 0.72rem;
+  font-weight: 600;
+  left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  position: absolute;
+  top: 0.5rem;
+}
+.xp-tile.xp-tile-new {
+  align-items: center;
+  background: transparent;
+  border-color: var(--line-input);
+  border-style: dashed;
+  color: var(--teal);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.6rem;
+  justify-content: center;
+  min-height: 11.5rem;
+}
+.xp-tile-plus {
+  align-items: center;
+  background: var(--tint);
+  border-radius: 50%;
+  display: flex;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+}
+.xp-none {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+
+/* «Nuevo link» and «¿Qué muestra?» get room for four tiles with their
+   names. */
+.dialog-large:has(.xp-pick) {
+  width: 58rem;
+}
+
+@media (max-width: 760px) {
+  .xp-pick-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .xp-search {
+    width: 100%;
+  }
+}

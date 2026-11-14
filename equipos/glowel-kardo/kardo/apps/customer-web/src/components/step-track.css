@@ -1,0 +1,102 @@
+/* Horizontal steps, centered (relevo 36). */
+.step-track {
+  display: grid;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.step-track-item {
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+/* The line from the previous circle to this one. */
+.step-track-item + .step-track-item::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: calc(-50% + 21px);
+  right: calc(50% + 21px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line-input);
+}
+
+.step-track-item.step-track-joined::before {
+  background: var(--teal);
+}
+
+.step-track-button {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 7px;
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+
+button.step-track-button {
+  cursor: pointer;
+}
+
+button.step-track-button:focus-visible {
+  outline: var(--focus);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.step-track-mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--line-input);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 0.875rem;
+}
+
+.step-track-now .step-track-mark {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: #fff;
+}
+
+.step-track-done .step-track-mark {
+  border-color: var(--teal);
+  background: var(--tint);
+  color: var(--teal);
+}
+
+.step-track-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-soft);
+}
+
+.step-track-now .step-track-label {
+  color: var(--ink);
+}
+
+.step-track-done .step-track-label {
+  color: var(--teal-deep);
+}
+
+@media (min-width: 761px) {
+  .step-track-label {
+    font-size: 0.875rem;
+  }
+}

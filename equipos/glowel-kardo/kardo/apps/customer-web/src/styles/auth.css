@@ -1,0 +1,557 @@
+/* ===========================================================================
+   Access flow: sign in, verify, set password, onboarding, state screens.
+   =========================================================================== */
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(26rem, 0.94fr);
+  min-height: 100vh;
+}
+
+/* ---------------------------------------------------------------------------
+   Brand panel: logo, headline and the product showcase, which rises from the
+   bottom edge and takes whatever height the copy leaves.
+   --------------------------------------------------------------------------- */
+.auth-story {
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 88% 8%,
+      var(--ink-glow) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 0% 100%,
+      var(--teal-wash-strong) 0%,
+      transparent 70%
+    ),
+    var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  min-height: 100%;
+  overflow: hidden;
+  /* On wide monitors the content keeps a 44 rem column centered in the
+     panel instead of hugging the left edge. */
+  padding: clamp(1.75rem, 4.5vh, 3rem)
+    max(clamp(2rem, 5vw, 4.5rem), calc((100% - 44rem) / 2))
+    clamp(2rem, 6vh, 3.5rem);
+  position: relative;
+}
+.auth-logo {
+  flex: none;
+  height: auto;
+  width: 7.25rem;
+}
+.auth-story-copy {
+  animation: rise-in var(--motion-slow) var(--ease-out) both;
+  margin-block: auto;
+  max-width: 36rem;
+  padding: clamp(1.75rem, 6vh, 4rem) 0 clamp(0.5rem, 2vh, 1.5rem);
+}
+.auth-story h1 {
+  color: var(--paper);
+  font-family: var(--font-hero);
+  font-size: clamp(2.1rem, min(1.1rem + 2.7vw, 8.4vh), 3.9rem);
+  font-weight: var(--hero-weight);
+  letter-spacing: var(--hero-tracking);
+  line-height: 1.03;
+  margin: 0 0 1.1rem;
+  text-wrap: balance;
+}
+.auth-story-copy > p {
+  color: var(--ink-copy);
+  font-family: var(--font-support);
+  font-size: clamp(1rem, 0.92rem + 0.25vw, 1.125rem);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 31rem;
+  text-wrap: pretty;
+}
+
+/* ---------------------------------------------------------------------------
+   Brand message: the rotating word keeps every option in the same grid
+   cell, so the line takes the width of the longest one and nothing reflows
+   while they change.
+   --------------------------------------------------------------------------- */
+.auth-headline-line {
+  display: block;
+}
+.auth-rotator {
+  display: inline-grid;
+  vertical-align: bottom;
+}
+.auth-rotator > span {
+  animation: auth-word 10s var(--ease-standard) infinite both;
+  color: var(--aqua);
+  grid-area: 1 / 1;
+  opacity: 0;
+}
+.auth-rotator > span:nth-child(2) {
+  animation-delay: 2.5s;
+}
+.auth-rotator > span:nth-child(3) {
+  animation-delay: 5s;
+}
+.auth-rotator > span:nth-child(4) {
+  animation-delay: 7.5s;
+}
+@keyframes auth-word {
+  0% {
+    opacity: 0;
+    transform: translateY(0.25em);
+  }
+  4%,
+  21% {
+    opacity: 1;
+    transform: none;
+  }
+  25%,
+  100% {
+    opacity: 0;
+    transform: translateY(-0.25em);
+  }
+}
+
+/* The brand's tap signal, large and quiet behind the message: the ring sits
+   behind the headline and the waves run out to the panel's edge. */
+.auth-signal {
+  height: auto;
+  left: 24%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(48rem, 100%);
+  z-index: -1;
+}
+.auth-signal-ring {
+  fill: var(--paper);
+  fill-opacity: 0.07;
+}
+.auth-signal-core {
+  fill: var(--aqua);
+  opacity: 0.16;
+}
+.auth-signal-wave {
+  animation: auth-signal 4.8s var(--ease-standard) infinite;
+  fill: var(--aqua);
+  opacity: 0.07;
+}
+.auth-signal-wave--outer {
+  animation-delay: 0.35s;
+}
+@keyframes auth-signal {
+  0%,
+  45%,
+  100% {
+    opacity: 0.07;
+  }
+  18% {
+    opacity: 0.24;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-rotator > span,
+  .auth-signal-wave {
+    animation: none;
+  }
+  .auth-rotator > span:first-child {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Form side.
+   --------------------------------------------------------------------------- */
+/* Sign in, sign up and recovery are all centered on both axes. */
+.auth-form-area {
+  align-items: center;
+  background: var(--paper);
+  display: flex;
+  justify-content: center;
+  padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 4vw, 4rem);
+}
+.auth-form-wrap {
+  animation: auth-panel-in var(--motion-slow) var(--ease-out) both;
+  max-width: 25rem;
+  width: 100%;
+}
+@keyframes auth-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.auth-form-wrap h2 {
+  font-family: var(--font-hero);
+  font-size: clamp(1.75rem, 1.4rem + 0.8vw, 2.25rem);
+  font-weight: var(--hero-weight);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin-bottom: 0.65rem;
+  text-wrap: balance;
+}
+/* A short line over the title reads as plain text, never as an all-caps
+   eyebrow. */
+.auth-form-wrap .eyebrow,
+.onboarding-card .eyebrow {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+  text-transform: none;
+}
+.auth-progress {
+  color: var(--text-soft);
+  display: grid;
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  letter-spacing: 0.04em;
+  list-style: none;
+  margin: 0 0 1.8rem;
+  padding: 0;
+}
+.auth-progress li {
+  border-top: 3px solid var(--line);
+  border-radius: 2px;
+  padding-top: 0.5rem;
+  transition:
+    border-color var(--motion-base) var(--ease-out),
+    color var(--motion-base) var(--ease-out);
+}
+.auth-progress .auth-progress-current {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.auth-intro {
+  color: var(--text-muted);
+  font-family: var(--font-support);
+  font-size: var(--text-md);
+  line-height: 1.55;
+  margin-bottom: 1.75rem;
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+.auth-intro strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.auth-form {
+  display: grid;
+  gap: 0.45rem;
+}
+.auth-form label {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+.auth-form > label:first-child,
+.auth-form > .auth-label-row:first-child {
+  margin-top: 0;
+}
+.auth-label-row {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+}
+.auth-label-row label {
+  margin-top: 0;
+}
+.auth-label-row .link-button {
+  font-size: var(--text-sm);
+}
+.auth-form input,
+.auth-form select {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-xs);
+  color: var(--ink);
+  font-size: var(--text-base);
+  min-height: 2.875rem;
+  padding: 0 0.9rem;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+  width: 100%;
+}
+.auth-form input::placeholder {
+  color: var(--text-faint);
+}
+.auth-form input:hover:not(:focus),
+.auth-form select:hover:not(:focus) {
+  border-color: var(--text-faint);
+}
+.auth-form input:focus,
+.auth-form select:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--focus-halo);
+  outline: none;
+}
+.auth-form .button {
+  font-size: var(--text-base);
+  margin-top: 1.25rem;
+  min-height: 2.875rem;
+  width: 100%;
+}
+.auth-form .form-notice {
+  margin-top: 0.6rem;
+}
+.password-rules {
+  color: var(--text-soft);
+  display: grid;
+  font-size: var(--text-xs);
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+}
+.password-rules li {
+  align-items: center;
+  display: flex;
+  gap: 0.45rem;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.password-rules li > span[aria-hidden] {
+  align-items: center;
+  border: 1.5px solid var(--line-input);
+  border-radius: 50%;
+  color: transparent;
+  display: inline-flex;
+  font-size: 0.6rem;
+  font-weight: 800;
+  height: 0.95rem;
+  justify-content: center;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+  width: 0.95rem;
+}
+.password-rule-met {
+  color: var(--tone-success-text);
+}
+.password-rules .password-rule-met > span[aria-hidden] {
+  background: var(--tone-success-accent);
+  border-color: var(--tone-success-accent);
+  color: var(--on-solid);
+}
+.verification-code {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4em;
+  text-align: center;
+}
+.auth-form input.verification-code {
+  font-size: 1.4rem;
+}
+/* Secondary actions inside a form (resend, use another email). */
+.auth-form .mode-switch {
+  justify-self: start;
+  margin-top: 1rem;
+}
+.auth-form .mode-switch-secondary {
+  margin-top: 0.35rem;
+}
+/* The switch between signing in and creating an account closes the form. */
+.auth-form-wrap > .mode-switch {
+  border-top: 1px solid var(--line);
+  display: block;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  width: 100%;
+}
+
+/* Onboarding */
+.onboarding-layout {
+  background:
+    radial-gradient(
+      ellipse 60% 50% at 50% 0%,
+      var(--teal-wash-strong) 0%,
+      transparent 70%
+    ),
+    var(--paper);
+  min-height: 100vh;
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+}
+.onboarding-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 64rem;
+}
+.onboarding-header img {
+  width: 7rem;
+}
+.onboarding-header span {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.onboarding-card {
+  animation: pop-in var(--motion-slow) var(--ease-out) both;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  margin: clamp(2.5rem, 9vh, 6rem) auto 0;
+  max-width: 34rem;
+  padding: clamp(1.6rem, 5vw, 2.75rem);
+}
+.onboarding-card h1 {
+  font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+  margin-bottom: 0.9rem;
+  text-wrap: balance;
+}
+
+/* State screens (loading, errors outside the shell) */
+.state-screen {
+  align-items: center;
+  background:
+    radial-gradient(
+      ellipse 50% 40% at 50% 30%,
+      var(--teal-wash) 0%,
+      transparent 70%
+    ),
+    var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+.state-screen img,
+.state-screen-logo {
+  animation: fade-in var(--motion-slow) var(--ease-out) both;
+  width: 8.5rem;
+}
+.state-screen p {
+  color: var(--text-muted);
+  margin: 0;
+}
+.state-screen-progress {
+  background: var(--line);
+  border-radius: var(--radius-pill);
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  position: relative;
+  width: 8rem;
+}
+.state-screen-progress::after {
+  animation: progress-travel 1.2s var(--ease-standard) infinite;
+  background: linear-gradient(90deg, var(--teal), var(--aqua));
+  border-radius: inherit;
+  content: "";
+  height: 100%;
+  left: -40%;
+  position: absolute;
+  width: 40%;
+}
+.state-screen .state-panel {
+  animation: pop-in var(--motion-slow) var(--ease-out) both;
+  max-width: 34rem;
+  text-align: left;
+}
+
+@keyframes progress-travel {
+  to {
+    left: 100%;
+  }
+}
+
+/* Tablets and narrow windows: one column. The brand panel becomes a band
+   over the form (logo, headline and line of copy) and the showcase steps
+   aside so the form stays near the top. */
+@media (max-width: 1023px) {
+  .auth-layout {
+    display: flex;
+    flex-direction: column;
+  }
+  .auth-story {
+    min-height: 0;
+    padding: 1.5rem clamp(1.25rem, 6vw, 3rem) 2rem;
+  }
+  .auth-story-copy {
+    margin: 0;
+    max-width: 40rem;
+    padding: 1.6rem 0 0;
+  }
+  .auth-story h1 {
+    font-size: clamp(1.8rem, 1.1rem + 2.2vw, 2.5rem);
+    margin-bottom: 0.7rem;
+  }
+  .auth-story-copy > p {
+    font-size: var(--text-md);
+    max-width: 34rem;
+  }
+  .auth-signal {
+    display: none;
+  }
+  .auth-form-area {
+    align-items: flex-start;
+    flex: 1;
+    padding: 2.5rem clamp(1.25rem, 6vw, 3rem) 3rem;
+  }
+}
+/* Short landscape windows in the one-column range: headline only. */
+@media (max-width: 1023px) and (max-height: 820px) {
+  .auth-story-copy > p {
+    display: none;
+  }
+  .auth-story h1 {
+    margin-bottom: 0;
+  }
+}
+
+/* Phones: a compact band with the logo, then the form above the fold. The
+   headline stays in the document for assistive technology. */
+@media (max-width: 640px) {
+  .auth-story {
+    padding: 1.1rem 1.25rem;
+  }
+  .auth-logo {
+    width: 6.25rem;
+  }
+  .auth-story-copy {
+    animation: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+  .auth-form-area {
+    padding: 1.75rem 1.25rem 2.5rem;
+  }
+  .auth-form-wrap h2 {
+    font-size: 1.75rem;
+  }
+  .auth-intro {
+    font-size: var(--text-base);
+    margin-bottom: 1.4rem;
+  }
+  .auth-form input,
+  .auth-form select,
+  .auth-form .button {
+    min-height: 3rem;
+  }
+}

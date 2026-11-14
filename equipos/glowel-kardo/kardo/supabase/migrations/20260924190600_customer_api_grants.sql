@@ -1,0 +1,21 @@
+-- Revision de GRANTs de kardo_customer_api contra la superficie de acceso
+-- pedida (organizaciones, invitaciones, gestion de miembros). Resultado:
+-- casi todo ya existia.
+--
+--   * profiles, workspaces, workspace_memberships, touchpoints, experiences,
+--     experience_versions, publications, publication_jobs, assets: ya tenian
+--     select+insert+update+delete desde el GRANT amplio de
+--     20260914171353_initial_control_plane.sql ("grant ... on all tables in
+--     schema kardo_core to kardo_customer_api"), que cubre todas las tablas
+--     que existian en ese momento.
+--   * leads, analytics_hourly, analytics_daily: select ya otorgado en
+--     20260915155027_analytics_and_leads.sql.
+--   * kardo_audit.events: insert + usage de esquema ya otorgados
+--     (20260914171353 y 20260914222743).
+--   * experience_assets: select/insert/update ya otorgados en
+--     20260915070000_add_experience_asset_integrity.sql.
+--
+-- Lo unico que faltaba es la tabla nueva kardo_core.workspace_invitations
+-- (20260924190500). Sin DELETE a proposito: una invitacion se revoca o
+-- expira via UPDATE de `status`, nunca se borra.
+grant select, insert, update on kardo_core.workspace_invitations to kardo_customer_api;

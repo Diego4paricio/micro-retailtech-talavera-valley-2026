@@ -1,0 +1,30 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "kardo-poa-test-publisher",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "vars": {
+    "KARDO_ENV": "test"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["*/1 * * * *"]
+  },
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "a446e2f0b9de49eeb1009b91aa2412c2"
+    }
+  ],
+  "services": [
+    {
+      "binding": "RESOLVER",
+      "service": "kardo-poa-test-resolver"
+    }
+  ]
+}

@@ -1,0 +1,835 @@
+/* Shared styles for Overview, Analytics, Assets, Leads, Organization and
+   Settings. Chart marks live in charts.css. */
+
+/* Status grid variant for a two-card row. */
+.status-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* ===========================================================================
+   Assets: upload zone and library
+   =========================================================================== */
+.upload-panel {
+  background:
+    linear-gradient(90deg, var(--teal), var(--aqua)) top left / 100% 3px
+    no-repeat,
+    var(--surface);
+}
+.upload-privacy-note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+.upload-zone {
+  align-items: center;
+  background: var(--paper);
+  border: 1.5px dashed var(--line-input);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  text-align: center;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+.upload-zone-active {
+  background: var(--tint);
+  border-color: var(--teal);
+  border-style: solid;
+}
+.upload-zone-icon {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--mist);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px var(--tint);
+  color: var(--teal);
+  display: inline-flex;
+  height: 2.8rem;
+  justify-content: center;
+  margin-bottom: 0.35rem;
+  width: 2.8rem;
+}
+.upload-zone p {
+  margin: 0;
+}
+.upload-zone-hint {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.upload-steps {
+  counter-reset: upload-step;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+.upload-step {
+  align-items: center;
+  color: var(--text-faint);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.4rem;
+}
+.upload-step::before {
+  align-items: center;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  content: "";
+  display: inline-flex;
+  height: 0.9rem;
+  justify-content: center;
+  width: 0.9rem;
+}
+.upload-step-current {
+  color: var(--teal);
+}
+.upload-step-current::before {
+  animation: pulse 1.4s ease-in-out infinite;
+  background: var(--teal);
+}
+.upload-step-done {
+  color: var(--tone-success-text);
+}
+.upload-step-done::before {
+  background: var(--tone-success-accent);
+  border-color: var(--tone-success-accent);
+}
+.asset-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* A card is one button: the thumbnail, the name and the state. */
+.asset-card {
+  appearance: none;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-xs);
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  font: inherit;
+  gap: 0.6rem;
+  grid-template-rows: auto auto auto;
+  height: 100%;
+  padding: 0.6rem 0.6rem 0.75rem;
+  text-align: left;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+  width: 100%;
+}
+.asset-card:hover {
+  border-color: var(--line-cool);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+.asset-card:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+.asset-card-rejected {
+  border-color: var(--tone-danger-line);
+}
+.asset-card-body {
+  min-width: 0;
+  padding: 0 0.2rem;
+}
+.asset-card-body strong,
+.asset-card-body small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-card-body strong {
+  font-weight: 600;
+}
+.asset-card-body small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  margin-top: 0.15rem;
+}
+.asset-card-status {
+  padding: 0 0.2rem;
+}
+
+/* The picture of a file: the real image once validated, otherwise a tile. */
+.asset-preview {
+  align-items: center;
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(45deg, var(--tint) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--tint) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--tint) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--tint) 75%);
+  background-position:
+    0 0,
+    0 6px,
+    6px -6px,
+    -6px 0;
+  background-size: 12px 12px;
+  border-radius: var(--radius-m);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.asset-preview img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+.asset-preview-thumb {
+  aspect-ratio: 4 / 3;
+}
+.asset-preview-full {
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line-warm);
+  max-height: 26rem;
+}
+.asset-preview-tile {
+  background-image: none;
+  background-color: var(--tint);
+  color: var(--teal);
+  flex-direction: column;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.35rem;
+  letter-spacing: 0.02em;
+}
+.asset-preview-rejected.asset-preview-tile {
+  background-color: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+.asset-preview-quarantined.asset-preview-tile {
+  background-color: var(--tone-info-surface);
+  color: var(--tone-info-text);
+}
+.asset-preview-quarantined svg,
+.asset-preview-loading svg {
+  animation: asset-preview-spin 1.6s linear infinite;
+}
+@keyframes asset-preview-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .asset-preview-quarantined svg,
+  .asset-preview-loading svg {
+    animation: none;
+  }
+}
+
+/* File detail (modal). */
+.asset-detail {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+.asset-detail-info {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.asset-detail-status {
+  background: var(--tone-success-surface);
+  border: 1px solid var(--tone-success-line);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem 0.95rem;
+}
+.asset-detail-status header {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.asset-detail-status strong {
+  font-weight: 600;
+}
+.asset-detail-status p {
+  margin: 0;
+}
+.asset-detail-status-rejected {
+  background: var(--tone-danger-surface);
+  border-color: var(--tone-danger-line);
+}
+.asset-detail-status-quarantined {
+  background: var(--tone-info-surface);
+  border-color: var(--tone-info-line);
+}
+.asset-detail-fix {
+  align-items: start;
+  border-top: 1px solid var(--tone-danger-line);
+  display: flex;
+  gap: 0.45rem;
+  padding-top: 0.55rem;
+}
+.asset-detail-fix svg {
+  flex: 0 0 auto;
+  margin-top: 0.15rem;
+}
+.asset-detail-facts {
+  display: grid;
+  gap: 0.55rem 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+.asset-detail-facts > div:first-child {
+  grid-column: 1 / -1;
+}
+.asset-detail-facts dt {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.asset-detail-facts dd {
+  margin: 0.1rem 0 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.asset-detail-name {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.6rem;
+}
+.asset-detail-rename {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.asset-detail-rename input {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+.asset-detail-usage h3 {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: 0 0 0.45rem;
+}
+.asset-detail-usage ul {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0 0 0.45rem;
+  padding: 0;
+}
+.asset-detail-usage li {
+  align-items: center;
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+  padding: 0.45rem 0.6rem;
+}
+.asset-detail-usage-link {
+  align-items: center;
+  color: var(--teal);
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.asset-detail-usage-link span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.asset-detail-delete {
+  color: var(--tone-danger-text);
+  margin-right: auto;
+}
+.asset-detail-delete:disabled {
+  color: var(--text-faint);
+}
+.asset-detail-confirm {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  width: 100%;
+}
+.asset-detail-confirm p {
+  margin: 0;
+}
+.asset-detail-confirm-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+@media (max-width: 720px) {
+  .asset-detail {
+    grid-template-columns: 1fr;
+  }
+  .asset-preview-full {
+    aspect-ratio: auto;
+    height: 11rem;
+    max-height: none;
+  }
+}
+
+/* ===========================================================================
+   Leads: responsive table / cards
+   =========================================================================== */
+.leads-message-cell {
+  max-width: 20rem;
+}
+.lead-cards {
+  display: none;
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lead-card {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-xs);
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.95rem;
+}
+.lead-card p {
+  margin: 0;
+}
+.lead-card-header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+.lead-card-footer {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+}
+
+/* ===========================================================================
+   Radix UI primitives (Switch, Tabs, Tooltip, DropdownMenu), styled through
+   `data-state` attributes and tokens only.
+   =========================================================================== */
+.kd-switch-row {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.75rem;
+}
+.kd-switch-row label {
+  display: grid;
+  gap: 0.15rem;
+}
+.kd-switch-row label strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.kd-switch-row label small {
+  color: var(--text-soft);
+  display: block;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+.kd-switch {
+  background: var(--line-input);
+  border: 0;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-inset-sm);
+  cursor: pointer;
+  flex: 0 0 auto;
+  height: 1.5rem;
+  margin-top: 0.15rem;
+  padding: 0;
+  position: relative;
+  transition: background-color var(--motion-fast) var(--ease-out);
+  width: 2.6rem;
+}
+.kd-switch[data-state="checked"] {
+  background: var(--teal);
+}
+.kd-switch:disabled,
+.kd-switch[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.kd-switch-thumb {
+  background: var(--surface);
+  border-radius: 50%;
+  box-shadow: var(--shadow-xs);
+  display: block;
+  height: 1.15rem;
+  transform: translateX(0.18rem);
+  transition: transform var(--motion-fast) var(--ease-standard);
+  width: 1.15rem;
+}
+.kd-switch-thumb[data-state="checked"] {
+  transform: translateX(1.28rem);
+}
+
+.kd-tabs-list {
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+.kd-tabs-trigger {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: -1px;
+  min-height: 2.75rem;
+  padding: 0 0.1rem;
+  transition:
+    border-color var(--motion-base) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.kd-tabs-trigger:hover {
+  color: var(--ink);
+}
+.kd-tabs-trigger[data-state="active"] {
+  border-bottom-color: var(--teal);
+  color: var(--ink);
+}
+.kd-tabs-content[data-state="active"] {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+}
+
+.kd-tooltip {
+  background: var(--ink);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-md);
+  color: var(--paper);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  max-width: 17rem;
+  padding: 0.5rem 0.7rem;
+  z-index: 50;
+}
+.kd-tooltip[data-state="delayed-open"],
+.kd-tooltip[data-state="instant-open"] {
+  animation: toast-in var(--motion-fast) var(--ease-out) both;
+}
+.kd-tooltip-arrow {
+  fill: var(--ink);
+}
+
+.kd-dropdown-content {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-lg);
+  min-width: 11rem;
+  padding: 0.35rem;
+  z-index: 50;
+}
+.kd-dropdown-content[data-state="open"] {
+  animation: pop-in var(--motion-fast) var(--ease-out) both;
+}
+.kd-dropdown-label {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.4rem 0.6rem 0.2rem;
+  text-transform: uppercase;
+}
+.kd-dropdown-item {
+  align-items: center;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  display: flex;
+  font-size: var(--text-sm);
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+}
+.kd-dropdown-item[data-highlighted] {
+  background: var(--tint);
+  color: var(--teal-deep);
+  outline: none;
+}
+.kd-dropdown-item[data-disabled] {
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+.kd-dropdown-item-danger {
+  color: var(--tone-danger-text);
+}
+.kd-dropdown-item-danger[data-highlighted] {
+  background: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+.kd-dropdown-separator {
+  background: var(--line);
+  height: 1px;
+  margin: 0.3rem 0;
+}
+
+/* ===========================================================================
+   Overview & Analytics dashboards
+   =========================================================================== */
+.analytics-toolbar {
+  align-items: center;
+}
+.kd-refreshing {
+  align-items: center;
+  color: var(--text-soft);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  gap: 0.45rem;
+  min-height: 1.5rem;
+}
+.kd-refreshing .button-spinner {
+  color: var(--teal);
+  height: 0.8rem;
+  width: 0.8rem;
+}
+.kd-dashboard {
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+.kd-chart-skeleton {
+  min-height: 18rem;
+}
+
+/* KPI cards */
+.kd-kpi-grid {
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+}
+.kd-kpi-grid-6 {
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+.kd-kpi-card {
+  min-height: 9.25rem;
+}
+.status-card .kd-kpi-label {
+  align-items: center;
+  display: flex;
+  gap: 0.3rem;
+  margin-bottom: 0.9rem;
+}
+.kd-kpi-help {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-faint);
+  display: inline-flex;
+  height: 1.3rem;
+  justify-content: center;
+  padding: 0;
+  transition: color var(--motion-fast) var(--ease-out);
+  width: 1.3rem;
+}
+.kd-kpi-help:hover {
+  color: var(--teal);
+}
+.kd-kpi-body {
+  align-items: flex-end;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.status-card .kd-kpi-value {
+  font-variant-numeric: lining-nums proportional-nums;
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kd-kpi-body .sparkline {
+  margin-bottom: 0.2rem;
+}
+.status-card .kd-kpi-foot {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.45rem;
+}
+.kd-delta {
+  align-items: center;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  gap: 0.2rem;
+  padding: 0.15rem 0.5rem;
+  white-space: nowrap;
+}
+.kd-delta-up {
+  background: var(--tone-success-surface);
+  color: var(--tone-success-text);
+}
+.kd-delta-down {
+  background: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+.kd-delta-flat {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--text-muted);
+}
+/* Kept for older callers. */
+
+/* Getting started */
+
+/* Kept for older callers. */
+
+/* Channel donut */
+
+/* Weekday × hour heatmap */
+
+/* Rankings */
+
+.kd-analytics-grid {
+  align-items: stretch;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  margin-top: 1.5rem;
+}
+.kd-analytics-grid > .panel {
+  margin-top: 0;
+}
+
+/* Analytics table: link + share bar under each name. */
+.kd-table-link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.kd-table-link:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+.kd-share-track {
+  background: var(--paper);
+  border-radius: var(--radius-pill);
+  display: block;
+  height: 0.25rem;
+  margin-top: 0.4rem;
+  max-width: 14rem;
+  overflow: hidden;
+}
+.kd-share-fill {
+  animation: grow-right var(--motion-deliberate) var(--ease-out) both;
+  background: var(--teal);
+  border-radius: inherit;
+  display: block;
+  height: 100%;
+  transform-origin: left center;
+}
+.kd-touchpoint-table td strong {
+  font-weight: 600;
+}
+
+/* ===========================================================================
+   Lead delivery
+   =========================================================================== */
+.kd-delivery {
+  background:
+    linear-gradient(90deg, var(--teal), var(--aqua)) top left / 100% 3px
+    no-repeat,
+    var(--surface);
+}
+.kd-recipient-list {
+  display: grid;
+  gap: 0.5rem;
+}
+.kd-recipient-row {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+.kd-recipient-row label {
+  flex: 1;
+  min-width: 0;
+}
+.kd-webhook-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.kd-webhook-help {
+  margin-top: 1.2rem;
+}
+.kd-webhook-help summary {
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.kd-code-block {
+  background: var(--ink);
+  border-radius: var(--radius-m);
+  color: var(--ink-text);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  margin: 0.6rem 0;
+  overflow-x: auto;
+  padding: 0.85rem 1rem;
+}
+
+@media (max-width: 1100px) {
+  .kd-analytics-grid {
+    /* minmax(0, …): a wide chart scrolls inside its panel instead of
+       pushing the page sideways on a phone. */
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .status-grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .leads-table {
+    display: none;
+  }
+  .lead-cards {
+    display: grid;
+  }
+
+  .kd-kpi-grid,
+  .kd-kpi-grid-6 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kd-kpi-body {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .status-card .kd-kpi-value {
+    font-size: 1.75rem;
+  }
+}
+
+/* Analítica por grupo (relevo 37, E5): the name reads like a QR's name. */
+.kd-group-name {
+  display: block;
+  font-weight: 600;
+}

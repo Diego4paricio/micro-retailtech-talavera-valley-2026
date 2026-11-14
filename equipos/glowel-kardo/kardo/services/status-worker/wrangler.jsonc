@@ -1,0 +1,42 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Estado del servicio (ADR 022): pruebas cada minuto, páginas de los
+  // proveedores cada 5 y un Durable Object con el estado y el historial.
+  // Secretos (wrangler secret put): STATUS_COMMAND_KEY (Staff API) y
+  // STATUS_PROBE_KEY (GET /health/ready del Customer API).
+  "name": "kardo-poa-test-status",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "vars": {
+    "KARDO_ENV": "test",
+    // Vacío hasta que el Customer API y el panel tengan dirección pública.
+    "CUSTOMER_API_URL": "",
+    "CUSTOMER_APP_URL": "",
+    "RESOLVER_URL": "https://kardo-poa-test-resolver.glowel-dev.workers.dev",
+    // QR de prueba: lo crea scripts/dev/status-probe-touchpoint.mjs.
+    "STATUS_PROBE_PUBLIC_ID": "",
+    "STATUS_PROBE_MARKER": "",
+    "PROVIDERS_ENABLED": "true"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "STATUS_STATE", "class_name": "StatusState" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["StatusState"] }],
+  // Entre Workers de la misma cuenta se llega por service binding: un fetch
+  // a otro *.workers.dev de la misma cuenta no sale a internet.
+  "services": [
+    { "binding": "RESOLVER", "service": "kardo-poa-test-resolver" },
+    { "binding": "PUBLISHER", "service": "kardo-poa-test-publisher" },
+    { "binding": "ANALYTICS", "service": "kardo-poa-test-analytics" },
+    { "binding": "ASSETS_WORKER", "service": "kardo-poa-test-assets" }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@kardo/publisher",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "lint": "biome check src test",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "types": "wrangler types",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@kardo/contracts": "workspace:*",
+    "@kardo/domain": "workspace:*",
+    "@kardo/page-render": "workspace:*",
+    "@sinclair/typebox": "^0.34.41",
+    "postgres": "^3.4.9"
+  }
+}

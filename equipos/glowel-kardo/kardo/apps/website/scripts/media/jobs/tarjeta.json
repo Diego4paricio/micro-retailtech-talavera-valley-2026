@@ -1,0 +1,57 @@
+{
+  "source": "../fuentes/tarjeta.webp",
+  "output": "../../../public/media/tarjeta.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 625.5, "cy": 779, "rx": 104, "ry": 104 }],
+        "feather": 12,
+        "degree": 2,
+        "sample": {
+          "ellipse": { "cx": 625.5, "cy": 779, "rx": 122, "ry": 122 }
+        }
+      },
+      "brand": {
+        "cx": 625.5,
+        "cy": 779,
+        "scale": 0.48,
+        "rotate": -10,
+        "squash": 1,
+        "box": [100, 100],
+        "items": [{ "type": "icon", "x": 50, "y": 50, "size": 70 }],
+        "soften": 0.6
+      }
+    },
+    {
+      "brand": {
+        "cx": 430,
+        "cy": 560,
+        "scale": 0.6,
+        "rotate": -10,
+        "squash": 1,
+        "box": [420, 170],
+        "items": [
+          {
+            "type": "text",
+            "x": 210,
+            "y": 58,
+            "text": "Sofía Ramírez",
+            "fontFamily": "Optima",
+            "fontWeight": 700,
+            "fontSize": 58
+          },
+          {
+            "type": "text",
+            "x": 210,
+            "y": 118,
+            "text": "Contadora",
+            "fontFamily": "Optima",
+            "fontWeight": 400,
+            "fontSize": 34
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

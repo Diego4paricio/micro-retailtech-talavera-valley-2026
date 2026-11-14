@@ -1,0 +1,76 @@
+.legal-check {
+  align-items: flex-start;
+  color: var(--text);
+  display: flex;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  gap: 0.6rem;
+  line-height: 1.45;
+  margin-top: 0.9rem;
+}
+.auth-form .legal-check {
+  font-weight: 500;
+  margin-top: 0.9rem;
+}
+.legal-check input[type="checkbox"],
+.auth-form .legal-check input[type="checkbox"] {
+  accent-color: var(--teal);
+  box-shadow: none;
+  flex: 0 0 auto;
+  height: 1.1rem;
+  margin: 0.15rem 0 0;
+  min-height: 0;
+  padding: 0;
+  width: 1.1rem;
+}
+.legal-check a,
+.terms-gate-links a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.terms-gate {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l, 1rem);
+  box-shadow: var(--shadow-l, 0 24px 60px rgb(0 0 0 / 0.2));
+  color: var(--text);
+  max-height: calc(100dvh - 2rem);
+  max-width: min(32rem, calc(100vw - 2rem));
+  overflow: auto;
+  padding: 0;
+  width: 100%;
+}
+.terms-gate::backdrop {
+  background: rgb(10 14 20 / 0.55);
+}
+.terms-gate-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.terms-gate h2 {
+  font-size: var(--text-xl, 1.35rem);
+  margin: 0;
+}
+.terms-gate-list {
+  color: var(--text-soft);
+  display: grid;
+  font-size: var(--text-sm);
+  gap: 0.6rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.terms-gate-links {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  gap: 0.4rem 1rem;
+}
+.terms-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>Te invitaron a Kardo</title>
+</head>
+<body style="margin:0;padding:0;background:#f3f0e8;-webkit-text-size-adjust:100%;">
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f3f0e8;">Activa tu cuenta de Kardo.</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f3f0e8;">
+  <tr>
+    <td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px;">
+        <tr>
+          <td style="padding:0 8px 20px 8px;font-family:'Fraunces',Georgia,'Times New Roman',serif;font-size:26px;font-weight:700;letter-spacing:-0.5px;color:#08293d;">
+            Kardo<span style="color:#0d637d;">.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#fffefa;border:1px solid #cedad7;border-radius:20px;padding:36px 32px;">
+            <p style="margin:0 0 10px 0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:#0d637d;">Invitación</p>
+            <h1 style="margin:0 0 14px 0;font-family:'Fraunces',Georgia,'Times New Roman',serif;font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-0.6px;color:#08293d;">Te invitaron a Kardo</h1>
+            <p style="margin:0 0 24px 0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.55;color:#08293d;">Tienes una invitación para usar Kardo, la plataforma para crear y administrar experiencias NFC y QR. Activa tu cuenta para empezar.</p>
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td style="border-radius:999px;background:#08293d;">
+                  <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 26px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:15px;font-weight:700;color:#fffefa;text-decoration:none;border-radius:999px;">Activar mi cuenta</a>
+                </td>
+              </tr>
+            </table>
+            <p style="margin:18px 0 0 0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;line-height:1.5;color:#516a72;word-break:break-all;">Si el botón no funciona, copia este enlace en tu navegador:<br><a href="{{ .ConfirmationURL }}" style="color:#0d637d;">{{ .ConfirmationURL }}</a></p>
+            <p style="margin:24px 0 0 0;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:13px;line-height:1.55;color:#516a72;">Si no esperabas esta invitación, ignora este correo.</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px 8px 0 8px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:12px;line-height:1.55;color:#516a72;">
+            Recibiste este correo porque alguien usó <strong style="color:#08293d;">{{ .Email }}</strong> en Kardo. Kardo nunca te pedirá este código por teléfono, chat ni redes sociales.
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,1002 @@
+/* ---------------------------------------------------------------------------
+   Primeros pasos (relevo 31, approved 2026-10-03): a focused screen without
+   the sidebar, right after the sign-up questions; the guide button at the
+   bottom right ("como Stripe"); and «Cómo funciona Kardo».
+   --------------------------------------------------------------------------- */
+.fs-focus {
+  background: var(--paper);
+  min-height: 100dvh;
+}
+.fs-focus-bar {
+  align-items: center;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line-warm);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.7rem var(--space-5);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.fs-focus-logo {
+  display: block;
+  height: 1.6rem;
+}
+.fs-focus-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+/* The shared steps, above the step's title. */
+.fs-stepper {
+  margin: 0 auto var(--space-5);
+}
+.fs {
+  margin-inline: auto;
+  max-width: 42rem;
+  padding: var(--space-6, 1.5rem) var(--space-5) 4rem;
+}
+/* «Tu página» and «Cómo se ve» need room for the tiles and the phone. */
+.fs-wide {
+  max-width: 64rem;
+}
+.fs-narrow {
+  margin-inline: auto;
+  max-width: 40rem;
+  width: 100%;
+}
+.fs-center {
+  text-align: center;
+}
+@media (max-width: 40rem) {
+  .fs-focus-bar {
+    padding-inline: var(--space-4);
+  }
+  .fs-focus-help {
+    display: none;
+  }
+  .fs {
+    padding-inline: var(--space-4);
+  }
+}
+.fs-title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 var(--space-5);
+  text-align: center;
+}
+.fs-title:focus {
+  outline: none;
+}
+.fs-progress {
+  background: var(--tint);
+  border-radius: 999px;
+  height: 0.5rem;
+  overflow: hidden;
+}
+.fs-progress span {
+  background: var(--teal);
+  border-radius: 999px;
+  display: block;
+  height: 100%;
+  transition: width var(--motion-slow) var(--ease-out);
+}
+
+/* Step marks of the guide button (FirstStepsLauncher). */
+.fs-step-mark {
+  align-items: center;
+  border: 2px solid var(--line-input);
+  border-radius: 50%;
+  color: var(--text-muted);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+.fs-step-done .fs-step-mark {
+  background: var(--success);
+  border-color: var(--success);
+  color: var(--paper);
+}
+
+.fs-card {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-xs);
+  padding: 1.1rem;
+}
+.fs-form {
+  display: grid;
+  gap: 0.9rem;
+}
+.fs-note {
+  color: var(--text-note);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+.fs-hint {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  margin: 0;
+}
+.fs-cta {
+  justify-self: stretch;
+  min-height: 3rem;
+}
+
+/* Quick capture: name and price per row. */
+.fs-section {
+  border: 0;
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+}
+.fs-section + .fs-section {
+  border-top: 1px dashed var(--line);
+  padding-top: 0.9rem;
+}
+.fs-section-name .input {
+  font-weight: 600;
+}
+.fs-row {
+  align-items: center;
+  display: grid;
+  gap: 0.45rem;
+  grid-template-columns: minmax(0, 1fr) 6.5rem 2.25rem;
+}
+.fs-row-head {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.fs-price {
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+.fs-price span {
+  color: var(--text-soft);
+  left: 0.7rem;
+  pointer-events: none;
+  position: absolute;
+}
+.fs-price .input {
+  padding-left: 1.5rem;
+}
+.fs-price-invalid .input {
+  border-color: var(--danger);
+}
+.fs-add {
+  justify-self: start;
+}
+.fs-paste {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+.fs-paste label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.fs-paste textarea {
+  min-height: 7rem;
+  padding-block: 0.6rem;
+  resize: vertical;
+}
+.fs-paste-actions {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Icons drawn for these steps (first-steps-icons.tsx): two tones. */
+.fsi {
+  display: block;
+  flex: none;
+}
+.fsi-f {
+  fill: var(--tint);
+  stroke: var(--teal);
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.fsi-w {
+  fill: var(--surface);
+  stroke: var(--teal);
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.fsi-l {
+  fill: none;
+  stroke: var(--teal);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+.fsi-a {
+  fill: none;
+  stroke: var(--aqua);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+.fsi-af {
+  fill: var(--aqua);
+}
+.fsi-lf {
+  fill: var(--teal);
+}
+.fsi-tile {
+  fill: var(--tint);
+}
+.fsi-label {
+  fill: var(--on-solid);
+  font-size: 7.6px;
+  font-weight: 700;
+}
+
+/* Step 2: every page type in view, in equal tiles. */
+.fs-tiles {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 48rem) {
+  .fs-tiles {
+    gap: 0.9rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.fs-tile {
+  align-items: flex-start;
+  aspect-ratio: 1 / 0.8;
+  background: var(--surface);
+  border: 1.5px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.9rem;
+  position: relative;
+  text-align: start;
+  transition:
+    border-color var(--motion-fast, 120ms) var(--ease-out),
+    transform var(--motion-fast, 120ms) var(--ease-out);
+  width: 100%;
+}
+/* Between a phone and a laptop two columns are wide: lower tiles. */
+@media (min-width: 30rem) and (max-width: 47.99rem) {
+  .fs-tile {
+    aspect-ratio: 1 / 0.62;
+  }
+}
+.fs-tile:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+.fs-tile .fsi {
+  height: 3.4rem;
+  width: 3.4rem;
+}
+.fs-tile strong {
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.fs-tile-badge {
+  background: var(--tint);
+  border-radius: 999px;
+  color: var(--teal-deep);
+  font-size: var(--text-2xs, 0.72rem);
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+}
+@media (min-width: 48rem) {
+  .fs-tile {
+    padding: 1.1rem;
+  }
+  .fs-tile .fsi {
+    height: 4rem;
+    width: 4rem;
+  }
+}
+.fs-existing ul {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+}
+.fs-existing-item {
+  align-items: center;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  text-align: start;
+  width: 100%;
+}
+.fs-existing-item:hover {
+  border-color: var(--teal);
+}
+.fs-existing-item strong {
+  flex: 1;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.fs-existing-item small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.fs-chosen {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: 0.85rem;
+}
+.fs-chosen .fsi {
+  height: 2.25rem;
+  width: 2.25rem;
+}
+.fs-chosen strong {
+  flex: 1;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.fs-check {
+  align-items: center;
+  display: flex;
+  font-size: var(--text-sm);
+  gap: 0.5rem;
+}
+
+/* Step 3: the page in a phone; beside it, the looks, the color and the
+   two texts. */
+.fs-look {
+  align-items: start;
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: minmax(16rem, 21rem) minmax(0, 1fr);
+}
+.fs-look-phone .es-designed-note {
+  display: none;
+}
+.fs-look-controls {
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+}
+.fs-look-field {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+.fs-look-field legend,
+.fs-look-text span {
+  color: var(--text-muted);
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+.fs-look-text {
+  display: block;
+}
+.fs-look-strip {
+  display: grid;
+  gap: 0.6rem;
+  grid-auto-columns: 6.5rem;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  padding: 0.2rem 0.2rem 0.6rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+}
+.fs-look-option {
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius-m);
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  overflow: hidden;
+  padding: 0;
+  scroll-snap-align: start;
+}
+.fs-look-option[aria-pressed="true"] {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-wash);
+}
+.fs-look-option .es-thumb {
+  border-radius: 0;
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+.fs-look-option span:last-child {
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  overflow: hidden;
+  padding: 0.35rem 0.25rem 0.4rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fs-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.fs-swatch {
+  border: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  height: 2.1rem;
+  width: 2.1rem;
+}
+.fs-swatch[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px var(--paper),
+    0 0 0 4px var(--ink);
+}
+.fs-swatch-brand {
+  outline: 2px dashed var(--line-input);
+  outline-offset: 3px;
+}
+.fs-more {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+@media (max-width: 48rem) {
+  .fs-look {
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fs-look-phone {
+    justify-self: center;
+    width: 100%;
+  }
+  /* Small enough that the looks show below it on a phone. */
+  .fs-look-phone .es-designed-phone {
+    max-width: 13.5rem;
+  }
+}
+
+/* Step 3 opens with the business's logo (owner, 2026-10-07). */
+.fs-logo {
+  justify-items: center;
+  padding-block: 1.6rem 1.2rem;
+}
+.fs-logo-drop {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--paper);
+  border: 2px dashed var(--line-input);
+  border-radius: 50%;
+  color: var(--teal);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition:
+    border-color var(--motion-fast, 120ms) var(--ease-out),
+    background-color var(--motion-fast, 120ms) var(--ease-out);
+  width: 11rem;
+}
+.fs-logo-drop:hover,
+.fs-logo-drop-active {
+  background: var(--tint);
+  border-color: var(--teal);
+}
+.fs-logo-drop:focus-within {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+.fs-logo-drop span {
+  color: var(--ink);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.fs-logo-drop small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.fs-logo-image {
+  height: 4.5rem;
+  object-fit: contain;
+  width: 4.5rem;
+}
+.fs-logo-skip {
+  justify-self: center;
+}
+/* Step 2, «Una imagen»: one box for the photo, then the photo. */
+.fs-image-drop {
+  align-items: center;
+  aspect-ratio: 4 / 3;
+  background: var(--paper);
+  border: 2px dashed var(--line-input);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition:
+    border-color var(--motion-fast, 120ms) var(--ease-out),
+    background-color var(--motion-fast, 120ms) var(--ease-out);
+}
+.fs-image-drop:hover,
+.fs-image-drop-active {
+  background: var(--tint);
+  border-color: var(--teal);
+}
+.fs-image-drop:focus-within {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+.fs-image-drop-action {
+  color: var(--ink);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.fs-image-drop small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.fs-image-drop-filled {
+  background: var(--ink);
+  border-style: solid;
+}
+.fs-image-drop-image {
+  height: 100%;
+  inset: 0;
+  object-fit: contain;
+  position: absolute;
+  width: 100%;
+}
+.fs-image-drop-filled .fs-image-drop-action {
+  background: rgb(255 255 255 / 0.92);
+  border-radius: 999px;
+  bottom: 0.75rem;
+  font-size: var(--text-sm);
+  padding: 0.3rem 0.85rem;
+  position: absolute;
+}
+.fs-look-logo {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+.fs-look-logo > span {
+  color: var(--text-muted);
+  flex: 1;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.fs-look-logo-image {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  height: 2.25rem;
+  object-fit: contain;
+  padding: 0.2rem;
+  width: 2.25rem;
+}
+
+/* Step 4: QR, NFC or link, in columns; step 5: what to scan, write or
+   share. */
+.fs-ways {
+  border: 0;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+.fs-way {
+  align-items: center;
+  aspect-ratio: 1 / 1.08;
+  background: var(--surface);
+  border: 1.5px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  justify-content: center;
+  padding: 0.6rem 0.4rem;
+}
+.fs-way:hover {
+  border-color: var(--teal);
+}
+.fs-way[aria-pressed="true"] {
+  background: var(--surface);
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-wash);
+}
+.fs-way:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+.fs-way .fsi {
+  height: 3.5rem;
+  width: 3.5rem;
+}
+.fs-way strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+@media (min-width: 48rem) {
+  .fs-ways {
+    gap: 1rem;
+  }
+  .fs-way .fsi {
+    height: 5rem;
+    width: 5rem;
+  }
+  .fs-way strong {
+    font-size: var(--text-base);
+  }
+}
+.fs-share-card {
+  display: grid;
+  gap: 0.7rem;
+}
+.fs-share-steps {
+  color: var(--text-note);
+  display: grid;
+  font-size: var(--text-sm);
+  gap: 0.35rem;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.fs-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.fs-qr {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+.fs-qr-image {
+  display: block;
+  height: auto;
+  width: 14rem;
+}
+.fs-qr > .button {
+  width: 100%;
+}
+.fs-finished {
+  display: grid;
+  gap: 0.9rem;
+}
+.fs-finished-row {
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.75rem;
+}
+.fs-finished-row .fs-qr-image {
+  width: 5.5rem;
+}
+.fs-finished-where strong {
+  display: block;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+.fs-finished-where small {
+  color: var(--text-soft);
+  display: block;
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+.fs-next {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.fs-next a {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  color: var(--ink);
+  display: grid;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.4rem;
+  justify-items: center;
+  padding: 0.75rem 0.4rem;
+  text-align: center;
+  text-decoration: none;
+}
+.fs-next a:hover {
+  border-color: var(--teal);
+}
+.fs-next svg {
+  color: var(--teal);
+}
+
+/* The guide: a button at the bottom right with the progress, that opens
+   the steps (like Stripe's setup guide). */
+.fsl {
+  bottom: 1.25rem;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: end;
+  position: fixed;
+  right: 1.25rem;
+  z-index: 30;
+}
+.fsl-button {
+  align-items: center;
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: var(--shadow-pop);
+  color: var(--ink-text-bright);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.55rem;
+  padding: 0.55rem 0.95rem 0.55rem 0.65rem;
+}
+.fsl-button:hover {
+  background: var(--ink-raised);
+}
+.fsl-button-count {
+  color: var(--ink-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+.fsl-ring circle:first-child {
+  stroke: var(--ink-line);
+}
+.fsl-ring circle:last-child {
+  stroke: var(--aqua);
+  transition: stroke-dasharray var(--motion-slow) var(--ease-out);
+}
+.fsl-panel {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-pop);
+  display: grid;
+  gap: 0.75rem;
+  max-height: min(34rem, calc(100vh - 6rem));
+  overflow-y: auto;
+  padding: 1rem;
+  width: 21rem;
+}
+.fsl-head {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+}
+.fsl-head h2 {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 0;
+}
+.fsl-head p {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  margin: 0.15rem 0 0;
+}
+.fsl-steps {
+  display: grid;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.fsl-step {
+  align-items: center;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-m);
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.45rem 0.5rem;
+  text-align: start;
+  width: 100%;
+}
+.fsl-step:hover {
+  background: var(--teal-wash);
+}
+.fsl-step-next {
+  background: var(--tint);
+}
+.fsl-step .fs-step-mark {
+  font-size: var(--text-xs);
+  height: 1.55rem;
+  width: 1.55rem;
+}
+.fsl-step.fs-step-done .fs-step-mark {
+  border-width: 1px;
+}
+.fsl-step strong {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.fsl-step small {
+  color: var(--text-muted);
+  display: block;
+  font-size: var(--text-xs);
+}
+.fsl-step.fs-step-done strong {
+  color: var(--text-muted);
+}
+.fsl-continue {
+  width: 100%;
+}
+.fsl-links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+}
+.fsl-hide {
+  color: var(--text-soft);
+}
+.fsl-note {
+  color: var(--text-faint);
+  font-size: var(--text-2xs, 0.72rem);
+  margin: -0.35rem 0 0;
+}
+@media (max-width: 40rem) {
+  .fsl {
+    bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+  .fsl-panel {
+    width: 100%;
+  }
+}
+
+/* «Cómo funciona Kardo»: one idea per card. */
+.hkw {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: center;
+  padding: 0.5rem 0 0.25rem;
+  text-align: center;
+}
+.hkw-icon {
+  align-items: center;
+  background: var(--tint);
+  border-radius: 50%;
+  color: var(--teal);
+  display: inline-flex;
+  height: 4.5rem;
+  justify-content: center;
+  width: 4.5rem;
+}
+.hkw-title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0.4rem 0 0;
+}
+.hkw-text {
+  color: var(--text-note);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 26rem;
+}
+.hkw-term {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+.hkw-dots {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+}
+.hkw-dot {
+  background: var(--line);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  height: 0.5rem;
+  padding: 0;
+  width: 0.5rem;
+}
+.hkw-dot[aria-current="step"] {
+  background: var(--teal);
+  width: 1.4rem;
+}
+
+/* Ayuda: Primeros pasos and «Cómo funciona Kardo», always reachable. */
+.help-start {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.help-start-link {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  cursor: pointer;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  text-align: start;
+  width: 100%;
+}
+.help-start-link:hover {
+  border-color: var(--teal-soft-line);
+}
+.help-start .help-start-link strong {
+  color: var(--ink);
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.help-start .help-start-link small {
+  color: var(--text-muted);
+  display: block;
+  font-size: var(--text-xs);
+}

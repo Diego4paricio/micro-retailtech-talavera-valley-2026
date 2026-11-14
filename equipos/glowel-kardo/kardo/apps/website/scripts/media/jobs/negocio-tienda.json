@@ -1,0 +1,47 @@
+{
+  "source": "../fuentes/negocio-tienda.png",
+  "output": "../../../public/media/tienda.webp",
+  "outputWidth": 1200,
+  "patches": [
+    {
+      "brand": {
+        "cx": 606.7,
+        "cy": 891.8,
+        "ex": [0.99763, -0.06238],
+        "ey": [0.15573, 0.98756],
+        "scale": 1,
+        "box": [634, 454],
+        "soften": 0.7,
+        "items": [
+          {
+            "type": "icon",
+            "x": 317,
+            "y": 118,
+            "size": 74,
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 317,
+            "y": 250,
+            "text": "Florería Lila",
+            "fontFamily": "Georgia",
+            "fontStyle": "italic",
+            "fontWeight": 700,
+            "fontSize": 70,
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 317,
+            "y": 318,
+            "text": "Acerca tu celular",
+            "fontFamily": "Optima",
+            "fontSize": 32,
+            "color": "#52646D"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "@kardo/operations-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5174",
+    "lint": "biome check src test",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc -p tsconfig.json && vite build",
+    "test": "vitest run --dir test"
+  },
+  "dependencies": {
+    "@kardo/contracts": "workspace:*",
+    "@kardo/customer-web": "workspace:*",
+    "@supabase/supabase-js": "2.57.0",
+    "lucide-react": "1.47.0",
+    "radix-ui": "^1.6.7",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.1.7"
+  }
+}

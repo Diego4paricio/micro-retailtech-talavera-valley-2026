@@ -1,0 +1,37 @@
+{
+  "source": "../fuentes/salon.webp",
+  "output": "../../../public/media/salon.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 517.5, "cy": 451.5, "rx": 112, "ry": 112 }],
+        "feather": 10,
+        "degree": 2,
+        "sample": {
+          "ellipse": { "cx": 517.5, "cy": 451.5, "rx": 127, "ry": 127 }
+        }
+      },
+      "brand": {
+        "cx": 544,
+        "cy": 446,
+        "scale": 0.4,
+        "rotate": 0,
+        "squash": 1,
+        "box": [520, 300],
+        "items": [
+          { "type": "icon", "x": 260, "y": 68, "size": 78 },
+          {
+            "type": "text",
+            "x": 260,
+            "y": 225,
+            "text": "Estudio Noa",
+            "fontFamily": "Optima",
+            "fontWeight": 400,
+            "fontSize": 100
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

@@ -1,0 +1,880 @@
+/* /personalizar/: the small designer for the pieces. Same voice as the
+   editorial pages: cream paper, 1px rules, Lora for the page title, Geist
+   600 for group titles, DM Sans for everything you read or press. */
+
+.ps-page {
+  --ps-line: var(--color-line);
+  --ps-radius: 3px;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  padding-bottom: 96px;
+}
+
+.ps-head {
+  padding: 112px 5vw 0;
+  text-align: center;
+}
+.ps-head h1 {
+  font-family: var(--font-lora), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 3.4vw, 3.3rem);
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+}
+.ps-head p {
+  max-width: 62ch;
+  margin: 12px auto 0;
+  font-size: clamp(0.98rem, 1.05vw, 1.06rem);
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+/* Steps: circles joined by a line, centered, label under each. */
+.ps-steps {
+  padding: 26px 5vw 22px;
+}
+.ps-steps ol {
+  display: flex;
+  justify-content: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+.ps-steps li {
+  position: relative;
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+.ps-steps li + li::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: calc(50% + 22px);
+  left: calc(-50% + 22px);
+  height: 1px;
+  background: var(--ps-line);
+}
+.ps-steps li[data-done="true"]::before,
+.ps-steps li[data-current="true"]::before {
+  background: var(--color-teal);
+}
+.ps-steps button {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 64px;
+  padding: 0 4px;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+.ps-step-dot {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ps-line);
+  border-radius: 999px;
+  background: var(--color-paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  transition:
+    background 160ms,
+    border-color 160ms,
+    color 160ms;
+}
+.ps-steps li[data-done="true"] .ps-step-dot {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+.ps-steps li[data-current="true"] .ps-step-dot {
+  border-color: var(--color-ink);
+  background: var(--color-ink);
+  color: white;
+}
+.ps-steps li[data-current="true"] button {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* Preview left, controls right. */
+.ps-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+  gap: 0;
+  margin: 0 5vw;
+  border-top: 1px solid var(--ps-line);
+  border-bottom: 1px solid var(--ps-line);
+}
+.ps-preview {
+  position: sticky;
+  top: 72px;
+  align-self: start;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: calc(100svh - 96px);
+  min-height: 520px;
+  max-height: 860px;
+  padding: 20px 4% 24px 0;
+  border-right: 1px solid var(--ps-line);
+}
+.ps-piece-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.ps-piece-tabs button,
+.ps-segmented button {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid transparent;
+  border-radius: var(--ps-radius);
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+.ps-piece-tabs button[aria-pressed="true"],
+.ps-segmented button[aria-pressed="true"] {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+@media (hover: hover) and (pointer: fine) {
+  .ps-piece-tabs button:hover,
+  .ps-segmented button:hover {
+    color: var(--color-ink);
+  }
+}
+
+.ps-stage {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 0;
+  margin: 12px 0 0;
+}
+.ps-stage-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 28px 0 36px;
+  background: radial-gradient(
+    120% 90% at 50% 20%,
+    #fffdf8 0%,
+    #efebe2 70%,
+    #e8e3d8 100%
+  );
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+}
+.ps-stage-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ps-stage-rows {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ps-face {
+  position: relative;
+  flex: none;
+}
+.ps-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 18px 22px rgb(22 35 46 / 0.16))
+    drop-shadow(0 2px 3px rgb(22 35 46 / 0.12));
+}
+.ps-face-stand .ps-art {
+  position: relative;
+  z-index: 1;
+}
+/* The wooden base the Stand sits in (10 × 5 × 2 cm, seen from the front). */
+.ps-stand-base {
+  position: absolute;
+  z-index: 2;
+  left: -4%;
+  right: -4%;
+  bottom: -6%;
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(
+      91deg,
+      rgb(255 255 255 / 0.05) 0 2px,
+      transparent 2px 9px
+    ),
+    linear-gradient(180deg, #d9b98d 0%, #c49a68 55%, #a97d4f 100%);
+  box-shadow:
+    0 14px 18px -8px rgb(22 35 46 / 0.35),
+    inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+.ps-stage figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 18px;
+  padding-top: 12px;
+  font-size: 0.84rem;
+  color: var(--color-soft);
+}
+.ps-stage figcaption span:first-child {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+/* Controls ------------------------------------------------------------------ */
+.ps-controls {
+  display: grid;
+  align-content: start;
+  gap: 22px;
+  padding: 28px 0 40px 6%;
+}
+.ps-controls section {
+  display: grid;
+  gap: 18px;
+}
+.ps-controls h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.45rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.ps-subtitle {
+  margin-top: 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+.ps-notice {
+  padding: 12px 14px;
+  border-left: 2px solid var(--color-teal);
+  background: var(--color-tint);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.ps-piece-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ps-piece-option,
+.ps-layouts button,
+.ps-palettes button,
+.ps-fonts button,
+.ps-kit {
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius);
+  background: var(--color-paper);
+  text-align: left;
+  transition:
+    border-color 160ms,
+    box-shadow 160ms;
+}
+.ps-piece-option[aria-pressed="true"],
+.ps-layouts button[aria-pressed="true"],
+.ps-palettes button[aria-pressed="true"],
+.ps-fonts button[aria-pressed="true"],
+.ps-kit[data-checked="true"] {
+  border-color: var(--color-ink);
+  box-shadow: inset 0 0 0 1px var(--color-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ps-piece-option:hover,
+  .ps-layouts button:hover,
+  .ps-palettes button:hover,
+  .ps-fonts button:hover,
+  .ps-kit:hover {
+    border-color: #b9b5aa;
+  }
+}
+.ps-piece-option {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  grid-template-rows: auto auto auto;
+  column-gap: 12px;
+  align-items: center;
+  padding: 12px;
+}
+.ps-piece-thumb {
+  grid-row: 1 / 4;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 64px;
+}
+.ps-piece-thumb svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 3px 4px rgb(22 35 46 / 0.18));
+}
+.ps-piece-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+}
+.ps-piece-measure {
+  font-size: 0.78rem;
+  color: var(--color-teal);
+}
+.ps-piece-line {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--color-muted);
+}
+
+.ps-layouts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.ps-layouts button {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 14px 10px 12px;
+  font-size: 0.86rem;
+}
+.ps-layout-thumb {
+  display: grid;
+  place-items: center;
+  height: 112px;
+}
+.ps-layout-thumb svg {
+  height: 100%;
+  width: auto;
+  filter: drop-shadow(0 4px 6px rgb(22 35 46 / 0.16));
+}
+.ps-layout-card svg,
+.ps-layout-magnet svg {
+  height: auto;
+  width: 150px;
+}
+
+.ps-palettes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.ps-palettes button {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: 10px 4px 8px;
+  font-size: 0.78rem;
+  color: var(--color-muted);
+}
+.ps-swatch {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgb(22 35 46 / 0.14);
+}
+.ps-swatch i {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid var(--color-paper);
+}
+
+.ps-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.ps-field,
+.ps-color {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+fieldset.ps-field,
+fieldset.ps-chips,
+fieldset.ps-piece-tabs {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+legend.ps-field-head {
+  margin-bottom: 8px;
+  padding: 0;
+}
+.ps-field-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+.ps-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-soft);
+  font-weight: 400;
+}
+.ps-field input[type="text"],
+.ps-color input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius);
+  background: var(--color-paper);
+  font-size: 1rem;
+}
+.ps-field input[type="text"]:focus,
+.ps-color input[type="text"]:focus {
+  outline: 2px solid var(--color-aqua);
+  outline-offset: 1px;
+  border-color: var(--color-teal);
+}
+.ps-color-row {
+  display: flex;
+  gap: 8px;
+}
+.ps-color input[type="color"] {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 3px;
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius);
+  background: var(--color-paper);
+  cursor: pointer;
+}
+.ps-color input[type="text"] {
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+}
+.ps-hint {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+.ps-error {
+  font-size: 0.84rem;
+  color: #a33a2b;
+}
+.ps-segmented {
+  display: flex;
+  gap: 4px;
+}
+
+.ps-fonts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ps-fonts button {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  min-width: 0;
+}
+.ps-font-sample {
+  overflow: hidden;
+  font-size: 1.15rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.ps-font-name {
+  font-size: 0.76rem;
+  color: var(--color-muted);
+}
+
+.ps-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.ps-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.ps-switch-track {
+  position: relative;
+  flex: none;
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background: #cfcbc1;
+  transition: background 160ms;
+}
+.ps-switch-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: white;
+  box-shadow: 0 1px 2px rgb(22 35 46 / 0.25);
+  transition: transform 160ms var(--ease-out-soft);
+}
+.ps-switch input:checked + .ps-switch-track {
+  background: var(--color-teal);
+}
+.ps-switch input:checked + .ps-switch-track::after {
+  transform: translateX(16px);
+}
+.ps-switch input:focus-visible + .ps-switch-track {
+  outline: 3px solid var(--color-aqua);
+  outline-offset: 2px;
+}
+.ps-switch[data-disabled="true"] {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.ps-drop {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px dashed #c4c0b5;
+  border-radius: var(--ps-radius);
+  background: var(--color-paper);
+}
+.ps-drop[data-over="true"] {
+  border-color: var(--color-teal);
+  background: var(--color-tint);
+}
+.ps-drop-logo {
+  flex: none;
+  width: 72px;
+  height: 56px;
+  object-fit: contain;
+  background:
+    conic-gradient(#ece9e1 25%, transparent 0 50%, #ece9e1 0 75%, transparent 0)
+    0 0 / 12px 12px;
+  border-radius: 2px;
+}
+.ps-drop-icon {
+  flex: none;
+  color: var(--color-teal);
+}
+.ps-drop-actions {
+  display: grid;
+  justify-items: start;
+  gap: 6px;
+}
+.ps-logo-options {
+  display: grid;
+  gap: 14px;
+  padding: 0 0 6px;
+}
+.ps-logo-options input[type="range"] {
+  width: 100%;
+  accent-color: var(--color-teal);
+}
+
+.ps-call {
+  display: grid;
+  gap: 10px;
+}
+.ps-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ps-chips button {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ps-line);
+  border-radius: 999px;
+  background: var(--color-paper);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+.ps-chips button[aria-pressed="true"] {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+
+.ps-kits {
+  display: grid;
+  gap: 8px;
+}
+.ps-kits legend {
+  margin-bottom: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+}
+.ps-kit {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.ps-kit input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.ps-kit:has(input:focus-visible) {
+  outline: 3px solid var(--color-aqua);
+  outline-offset: 2px;
+}
+.ps-kit-name {
+  font-weight: 600;
+}
+.ps-kit-price {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+.ps-kit-items,
+.ps-kit-panel {
+  grid-column: 1 / -1;
+  font-size: 0.84rem;
+  color: var(--color-muted);
+}
+.ps-kit-panel {
+  color: var(--color-teal);
+}
+.ps-edit-pieces {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  font-size: 0.86rem;
+  color: var(--color-muted);
+}
+.ps-edit-pieces button {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--ps-line);
+}
+
+.ps-send {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--ps-line);
+}
+.ps-send li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--ps-line);
+}
+.ps-send p {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.ps-send li:last-child p {
+  margin-bottom: 0;
+}
+.ps-send-number {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--ps-line);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+.ps-send li[data-done="true"] .ps-send-number {
+  border-color: var(--color-teal);
+  color: var(--color-teal);
+}
+.ps-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ps-after {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.ps-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: var(--ps-radius);
+  background: var(--color-ink);
+  color: white;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ps-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.ps-button-quiet {
+  min-height: 42px;
+  border: 1px solid var(--color-ink);
+  background: transparent;
+  color: var(--color-ink);
+}
+.ps-button-whatsapp svg {
+  color: var(--color-whatsapp);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ps-button:hover {
+    background: var(--color-ink-deep);
+  }
+  .ps-button-quiet:hover {
+    background: var(--color-ink);
+    color: white;
+  }
+}
+.ps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-ink);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #c4c0b5;
+}
+.ps-icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  color: var(--color-muted);
+}
+
+.ps-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--ps-line);
+}
+.ps-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  font-size: 0.8rem;
+  color: var(--color-soft);
+}
+.ps-reset-confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* On phones the step track scrolls away: this line stays with the piece. */
+.ps-mini-steps {
+  display: none;
+}
+
+/* Tablets and phones: the piece stays in view at the top while you edit. */
+@media (max-width: 1023px) {
+  .ps-mini-steps {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+    color: var(--color-muted);
+  }
+  .ps-mini-bars {
+    display: flex;
+    gap: 3px;
+  }
+  .ps-mini-bars i {
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ps-line);
+  }
+  .ps-mini-bars i[data-on="true"] {
+    background: var(--color-teal);
+  }
+  .ps-preview {
+    grid-template-rows: auto auto 1fr;
+  }
+  .ps-head {
+    padding: 104px 6vw 0;
+  }
+  .ps-steps {
+    padding: 24px 4vw 18px;
+  }
+  .ps-layout {
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+  .ps-preview {
+    position: sticky;
+    top: 60px;
+    z-index: 5;
+    height: min(50svh, 450px);
+    min-height: 320px;
+    padding: 10px 4vw 10px;
+    border-right: 0;
+    border-bottom: 1px solid var(--ps-line);
+    background: var(--color-cream);
+  }
+  .ps-piece-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .ps-piece-tabs button {
+    min-height: 32px;
+    padding: 0 12px;
+  }
+  .ps-stage {
+    margin-top: 6px;
+  }
+  .ps-stage-box {
+    padding: 16px 0 22px;
+  }
+  .ps-stage figcaption {
+    padding-top: 6px;
+    font-size: 0.76rem;
+  }
+  .ps-stage figcaption span:last-child {
+    display: none;
+  }
+  .ps-controls {
+    padding: 22px 6vw 32px;
+  }
+}
+@media (max-width: 520px) {
+  .ps-steps button {
+    min-width: 0;
+    font-size: 0.74rem;
+  }
+  .ps-piece-options,
+  .ps-two {
+    grid-template-columns: 1fr;
+  }
+  .ps-palettes {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ps-fonts {
+    grid-template-columns: 1fr;
+  }
+}

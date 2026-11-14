@@ -1,0 +1,193 @@
+/* Kardo palette — identical values to the original panel, now named.
+   The color values in this first block are the brand: never change them.
+   Everything below it is derived (tiers, surfaces, motion, type). */
+:root {
+  --ink: #16232e;
+  --ink-raised: #20323d;
+  --ink-line: #31454d;
+  --ink-muted: #577078;
+  --ink-text: #d7e4e2;
+  --ink-text-soft: #a9c3c3;
+  --ink-text-faint: #b3c5c4;
+  --ink-text-bright: #dce8e6;
+  --ink-copy: #c7d7d5;
+
+  --paper: #f7f5f0;
+  --surface: #fffdf8;
+  --mist: #dceced;
+  --tint: #e6f3f3;
+
+  --teal: #0a6c78;
+  --teal-hover: #075b65;
+  --teal-deep: #064d56;
+  --aqua: #4ec3ce;
+  --teal-soft-line: #a8c7c6;
+
+  --text: #16232e;
+  --text-muted: #52646d;
+  --text-soft: #66777f;
+  --text-faint: #82928f;
+  --text-note: #20414a;
+
+  --line: #d9ded8;
+  --line-warm: #e2ded4;
+  --line-cool: #cbd6d4;
+  --line-input: #b8c6c3;
+
+  --success: #176b5b;
+  --danger: #9b2c16;
+  --danger-text: #6c2417;
+  --danger-surface: #fceae5;
+
+  --shadow-pop: 0 18px 50px -18px rgba(22, 35, 46, 0.35);
+  --focus: 3px solid var(--aqua);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---------------------------------------------------------------------
+     Alert tiers (research §4). Text ≥ 5.4:1 on its surface; accents ≥ 3:1.
+     Terracotta / ochre / sea-green instead of pure red / yellow / green so
+     they live comfortably next to paper and ink.
+     --------------------------------------------------------------------- */
+  --tone-info-text: #0d637d;
+  --tone-info-accent: #1a86a3;
+  --tone-info-surface: #e8f2f5;
+  --tone-info-line: #b7d6df;
+  --tone-info-on-ink: #8ce0dc;
+
+  --tone-success-text: #1e6b50;
+  --tone-success-accent: #2e8a66;
+  --tone-success-surface: #e6f2ec;
+  --tone-success-line: #b3d9c6;
+  --tone-success-on-ink: #7fd1ad;
+
+  --tone-warning-text: #8a5413;
+  --tone-warning-accent: #b87514;
+  --tone-warning-surface: #f9efdb;
+  --tone-warning-line: #e6cc94;
+  --tone-warning-on-ink: #f0c36b;
+
+  --tone-danger-text: #9b3530;
+  --tone-danger-accent: #c0443c;
+  --tone-danger-surface: #f9e9e7;
+  --tone-danger-line: #e8bdb8;
+  --tone-danger-on-ink: #f2a097;
+  /* Destructive buttons: 7.1:1 with white. */
+  --tone-danger-solid: #9b3530;
+  --tone-danger-solid-hover: #7f2a26;
+
+  /* ---------------------------------------------------------------------
+     Derived surfaces (translucent versions of the palette above).
+     --------------------------------------------------------------------- */
+  --paper-glass: rgba(247, 245, 240, 0.86);
+  --surface-hover: rgba(230, 243, 243, 0.55);
+  --teal-wash: rgba(10, 108, 120, 0.07);
+  --teal-wash-strong: rgba(10, 108, 120, 0.12);
+  --ink-hover: rgba(215, 228, 226, 0.07);
+  --ink-active: rgba(78, 195, 206, 0.13);
+  --ink-glow: rgba(78, 195, 206, 0.16);
+  --scrim: rgba(22, 35, 46, 0.48);
+  --focus-halo: rgba(78, 195, 206, 0.4);
+  --on-solid: #ffffff;
+
+  /* Charts (research §5, in the current palette). */
+  --chart-line: var(--teal);
+  --chart-area-top: rgba(10, 108, 120, 0.18);
+  --chart-area-bottom: rgba(10, 108, 120, 0);
+  --chart-grid: #e4dfd3;
+  --chart-previous: var(--text-faint);
+  --chart-crosshair: rgba(22, 35, 46, 0.28);
+
+  /* ---------------------------------------------------------------------
+     Elevation: soft, layered, tinted with ink — never pure black.
+     --------------------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(22, 35, 46, 0.05);
+  --shadow-sm:
+    0 1px 2px rgba(22, 35, 46, 0.04), 0 4px 14px -6px rgba(22, 35, 46, 0.08);
+  --shadow-md:
+    0 2px 4px rgba(22, 35, 46, 0.04), 0 12px 28px -12px rgba(22, 35, 46, 0.18);
+  --shadow-lg: var(--shadow-pop);
+  --shadow-drawer: -24px 0 60px -30px rgba(22, 35, 46, 0.4);
+  --shadow-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  --shadow-teal-sm: 0 1px 2px rgba(6, 77, 86, 0.28);
+  --shadow-teal-md: 0 6px 16px -8px rgba(6, 77, 86, 0.6);
+  --shadow-danger-sm: 0 1px 2px rgba(127, 42, 38, 0.3);
+  --shadow-inset-sm: inset 0 1px 2px rgba(22, 35, 46, 0.12);
+
+  /* Radii. */
+  --radius-xs: 0.25rem;
+  --radius-s: 0.375rem;
+  --radius-m: 0.5rem;
+  --radius-l: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-pill: 999px;
+
+  /* ---------------------------------------------------------------------
+     Motion (research §3). Few durations, decelerating curves, no bounce.
+     Exits run at ~70 % of their entrance. Reduced motion zeroes them all.
+     --------------------------------------------------------------------- */
+  --motion-instant: 100ms;
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-slow: 350ms;
+  --motion-deliberate: 500ms;
+  --motion-exit-base: 175ms;
+  --motion-exit-slow: 245ms;
+  --motion-stagger: 30ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  /* ---------------------------------------------------------------------
+     Typography: Geist (semibold) for titles and figures, DM Sans for
+     interface text: the same pairing as the Kardo website. Fraunces stays
+     loaded only as the QR Studio's serif option for frame text.
+     --------------------------------------------------------------------- */
+  --font-display: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --display-weight: 600;
+  /* Resumen header and help texts: the same voices and treatment as the
+     Kardo website (apps/website): Geist semibold with tight tracking for the
+     greeting and title, DM Sans for the lines that support them. */
+  --font-hero: var(--font-display);
+  --hero-weight: 600;
+  --hero-tracking: -0.04em;
+  --font-support: var(--font-sans);
+  --font-sans: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: clamp(2rem, 1.55rem + 1.3vw, 2.625rem);
+  --text-display: clamp(2.75rem, 1.9rem + 3.4vw, 5rem);
+
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.55;
+
+  /* Spacing rhythm on a 4 px grid. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Shell. */
+  --sidebar-width: 16.25rem;
+  --topbar-height: 3.75rem;
+
+  color: var(--text);
+  background: var(--paper);
+  font-family: var(--font-sans);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

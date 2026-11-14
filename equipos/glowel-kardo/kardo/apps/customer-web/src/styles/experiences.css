@@ -1,0 +1,2191 @@
+/* Type picker */
+.type-picker {
+  border: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  margin: 0;
+  padding: 0;
+}
+.type-card {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  cursor: pointer;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.1rem;
+  position: relative;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease;
+}
+.type-card:hover {
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+.type-card input {
+  opacity: 0;
+  position: absolute;
+}
+.type-card:focus-within {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+.type-card-selected {
+  background: var(--mist);
+  border-color: var(--teal);
+  box-shadow: inset 0 3px 0 var(--teal);
+}
+.type-card-icon {
+  align-items: center;
+  background: var(--tint);
+  border-radius: 50%;
+  color: var(--teal);
+  display: inline-flex;
+  height: 2.4rem;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+  width: 2.4rem;
+}
+.type-card-selected .type-card-icon {
+  background: var(--teal);
+  color: var(--paper);
+}
+.type-card small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.new-experience-details {
+  border-top: 4px solid var(--teal);
+}
+
+/* Editor */
+.page-editor {
+  max-width: 80rem;
+}
+.editor-layout {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 22rem);
+}
+.editor-form {
+  border-top: 4px solid var(--teal);
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 0;
+}
+.editor-divider {
+  border-top: 1px solid var(--line);
+  margin: 0.4rem 0;
+}
+.editor-side {
+  display: grid;
+  gap: 1.25rem;
+  position: sticky;
+  top: 1.5rem;
+}
+.editor-side .panel {
+  margin-top: 0;
+}
+.panel-title {
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.8rem;
+}
+/* Name and price side by side while both fit, else the price drops to its
+   own line. It follows the width of the editor it sits in, not the
+   window's: the Estudio's Contenido panel is about 300 px wide even on a
+   wide screen, where a fixed price column left the name 37 px and the two
+   labels overlapped («NombrePrecio», 2026-10-03 study, finding 14). */
+.form-grid-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+.form-grid-item > * {
+  flex: 3 1 12rem;
+  min-width: 0;
+}
+.form-grid-item > :last-child:not(:first-child) {
+  flex: 1 1 7rem;
+}
+
+.repeatable {
+  border: 0;
+  display: grid;
+  gap: 0.7rem;
+  /* A fieldset (and an auto grid track) never shrinks below its content by
+     default: in the Estudio's narrow «Contenido» panel the list grew past
+     the panel and cut the fields on the right (relevo 37, round 3). */
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0.2rem 0 0;
+  min-inline-size: 0;
+  padding: 0;
+}
+.repeatable > legend {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+.repeatable-list,
+.section-list {
+  display: grid;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.repeatable-item {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  padding: 0.8rem 0.9rem 1rem;
+}
+.repeatable-item-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.repeatable-index {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-cool);
+  border-radius: 50%;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 700;
+  height: 1.6rem;
+  justify-content: center;
+  width: 1.6rem;
+}
+.item-controls {
+  display: flex;
+  gap: 0.15rem;
+}
+.item-controls .icon-button {
+  height: 2rem;
+  min-width: 2rem;
+}
+.icon-button-danger:not(:disabled):hover {
+  background: var(--danger-surface);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.rotate-90 {
+  transform: rotate(90deg);
+}
+.section-block {
+  border: 1px solid var(--line-cool);
+  border-left: 3px solid var(--teal);
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+.section-block-header {
+  align-items: end;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.field-settings {
+  border: 1px solid var(--line);
+  display: grid;
+}
+.field-setting {
+  align-items: center;
+  display: flex;
+  font-size: 0.86rem;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 3rem;
+  padding: 0.4rem 0.8rem;
+}
+.field-setting + .field-setting {
+  border-top: 1px solid var(--line);
+}
+.field-setting strong {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+.field-setting select {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  min-height: 2.4rem;
+  padding: 0 0.6rem;
+}
+
+/* Versions */
+.version-list {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.version {
+  border-left: 2px solid var(--line-cool);
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.2rem 0 0.9rem 0.9rem;
+  position: relative;
+}
+.version::before {
+  background: var(--surface);
+  border: 2px solid var(--line-input);
+  border-radius: 50%;
+  content: "";
+  height: 0.65rem;
+  left: -0.4rem;
+  position: absolute;
+  top: 0.35rem;
+  width: 0.65rem;
+}
+.version-live::before {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.version-header {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+.version small {
+  color: var(--text-soft);
+  font-size: 0.75rem;
+}
+.version-failure {
+  align-items: flex-start;
+  color: var(--danger);
+  display: flex;
+  font-size: 0.78rem;
+  gap: 0.3rem;
+  line-height: 1.4;
+  margin: 0.2rem 0 0;
+}
+.version-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  margin-top: 0.2rem;
+}
+.version-empty {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Phone preview (mirrors the public Resolver page). A custom theme (see
+   theme-style.ts) sets the --phone-* custom properties inline; every rule
+   below falls back to the original look when they are unset. */
+.phone-preview {
+  margin: 0;
+}
+.phone-preview figcaption {
+  color: var(--text-soft);
+  font-size: 0.75rem;
+  margin-top: 0.6rem;
+  text-align: center;
+}
+.phone-frame {
+  background: var(--ink);
+  border-radius: 2rem;
+  margin: 0 auto;
+  max-width: 19rem;
+  padding: 0.7rem;
+}
+.phone-screen {
+  background-color: var(--phone-bg-color, var(--paper));
+  background-image: var(--phone-bg-image, none);
+  background-position: center;
+  background-size: cover;
+  border-radius: 1.45rem;
+  color: var(--phone-text, var(--text));
+  display: flex;
+  flex-direction: column;
+  font-family: var(--phone-font, inherit);
+  gap: 0.6rem;
+  max-height: 34rem;
+  min-height: 26rem;
+  overflow-y: auto;
+  padding: 1.6rem 1.1rem 1rem;
+}
+.preview-title {
+  color: inherit;
+  font-size: 1.35rem;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.preview-center {
+  text-align: center;
+}
+.preview-text {
+  color: var(--phone-muted, var(--text-muted));
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.preview-buttons,
+.preview-form {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+.preview-button {
+  align-items: center;
+  background: var(--phone-surface, var(--surface));
+  border: 1px solid var(--phone-surface-line, var(--line-cool));
+  border-radius: var(--phone-radius, 0.6rem);
+  color: inherit;
+  display: flex;
+  font-size: 0.82rem;
+  font-weight: 700;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 2.6rem;
+  overflow-wrap: anywhere;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+}
+.preview-button-primary {
+  background: var(--phone-button-bg, var(--teal));
+  border-color: var(--phone-button-border, var(--teal));
+  color: var(--phone-button-color, var(--paper));
+}
+.preview-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-top: 0.2rem;
+}
+.preview-social {
+  align-items: center;
+  background: var(--phone-surface, var(--surface));
+  border: 1px solid var(--phone-surface-line, var(--line-cool));
+  border-radius: 50%;
+  color: inherit;
+  display: flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+.preview-avatar {
+  align-items: center;
+  align-self: center;
+  background: var(--phone-accent, var(--teal));
+  border: 3px solid var(--surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--aqua);
+  color: var(--paper);
+  display: flex;
+  font-size: 1.6rem;
+  font-weight: 700;
+  height: 4.5rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 4.5rem;
+}
+.preview-avatar-image {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.preview-media {
+  align-items: center;
+  background: var(--mist);
+  border: 1px dashed var(--teal-soft-line);
+  color: var(--teal);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 0.8rem;
+  font-weight: 700;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 14rem;
+  padding: 1rem;
+  text-align: center;
+}
+.preview-media small {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.preview-media-small {
+  flex: 0;
+  min-height: 7rem;
+}
+/* The Imagen Experience's photo, once readable: fills the frame instead of
+   the dashed placeholder. */
+.preview-media-image {
+  border-style: solid;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.preview-media-image img {
+  display: block;
+  height: 100%;
+  min-height: 14rem;
+  object-fit: cover;
+  width: 100%;
+}
+.preview-redirect {
+  align-items: center;
+  color: var(--teal);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  text-align: center;
+}
+.preview-redirect strong {
+  color: var(--ink);
+}
+.preview-redirect p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+.preview-redirect code {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  padding: 0.4rem 0.6rem;
+  word-break: break-all;
+}
+.preview-section h4 {
+  border-bottom: 2px solid var(--teal);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  margin: 0.6rem 0 0.2rem;
+  padding-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+.preview-menu-item {
+  align-items: flex-start;
+  border-bottom: 1px dashed var(--line);
+  display: flex;
+  font-size: 0.82rem;
+  gap: 0.6rem;
+  justify-content: space-between;
+  padding: 0.45rem 0;
+}
+.preview-menu-item-thumb {
+  align-items: center;
+  background: var(--mist);
+  border-radius: 0.75rem;
+  color: var(--teal);
+  display: flex;
+  flex: 0 0 auto;
+  height: 4rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 4rem;
+}
+.preview-menu-item-thumb img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.preview-menu-item-text {
+  flex: 1;
+  min-width: 0;
+}
+.preview-menu-item-meta {
+  flex: 0 0 auto;
+  text-align: right;
+}
+.preview-menu-item small {
+  color: var(--text-muted);
+  display: block;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  margin-top: 0.1rem;
+}
+.preview-menu-item em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.preview-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+}
+.preview-product {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  display: grid;
+  font-size: 0.75rem;
+  gap: 0.2rem;
+  padding: 0.5rem;
+}
+.preview-product-image {
+  align-items: center;
+  aspect-ratio: 1;
+  background: var(--mist);
+  color: var(--teal);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.2rem;
+  overflow: hidden;
+}
+.preview-product-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.preview-product em {
+  color: var(--teal);
+  font-style: normal;
+  font-weight: 700;
+}
+.preview-link {
+  color: var(--teal);
+  font-weight: 700;
+}
+.preview-input {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: 0.4rem;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  padding: 0.65rem 0.7rem;
+}
+.preview-consent {
+  align-items: flex-start;
+  color: var(--text-muted);
+  display: flex;
+  font-size: 0.72rem;
+  gap: 0.45rem;
+  line-height: 1.4;
+}
+.preview-checkbox {
+  border: 1.5px solid var(--line-input);
+  border-radius: 0.2rem;
+  flex: 0 0 auto;
+  height: 0.9rem;
+  margin-top: 0.1rem;
+  width: 0.9rem;
+}
+.preview-footer {
+  color: var(--text-faint);
+  font-size: 0.65rem;
+  margin: auto 0 0;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+/* Documento PDF: the pages, stacked full width like the public page */
+.preview-document-pages {
+  display: grid;
+  gap: 0.6rem;
+}
+.preview-document-page {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  margin: 0;
+  overflow: hidden;
+}
+.preview-document-page img {
+  display: block;
+  width: 100%;
+}
+.preview-document-page-placeholder {
+  aspect-ratio: 3 / 4;
+  align-items: center;
+  background: var(--mist);
+  color: var(--teal);
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1100px) {
+  .editor-layout {
+    grid-template-columns: 1fr;
+  }
+  .editor-side {
+    position: static;
+  }
+}
+@media (max-width: 760px) {
+  .type-picker {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Theme editor (Experiences, Links, org brand) */
+.theme-editor {
+  border: 0;
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+.theme-editor > legend {
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 0;
+}
+.theme-editor-toggle {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+}
+.theme-editor-toggle .field-hint {
+  flex: 1 1 16rem;
+  margin: 0;
+}
+.theme-editor-body {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 1.1rem;
+  padding-top: 0.9rem;
+}
+.theme-editor-group {
+  border: 0;
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+.theme-editor-group > legend {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0;
+}
+.theme-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+.theme-preset {
+  background-position: center;
+  background-size: cover;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 2.3rem;
+  padding: 0;
+  position: relative;
+  transition: transform 120ms ease;
+  width: 2.3rem;
+}
+.theme-preset:hover {
+  transform: translateY(-1px);
+}
+.theme-preset:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+.theme-preset-selected {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px var(--surface);
+}
+.theme-preset-dot {
+  border: 1.5px solid var(--surface);
+  border-radius: 50%;
+  bottom: -1px;
+  height: 0.6rem;
+  position: absolute;
+  right: -1px;
+  width: 0.6rem;
+}
+.theme-color-row {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: 1fr 1fr;
+}
+.theme-color-field {
+  align-items: center;
+  display: flex;
+  gap: 0.55rem;
+}
+.theme-color-field input[type="color"] {
+  block-size: 2.2rem;
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  inline-size: 2.6rem;
+  padding: 0.15rem;
+}
+.theme-color-field code {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+.theme-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.theme-button-sample {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  display: flex;
+  flex-direction: column;
+  font-size: 0.72rem;
+  gap: 0.4rem;
+  padding: 0.55rem 0.75rem;
+}
+.theme-button-sample-selected {
+  border-color: var(--teal);
+  box-shadow: inset 0 0 0 1px var(--teal);
+}
+.theme-button-shape {
+  border-style: solid;
+  border-width: 1.5px;
+  height: 0.85rem;
+  width: 1.7rem;
+}
+.theme-button-shape-pill {
+  border-radius: 999px;
+}
+.theme-button-shape-rounded,
+.theme-button-shape-outline {
+  border-radius: 0.4rem;
+}
+.theme-button-shape-square {
+  border-radius: 0.1rem;
+}
+
+/* Collapsible "Foto" control on a menu item row (keeps the row compact) */
+.item-photo {
+  margin-top: -0.1rem;
+}
+.item-photo > summary {
+  align-items: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 700;
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+}
+.item-photo > summary::marker,
+.item-photo > summary::-webkit-details-marker {
+  display: none;
+}
+.item-photo[open] > summary {
+  color: var(--teal);
+}
+.item-photo-chevron {
+  transition: transform 150ms ease;
+}
+.item-photo[open] .item-photo-chevron {
+  transform: rotate(180deg);
+}
+.item-photo-body {
+  margin-top: 0.4rem;
+  max-width: 22rem;
+}
+
+/* AssetSelect: the select plus a small preview of the chosen image */
+.asset-select-control {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+.asset-select-control select {
+  flex: 1;
+  min-width: 0;
+}
+.asset-select-thumb {
+  align-items: center;
+  background: var(--mist);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  color: var(--teal);
+  display: flex;
+  flex: 0 0 auto;
+  height: 2.4rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 2.4rem;
+}
+.asset-select-thumb img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* ThemeEditor: a bigger preview of the current background photo */
+.theme-bg-image-row {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.6rem;
+}
+.theme-bg-image-row .field {
+  flex: 1;
+  min-width: 0;
+}
+.theme-bg-thumb {
+  align-items: center;
+  background: var(--mist);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  display: flex;
+  flex: 0 0 auto;
+  height: 3.4rem;
+  justify-content: center;
+  margin-top: 1.6rem;
+  overflow: hidden;
+  width: 3.4rem;
+}
+.theme-bg-thumb img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Inline asset upload inside AssetSelect */
+.asset-select-upload {
+  margin-top: 0.5rem;
+}
+.asset-select-dropzone {
+  align-items: center;
+  border: 1px dashed var(--line-input);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  font-size: 0.78rem;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.7rem;
+  text-align: center;
+}
+.asset-select-dropzone:hover,
+.asset-select-dropzone-active {
+  background: var(--tint);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* Documento PDF: pick/drop a PDF, draw its pages, show a real preview and
+   clear progress the whole way (features/experiences/pdf/PdfPagesField.tsx) */
+.pdf-field {
+  display: grid;
+  gap: 0.5rem;
+}
+.pdf-field-dropzone {
+  align-items: center;
+  background: var(--surface);
+  border: 1px dashed var(--line-input);
+  border-radius: var(--radius-m);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  justify-content: center;
+  min-height: 8rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+.pdf-field-dropzone:hover,
+.pdf-field-dropzone-active {
+  background: var(--tint);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.pdf-field-dropzone strong {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: var(--display-weight);
+}
+.pdf-field-dropzone-active strong {
+  color: var(--teal-deep);
+}
+.pdf-field-dropzone span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Shared by the "preparing" and "ready" layouts: a big first-page preview
+   next to the file's details. */
+.pdf-field-working,
+.pdf-field-ready-main {
+  display: flex;
+  gap: 0.85rem;
+}
+.pdf-field-big-preview {
+  align-items: center;
+  background: var(--mist);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  display: flex;
+  flex-shrink: 0;
+  height: 7rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 5.4rem;
+}
+.pdf-field-big-preview img,
+.pdf-field-big-preview-image {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.pdf-field-big-preview svg {
+  color: var(--text-faint);
+}
+.pdf-field-working-info,
+.pdf-field-ready-info {
+  display: grid;
+  gap: 0.4rem;
+  min-width: 0;
+}
+.pdf-field-filename {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: var(--display-weight);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pdf-field-progress {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+}
+.pdf-field-progress-track {
+  background: var(--mist);
+  border-radius: var(--radius-pill);
+  display: block;
+  height: 0.4rem;
+  overflow: hidden;
+  width: 100%;
+}
+.pdf-field-progress-bar {
+  background: var(--teal);
+  border-radius: var(--radius-pill);
+  display: block;
+  height: 100%;
+  transition: width 200ms ease;
+  width: calc(var(--pdf-field-progress, 0) * 100%);
+}
+.pdf-field-progress p {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin: 0;
+}
+.pdf-field-ready {
+  display: grid;
+  gap: 0.6rem;
+}
+.pdf-field-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.pdf-field-thumb {
+  align-items: center;
+  background: var(--mist);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  display: flex;
+  height: 2.6rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 2rem;
+}
+.pdf-field-thumb img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.pdf-field-thumb-more {
+  align-items: center;
+  background: var(--tint);
+  border-radius: var(--radius-s);
+  color: var(--teal);
+  display: flex;
+  font-size: 0.72rem;
+  font-weight: 600;
+  height: 2.6rem;
+  justify-content: center;
+  width: 2rem;
+}
+.pdf-field-ready-meta {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+}
+.pdf-field-ready-meta strong {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+}
+.pdf-field-error {
+  display: grid;
+  gap: 0.6rem;
+}
+.pdf-field-error .field-error {
+  margin: 0;
+}
+.pdf-field-error-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pdf-allow-download {
+  align-items: flex-start;
+  background: var(--tint);
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.75rem 0.9rem;
+}
+.pdf-allow-download input {
+  margin-top: 0.2rem;
+}
+.pdf-allow-download span {
+  display: grid;
+  gap: 0.15rem;
+}
+.pdf-allow-download small {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+/* ===========================================================================
+   Experience workspace (/experiences/:id): compact header, three views
+   (Diseño · Destinos · Historial) and the publish dialog. Container queries
+   keep it balanced with or without the sidebar. Colors come from tokens.
+   =========================================================================== */
+.xpw {
+  --xpw-preview-width: 20rem;
+  container: xpw / inline-size;
+  max-width: 88rem;
+}
+.xpw-loading {
+  max-width: 88rem;
+}
+
+/* Header */
+.xpw-header {
+  align-items: start;
+  display: grid;
+  gap: 0.35rem 1rem;
+  grid-template-areas: "back heading actions";
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  margin-bottom: var(--space-4);
+}
+.xpw-back {
+  background: var(--surface);
+  border-color: var(--line-warm);
+  box-shadow: var(--shadow-xs);
+  color: var(--text-muted);
+  grid-area: back;
+  margin-top: 0.15rem;
+}
+.xpw-back:hover {
+  color: var(--teal-deep);
+}
+.xpw-heading {
+  grid-area: heading;
+  min-width: 0;
+}
+.xpw-kicker {
+  align-items: center;
+  color: var(--teal);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.35rem;
+  margin: 0 0 0.2rem;
+}
+.xpw-title-row {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.xpw-title-row h1 {
+  font-size: var(--text-2xl);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xpw-rename-trigger {
+  color: var(--text-faint);
+  flex: 0 0 auto;
+  height: 2rem;
+  min-width: 2rem;
+}
+.xpw-rename-trigger:not(:disabled):hover {
+  color: var(--teal-deep);
+}
+.xpw-rename {
+  align-items: center;
+  display: flex;
+  gap: 0.35rem;
+  max-width: 34rem;
+}
+.xpw-rename-input {
+  background: var(--surface);
+  border: 1px solid var(--teal);
+  border-radius: var(--radius-m);
+  box-shadow: 0 0 0 3px var(--focus-halo);
+  color: var(--ink);
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+  min-height: 2.6rem;
+  min-width: 0;
+  outline: none;
+  padding: 0 0.7rem;
+}
+.xpw-rename-done {
+  color: var(--teal);
+  flex: 0 0 auto;
+}
+.xpw-meta {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  gap: 0.35rem 0.75rem;
+  margin: 0.45rem 0 0;
+}
+.xpw-meta-item {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.xpw-meta-live {
+  color: var(--tone-success-text);
+  font-weight: 600;
+}
+.xpw-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.4rem;
+  grid-area: actions;
+}
+.xpw-more {
+  background: var(--surface);
+  border-color: var(--line-input);
+  box-shadow: var(--shadow-xs);
+}
+
+/* View tabs: a segmented control with its own URLs */
+.xpw-tabs {
+  background: color-mix(in srgb, var(--mist) 45%, var(--surface));
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: var(--space-5);
+  padding: 3px;
+}
+.xpw-tab {
+  align-items: center;
+  border-radius: calc(var(--radius-l) - 3px);
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.45rem;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  position: relative;
+  text-decoration: none;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+a.xpw-tab:not([aria-current="page"]):hover {
+  background: var(--teal-wash);
+  color: var(--ink);
+}
+.xpw-tab[aria-current="page"],
+.xpw-tab[data-selected] {
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+}
+/* Contenido | Estilo inside Diseño: same segmented control, no bottom gap. */
+.xpw-mode {
+  margin-bottom: 0;
+}
+button.xpw-tab {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+button.xpw-tab:not([data-selected]):hover {
+  background: var(--teal-wash);
+  color: var(--ink);
+}
+.xpw-tab[aria-disabled="true"] {
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+.xpw-tab-count {
+  background: var(--teal-wash-strong);
+  border-radius: var(--radius-pill);
+  color: var(--teal-deep);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  min-width: 1.25rem;
+  padding: 0.2rem 0.4rem;
+  text-align: center;
+}
+.xpw-tab[aria-current="page"] .xpw-tab-count {
+  background: var(--ink);
+  color: var(--paper);
+}
+.xpw-tab-dot {
+  background: var(--tone-warning-accent);
+  border-radius: 50%;
+  height: 0.4rem;
+  position: absolute;
+  right: 0.35rem;
+  top: 0.35rem;
+  width: 0.4rem;
+}
+.xpw > .notice {
+  margin-bottom: var(--space-4);
+}
+/* The save bar sits under the main column instead of over the preview. */
+.xpw > .unsaved-bar {
+  margin-left: 0;
+  max-width: min(46rem, 100%);
+}
+.xpw-view {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+}
+
+/* Section headings inside the views (Geist, compact) */
+.xpw-section-head {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: var(--space-4);
+}
+.xpw-section-title {
+  font-size: var(--text-lg);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0;
+}
+.xpw-section-note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 44rem;
+}
+
+/* Diseño: editor and live preview side by side */
+.xpw-design {
+  align-items: start;
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr) var(--xpw-preview-width);
+}
+.xpw .panel {
+  margin-top: 0;
+}
+/* Diseño of a designable type: just the door to the Estudio (no form) */
+.xpw-gateway {
+  display: grid;
+  gap: var(--space-3);
+}
+.xpw-gateway .es-entry {
+  margin-bottom: 0;
+}
+/* «Editar productos»: the dishes and prices without opening the design. */
+.xpw-items {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+}
+.xpw-items .xpw-section-note {
+  margin: 0;
+}
+/* Inside a dialog the form inputs' own padding wins over the quick editor's
+   room for its «$»: give it back. */
+.edit-items .fs-price .input {
+  padding-left: 1.5rem;
+}
+.xpw-editor.editor-form {
+  background:
+    linear-gradient(90deg, var(--teal), var(--aqua)) top left / 100% 3px
+    no-repeat,
+    var(--surface);
+  border-top: 1px solid var(--line-warm);
+  gap: 1rem;
+}
+.xpw-editor-head {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 2.25rem;
+}
+.xpw-editor.editor-form .xpw-editor-note {
+  margin-top: -0.7rem;
+}
+.xpw-preview-toggle {
+  display: none;
+  flex: 0 0 auto;
+}
+.xpw-preview {
+  display: grid;
+  gap: 0.6rem;
+  position: sticky;
+  top: calc(var(--topbar-height) + 1rem);
+}
+.xpw-preview-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+/* Destinos */
+.xpw-targets {
+  align-items: start;
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+}
+.xpw-targets-side {
+  display: grid;
+  gap: var(--space-4);
+}
+.xpw .target-list,
+.xpp .target-list {
+  border-color: var(--line-warm);
+  border-radius: 0 0 var(--radius-m) var(--radius-m);
+  max-height: 24rem;
+}
+.xpw .target-group > .target-list:first-child,
+.xpp .target-group > .target-list:first-child,
+.xpw .target-group-title + .target-list,
+.xpp .target-group-title + .target-list {
+  border-radius: var(--radius-m);
+}
+.xpw .target-group-header,
+.xpp .target-group-header {
+  border-color: var(--line-warm);
+  border-left-color: var(--teal);
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+}
+.xpw .target-row-checked,
+.xpp .target-row-checked {
+  background: var(--teal-wash);
+}
+.xpp .xpp-picker .target-list {
+  max-height: 16rem;
+}
+.xpw .target-group-title,
+.xpp .target-group-title {
+  font-size: var(--text-xs);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.xpw .target-picker legend,
+.xpp .target-picker legend {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.xpw-status-bar {
+  background: var(--paper);
+  border-radius: var(--radius-pill);
+  display: flex;
+  gap: 2px;
+  height: 0.6rem;
+  overflow: hidden;
+}
+.xpw-status-segment {
+  min-width: 0.6rem;
+}
+.xpw-status-live {
+  background: var(--tone-success-accent);
+}
+.xpw-status-publishing {
+  background: var(--tone-info-accent);
+}
+.xpw-status-waiting {
+  background: var(--teal-soft-line);
+}
+.xpw-status-failed {
+  background: var(--tone-danger-accent);
+}
+.xpw-status-overridden {
+  background: var(--text-faint);
+}
+.xpw-status-legend {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  gap: 0.35rem 1rem;
+  list-style: none;
+  margin: 0.7rem 0 0.4rem;
+  padding: 0;
+}
+.xpw-status-legend li {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  gap: 0.35rem;
+}
+.xpw-status-legend strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+}
+.xpw-status-swatch {
+  border-radius: 50%;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+.xpw-status-list {
+  display: grid;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  max-height: 22rem;
+  overflow-y: auto;
+  padding: 0;
+}
+.xpw-status-list li {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.6rem 0;
+}
+.xpw-status-row {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+  min-width: 0;
+}
+.xpw-status-row .status-badge {
+  flex: 0 0 auto;
+}
+.xpw-status-row a {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+.xpw-status-row a:hover {
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+.xpw-status-list small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.xpw-empty-note {
+  align-items: flex-start;
+  color: var(--text-muted);
+  display: flex;
+  font-size: var(--text-sm);
+  gap: 0.5rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.xpw-empty-note .icon {
+  color: var(--teal);
+  margin-top: 0.15rem;
+}
+.xpw-rule {
+  background: color-mix(in srgb, var(--mist) 40%, var(--surface));
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 1rem 1.1rem;
+}
+.xpw-rule-icon {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+.xpw-rule h3 {
+  font-size: var(--text-sm);
+  margin: 0 0 0.25rem;
+}
+.xpw-rule p {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Historial: timeline + preview of the selected version */
+.xpw-history {
+  align-items: start;
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: minmax(0, 1fr) var(--xpw-preview-width);
+}
+.xpw-versions .version {
+  padding-bottom: 0.7rem;
+}
+.version-select {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-m);
+  color: inherit;
+  display: grid;
+  gap: 0.2rem;
+  margin: -0.2rem 0 0 -0.1rem;
+  padding: 0.45rem 0.6rem;
+  text-align: left;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+  width: 100%;
+}
+.version-select:hover {
+  background: var(--surface-hover);
+}
+.version-selected > .version-select {
+  background: var(--teal-wash);
+  border-color: var(--teal-soft-line);
+}
+.version-select small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.xpw-versions .version-actions,
+.xpw-versions .version-failure {
+  padding-left: 0.6rem;
+}
+.version-draft::before {
+  background: var(--surface);
+  border-color: var(--tone-warning-accent);
+  border-style: dashed;
+}
+
+/* Medium containers (e.g. ~1054 px with the sidebar): slimmer preview */
+@container xpw (max-width: 60rem) {
+  /* A container cannot style itself: the width goes on the view grids. */
+  .xpw-design,
+  .xpw-history {
+    --xpw-preview-width: 15.5rem;
+    gap: var(--space-4);
+  }
+  .xpw .phone-frame {
+    border-radius: 1.75rem;
+    max-width: 15.5rem;
+    padding: 0.55rem;
+  }
+  .xpw .phone-screen {
+    max-height: 30rem;
+    min-height: 22rem;
+  }
+  .xpw-targets {
+    gap: var(--space-4);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+}
+
+/* Narrow containers (phones): one column, preview behind a toggle */
+@container xpw (max-width: 40rem) {
+  .xpw-header {
+    grid-template-areas:
+      "back actions"
+      "heading heading";
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .xpw-actions {
+    justify-content: flex-end;
+  }
+  .xpw-title-row h1 {
+    font-size: var(--text-xl);
+    white-space: normal;
+  }
+  .xpw-tabs {
+    display: flex;
+  }
+  .xpw-tab {
+    flex: 1;
+    padding: 0 0.5rem;
+  }
+  .xpw-design,
+  .xpw-history {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .xpw-preview-toggle {
+    display: inline-flex;
+  }
+  .xpw-design .xpw-preview {
+    display: none;
+    position: static;
+  }
+  .xpw-design[data-preview="open"] .xpw-preview {
+    display: grid;
+  }
+  .xpw-design[data-preview="open"] .xpw-editor > :not(.xpw-editor-head) {
+    display: none;
+  }
+  .xpw-history .xpw-preview {
+    position: static;
+  }
+  .xpw-targets {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .xpw .phone-frame {
+    max-width: 17rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Publish dialog
+   --------------------------------------------------------------------------- */
+.xpp {
+  display: grid;
+  gap: 0.85rem;
+}
+.xpp-step {
+  align-items: center;
+  color: var(--text-note);
+  display: flex;
+  font-size: var(--text-sm);
+  gap: 0.55rem;
+  margin: 0;
+}
+.xpp-step-icon {
+  align-items: center;
+  background: var(--tone-warning-surface);
+  border: 1px solid var(--tone-warning-line);
+  border-radius: 50%;
+  color: var(--tone-warning-text);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1.75rem;
+  justify-content: center;
+  width: 1.75rem;
+}
+.xpp-label {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: 0;
+}
+.xpp-where {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+}
+.xpp-where-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.xpp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.xpp-chips li {
+  align-items: center;
+  background: var(--tint);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-pill);
+  color: var(--teal-deep);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.35rem;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.3rem 0.65rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xpp-chips .xpp-chip-more {
+  background: var(--paper);
+  border-color: var(--line);
+  color: var(--text-muted);
+}
+.xpp-picker {
+  display: grid;
+  gap: 0.6rem;
+}
+.xpp-note {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.xpp-empty {
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px dashed var(--line-input);
+  border-radius: var(--radius-l);
+  color: var(--teal);
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+.xpp-empty strong {
+  color: var(--ink);
+  display: block;
+  font-size: var(--text-sm);
+}
+.xpp-empty p {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0.25rem 0 0.2rem;
+}
+/* No Touchpoint yet: the first QR is created right in the dialog
+   (relevo 31, finding 1). */
+.xpp-quick-qr {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-l);
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+.xpp-quick-qr-lead {
+  align-items: flex-start;
+  color: var(--teal);
+  display: flex;
+  gap: 0.75rem;
+  margin: 0 0 0.25rem;
+}
+.xpp-quick-qr-lead strong {
+  color: var(--ink);
+  display: block;
+  font-size: var(--text-sm);
+}
+.xpp-quick-qr-lead span {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+.xpp-quick-qr label {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.xpp-quick-qr-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.xpp-quick-qr-row .button {
+  flex: none;
+}
+
+/* ---------------------------------------------------------------------------
+   New Experience: type and name, then straight to Diseño
+   --------------------------------------------------------------------------- */
+.xpn {
+  max-width: 64rem;
+}
+.xpn .page-header {
+  margin-bottom: var(--space-6);
+}
+.xpn-steps {
+  margin: calc(var(--space-6) * -1 + var(--space-2)) 0 var(--space-5);
+}
+.xpn-form {
+  display: grid;
+  gap: var(--space-5);
+}
+.xpn-types {
+  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
+}
+.xpn-types .type-card {
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-xs);
+}
+.xpn-types .type-card-selected {
+  box-shadow:
+    inset 0 0 0 1px var(--teal),
+    var(--shadow-sm);
+}
+.xpn-types .type-card-icon {
+  border-radius: var(--radius-m);
+}
+.xpn-details.panel {
+  align-items: end;
+  background:
+    linear-gradient(90deg, var(--teal), var(--aqua)) top left / 100% 3px
+    no-repeat,
+    var(--surface);
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 0;
+}
+.xpn-actions {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: end;
+}
+.xpn-actions-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+.xpn-actions .form-note {
+  font-size: var(--text-xs);
+  margin: 0;
+  text-align: right;
+}
+@media (max-width: 760px) {
+  /* Compact rows on phones: icon beside the name and description. */
+  .xpn-types .type-card {
+    align-items: start;
+    column-gap: 0.85rem;
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 0.85rem 0.95rem;
+  }
+  .xpn-types .type-card-icon {
+    grid-row: span 2;
+    margin: 0;
+  }
+  .xpn-details.panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .xpn-actions {
+    justify-items: stretch;
+  }
+  .xpn-actions-buttons {
+    flex-direction: column-reverse;
+  }
+  .xpn-actions-buttons .button {
+    justify-content: center;
+    width: 100%;
+  }
+  .xpn-actions .form-note {
+    text-align: left;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Experiences list
+   --------------------------------------------------------------------------- */
+.xpl {
+  container: xpl / inline-size;
+}
+.xpl .page-header {
+  margin-bottom: var(--space-6);
+}
+.xpl-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: var(--space-4);
+}
+.xpl-filters .segment {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.4rem;
+}
+.xpl-filter-count {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+}
+.segment-current .xpl-filter-count {
+  color: var(--ink-text-soft);
+}
+.xpl-search {
+  flex: 1 1 12rem;
+  position: relative;
+}
+.xpl-search input {
+  padding-left: 2.2rem;
+}
+.xpl-search-icon {
+  color: var(--text-faint);
+  left: 0.75rem;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.xpl-selects {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  margin: 0;
+}
+.xpl-selects select {
+  font-size: var(--text-sm);
+  max-width: 12rem;
+  min-height: 2.5rem;
+}
+.xpl-panel.panel {
+  margin-top: 0;
+  padding: 0.4rem;
+}
+.xpl-list {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.xpl-row {
+  align-items: center;
+  border-radius: var(--radius-m);
+  display: flex;
+  gap: 0.2rem;
+  padding-right: 0.35rem;
+}
+.xpl-row + .xpl-row {
+  border-top: 1px solid var(--line);
+}
+.xpl-link {
+  align-items: center;
+  border-radius: var(--radius-m);
+  color: inherit;
+  display: grid;
+  flex: 1;
+  gap: 1rem;
+  grid-template-columns:
+    auto minmax(0, 1fr) minmax(0, 13.5rem) minmax(0, 12.5rem)
+    auto;
+  min-width: 0;
+  padding: 0.8rem 0.6rem;
+  text-decoration: none;
+  transition: background-color var(--motion-fast) var(--ease-out);
+}
+.xpl-link:hover {
+  background: var(--surface-hover);
+}
+.xpl-icon {
+  align-items: center;
+  background: var(--tint);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+}
+.xpl-main {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.xpl-main strong,
+.xpl-main small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xpl-main strong {
+  font-weight: 600;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.xpl-main small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}
+.xpl-reach {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  gap: 0.4rem;
+  min-width: 0;
+}
+.xpl-reach > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xpl-reach-live {
+  color: var(--tone-success-text);
+  font-weight: 600;
+}
+.xpl-reach-none {
+  color: var(--text-faint);
+}
+.xpl-status {
+  display: flex;
+  min-width: 0;
+}
+.xpl-chevron {
+  color: var(--text-faint);
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+.xpl-link:hover .xpl-main strong {
+  color: var(--teal);
+}
+.xpl-link:hover .xpl-chevron {
+  color: var(--teal);
+  transform: translateX(3px);
+}
+.xpl-empty .empty-state {
+  margin-top: 0;
+}
+
+@container xpl (max-width: 52rem) {
+  .xpl-link {
+    gap: 0.35rem 0.8rem;
+    grid-template-areas:
+      "icon main status chevron"
+      "icon reach reach chevron";
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+  .xpl-icon {
+    align-self: start;
+    grid-area: icon;
+  }
+  .xpl-main {
+    grid-area: main;
+  }
+  .xpl-reach {
+    grid-area: reach;
+  }
+  .xpl-status {
+    grid-area: status;
+  }
+  .xpl-chevron {
+    grid-area: chevron;
+  }
+}
+@container xpl (max-width: 30rem) {
+  .xpl-link {
+    grid-template-areas:
+      "icon main"
+      "icon reach"
+      "icon status";
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 0.75rem 0.4rem;
+  }
+  .xpl-chevron {
+    display: none;
+  }
+  .xpl-filters {
+    display: flex;
+    width: 100%;
+  }
+  .xpl-filters .segment {
+    flex: 1;
+    justify-content: center;
+    padding: 0 0.35rem;
+  }
+  .xpl-filter-count {
+    display: none;
+  }
+  .xpl-selects,
+  .xpl-selects label,
+  .xpl-selects select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
+/* Documento PDF, step 2: the file comes first and spans the form, with a
+   larger drop zone and page preview than inside the editor. */
+.xpn-file {
+  grid-column: 1 / -1;
+}
+.xpn-file .pdf-field-big-preview {
+  height: 15rem;
+  width: 11rem;
+}
+.xpn-file .pdf-field-thumb {
+  height: 3.6rem;
+  width: 2.7rem;
+}
+@media (max-width: 40rem) {
+  .xpn-file .pdf-field-big-preview {
+    height: 11rem;
+    width: 8rem;
+  }
+}
+
+/* «Dónde se ve» at the door of the Estudio (relevo 37, S11). */
+.xpw-where {
+  display: grid;
+  gap: 0.45rem;
+}
+.xpw-where-title {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight, 600);
+  margin: 0;
+}
+.xpl-sample {
+  color: var(--tone-warning-text);
+}
+.type-card-pick {
+  color: var(--teal);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+}
+
+/* Which product this card edits (relevo 37, round 3: Javier uploaded a
+   photo to the wrong bread; the card only showed its number). */
+.repeatable-name {
+  flex: 1;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

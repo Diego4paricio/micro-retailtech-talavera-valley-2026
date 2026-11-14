@@ -1,0 +1,55 @@
+{
+  "source": "../fuentes/negocio-hotel.png",
+  "output": "../../../public/media/hotel.webp",
+  "outputWidth": 1200,
+  "patches": [
+    {
+      "brand": {
+        "cx": 898.0,
+        "cy": 780.6,
+        "ex": [0.9989, -0.04316],
+        "ey": [0.1291, 0.99171],
+        "scale": 1,
+        "box": [862, 603],
+        "soften": 0.7,
+        "items": [
+          {
+            "type": "icon",
+            "x": 431,
+            "y": 140,
+            "size": 84,
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 431,
+            "y": 300,
+            "text": "Casa Jacaranda",
+            "fontFamily": "Georgia",
+            "fontWeight": 700,
+            "fontSize": 84,
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 431,
+            "y": 372,
+            "text": "Guía del huésped",
+            "fontFamily": "Optima",
+            "fontSize": 42,
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 431,
+            "y": 470,
+            "text": "Acerca tu celular",
+            "fontFamily": "Optima",
+            "fontSize": 32,
+            "color": "#52646D"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,627 @@
+/* Resumen widget bodies: the KPI card and every chart drawn in
+   `features/overview/widgets/**`. Every selector is prefixed `kw-` so it
+   never collides with the grid's own `dashboard.css` / `overview.css`.
+   Structural rules (`chart-plot`, `chart-svg`, `chart-grid`, `chart-line`,
+   `chart-column-*`, `chart-tooltip`, `chart-legend-*`, `sparkline`…) come
+   from `charts.css` and are reused as-is. */
+
+/* ---------------------------------------------------------------------------
+   The landing's validated 5-tone teal ramp (`AnalyticsPreview`), for the
+   heatmap and the hour-of-day strip. Declared here as tokens, not inlined,
+   even though the JS side (`widgets/charts/shapes.ts`) also knows the exact
+   hex values — the ramp is the one deliberate exception to "colors only from
+   tokens.css" the brief calls out.
+   --------------------------------------------------------------------------- */
+:root {
+  --kw-heat-1: #74b9c0;
+  --kw-heat-2: #3f9ca6;
+  --kw-heat-3: #1b8490;
+  --kw-heat-4: #0a6c78;
+  --kw-heat-5: #064d56;
+}
+
+/* ---------------------------------------------------------------------------
+   Layout: a widget body fills exactly the box the grid gives it (rowHeight
+   64 px, margin 16 px, minus the titled frame's ~52 px header) — measured by
+   `useMeasuredSize`, never a fixed height that could overflow it.
+   --------------------------------------------------------------------------- */
+.kw-fill-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.kw-fill {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+}
+/* `.chart-hint` (charts.css) reserves ~2.9em for two lines of hint text —
+   sized for a full analytics panel. A grid widget can be far shorter than
+   that (a preview is ~160 px total), so here the live readout wraps instead
+   of permanently starving the chart of the height it needs. */
+/* On the board the tooltip already reads each point out: the hint and live
+   readout stay for screen readers only, and the chart keeps every pixel. */
+.kw-fill-col .chart-hint {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ---------------------------------------------------------------------------
+   Empty / unavailable states, shared prose.
+   --------------------------------------------------------------------------- */
+.kw-empty {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  margin: 0;
+}
+.kw-empty-good {
+  color: var(--tone-success-text);
+}
+.kw-empty-block {
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+}
+.kw-empty-block p {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  margin: 0;
+}
+.kw-widget-foot {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  margin: 0.6rem 0 0;
+}
+.kw-widget-foot a {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------------
+   Inline legend: channel or series colors above a chart — never color alone.
+   --------------------------------------------------------------------------- */
+.kw-inline-legend {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+.kw-inline-legend li {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  gap: 0.35rem;
+}
+.kw-swatch {
+  border-radius: 3px;
+  display: inline-block;
+  height: 0.6rem;
+  width: 0.6rem;
+}
+.kw-swatch-taps {
+  background: var(--teal);
+}
+.kw-swatch-clicks {
+  background: var(--aqua);
+}
+
+/* ---------------------------------------------------------------------------
+   Dark tooltip — the landing's bar-chart tooltip (`AnalyticsPreview`, `--ink`
+   surface), used by every bar chart styled after it (trend bars, channels by
+   day, channel interaction, hours, weekday…).
+   --------------------------------------------------------------------------- */
+.kw-dark-tooltip {
+  animation: fade-in var(--motion-fast) var(--ease-out) both;
+  background: var(--ink);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-md);
+  color: var(--ink-text-soft);
+  display: grid;
+  font-size: var(--text-xs);
+  gap: 0.3rem;
+  min-width: 8.5rem;
+  padding: 0.55rem 0.7rem;
+  pointer-events: none;
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 12px));
+  transition:
+    left var(--motion-fast) var(--ease-out),
+    top var(--motion-fast) var(--ease-out);
+  white-space: nowrap;
+  z-index: 5;
+}
+.kw-dark-tooltip-start {
+  transform: translate(-8%, calc(-100% - 12px));
+}
+.kw-dark-tooltip-end {
+  transform: translate(-92%, calc(-100% - 12px));
+}
+.kw-dark-tooltip-title {
+  color: var(--ink-text-faint);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.kw-dark-tooltip-row {
+  align-items: center;
+  color: var(--ink-text-soft);
+  display: flex;
+  gap: 0.4rem;
+}
+.kw-dark-tooltip-row strong {
+  color: #fff;
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+.kw-dark-tooltip-swatch {
+  border-radius: 2px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+.kw-dark-tooltip-swatch-nfc {
+  background: var(--teal);
+}
+.kw-dark-tooltip-swatch-qr {
+  background: var(--aqua);
+}
+.kw-dark-tooltip-swatch-link {
+  background: var(--ink-text-bright);
+}
+.kw-dark-tooltip-note {
+  color: var(--ink-text-faint);
+  font-size: var(--text-2xs);
+}
+
+/* ---------------------------------------------------------------------------
+   Channel donut — the Resumen's original `ChannelSplitChart`, restored, now
+   sized by `donut-layout.ts` from the box the grid actually measures
+   (`useMeasuredSize`): the ring's own pixel diameter comes as an inline
+   style, and this stylesheet only places the legend beside it or below it
+   (`data-legend`) and shrinks it (`data-legend-compact`) — it never has to
+   guess a breakpoint, so the pair fits the catalog's 3×4 minimum, the 8×7
+   maximum and every gallery/editor preview box alike.
+   --------------------------------------------------------------------------- */
+.kw-channels {
+  align-items: center;
+  display: flex;
+  gap: 1.25rem;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+.kw-channels[data-legend="below"] {
+  flex-direction: column;
+  justify-content: center;
+}
+.kw-donut {
+  flex: 0 0 auto;
+}
+.kw-donut-segment {
+  animation: kw-donut-sweep var(--motion-deliberate) var(--ease-out) both;
+}
+@keyframes kw-donut-sweep {
+  from {
+    stroke-dasharray: 0 var(--kw-circ);
+  }
+}
+.kw-donut-total {
+  fill: var(--ink);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+}
+.kw-donut-caption {
+  fill: var(--text-soft);
+  font-family: var(--font-sans);
+  font-size: 10px;
+}
+.kw-donut-legend {
+  display: grid;
+  flex: 1 1 9rem;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.kw-channels[data-legend="below"] .kw-donut-legend {
+  flex: 0 1 auto;
+  width: 100%;
+}
+.kw-donut-legend li {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  font-size: var(--text-sm);
+  gap: 0.5rem;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  min-width: 0;
+  padding: 0.4rem 0;
+}
+.kw-donut-legend li:last-child {
+  border-bottom: 0;
+}
+.kw-donut-legend-label {
+  color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kw-donut-legend strong {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.kw-donut-legend-value {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.75rem;
+  text-align: right;
+}
+/* Tight box: drop the count column and shrink the type (`donut-layout.ts`
+   decided there still is room for a legend, just not the full one). */
+.kw-channels[data-legend-compact] .kw-donut-legend li {
+  font-size: var(--text-2xs);
+  gap: 0.4rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0.2rem 0;
+}
+/* Fewer legend rows fit than channels exist: the rest fold into one line,
+   never spilling a fourth row past the measured box. */
+.kw-donut-legend-more {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  padding: 0.2rem 0 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Bar ranking — the Resumen's original `RankingList`, as the whole widget
+   body instead of a table (`ranking`, `experienceTypes`, `channels` bars).
+   --------------------------------------------------------------------------- */
+.kw-rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0;
+}
+.kw-rank-row {
+  font-size: var(--text-sm);
+}
+.kw-rank-head {
+  align-items: baseline;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 0.3rem;
+}
+.kw-rank-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.kw-rank-name a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.kw-rank-name a:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+.kw-rank-meta {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  margin-left: 0.4rem;
+}
+.kw-rank-value {
+  color: var(--text-soft);
+  flex: 0 0 auto;
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.kw-rank-value strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.kw-rank-share {
+  margin-left: 0.3rem;
+}
+.kw-rank-track {
+  background: var(--paper);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px var(--line);
+  height: 0.4rem;
+  overflow: hidden;
+}
+.kw-rank-fill {
+  animation: grow-right var(--motion-deliberate) var(--ease-out) both;
+  background: linear-gradient(90deg, var(--teal), var(--aqua));
+  border-radius: inherit;
+  height: 100%;
+  transform-origin: left center;
+  transition: width var(--motion-base) var(--ease-standard);
+}
+
+/* ---------------------------------------------------------------------------
+   Weekday × hour heatmap — the Resumen's original `WeekdayHeatmap`, recolored
+   with the landing's 5-tone ramp.
+   --------------------------------------------------------------------------- */
+.kw-heatmap-frame {
+  overflow: hidden;
+  padding: 0.15rem 0 0.3rem;
+}
+.kw-heatmap {
+  display: grid;
+  gap: 3px;
+  grid-template-columns: 2.4rem repeat(24, minmax(0, 1fr));
+  grid-template-rows: auto repeat(7, minmax(0, 1fr));
+  height: 100%;
+}
+/* Gallery/editor preview: rows are only a few pixels tall there, too short
+   for any day label, so the label column collapses and the 24 hour cells
+   take the whole width. Screen readers still get the full table. */
+.kw-heatmap-preview {
+  grid-template-columns: 0 repeat(24, minmax(0, 1fr));
+}
+.kw-heatmap-preview .kw-heatmap-day {
+  overflow: hidden;
+  visibility: hidden;
+}
+.kw-heatmap-hour,
+.kw-heatmap-day {
+  align-items: center;
+  color: var(--text-soft);
+  display: flex;
+  font-size: var(--text-2xs);
+  justify-content: center;
+}
+.kw-heatmap-day {
+  font-weight: 600;
+  justify-content: flex-start;
+}
+.kw-heat-cell {
+  animation: fade-in var(--motion-base) var(--ease-out) both;
+  border: 0;
+  border-radius: 3px;
+  display: block;
+  min-height: 0.55rem;
+  padding: 0;
+  transition:
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+.kw-heat-cell-empty {
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.kw-heat-cell-active {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--teal);
+  position: relative;
+  transform: scale(1.08);
+  z-index: 1;
+}
+.kw-heatmap-footer {
+  align-items: flex-start;
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+.kw-heat-scale {
+  align-items: center;
+  color: var(--text-soft);
+  display: inline-flex;
+  font-size: var(--text-2xs);
+  gap: 0.4rem;
+}
+.kw-heat-scale-ramp {
+  background: linear-gradient(
+    90deg,
+    var(--kw-heat-1),
+    var(--kw-heat-2),
+    var(--kw-heat-3),
+    var(--kw-heat-4),
+    var(--kw-heat-5)
+  );
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  height: 0.5rem;
+  width: 5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Hour-of-day strip — the landing's "Actividad por hora".
+   --------------------------------------------------------------------------- */
+.kw-strip-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.kw-strip {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.kw-strip-cell {
+  background: var(--paper);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  height: 1.7rem;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+.kw-strip-cell-active {
+  box-shadow:
+    0 0 0 2px var(--surface),
+    0 0 0 4px var(--teal);
+  transform: scaleY(1.15);
+}
+.kw-strip-axis {
+  color: var(--text-soft);
+  display: flex;
+  font-size: var(--text-2xs);
+  justify-content: space-between;
+}
+
+/* ---------------------------------------------------------------------------
+   Funnel: accesses → clicks → leads, decreasing bars.
+   --------------------------------------------------------------------------- */
+.kw-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  height: 100%;
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.kw-funnel-head {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.3rem;
+}
+.kw-funnel-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.kw-funnel-value {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--display-weight);
+}
+.kw-funnel-track {
+  background: var(--paper);
+  border-radius: var(--radius-m);
+  box-shadow: inset 0 0 0 1px var(--line);
+  height: 1.5rem;
+  overflow: hidden;
+}
+.kw-funnel-fill {
+  animation: grow-right var(--motion-deliberate) var(--ease-out) both;
+  background: linear-gradient(90deg, var(--teal), var(--aqua));
+  border-radius: inherit;
+  height: 100%;
+  transform-origin: left center;
+  transition: width var(--motion-base) var(--ease-standard);
+}
+.kw-funnel-note {
+  color: var(--text-soft);
+  font-size: var(--text-2xs);
+  margin: 0.3rem 0 0;
+}
+/* Gallery/editor preview: three steps in a much shorter box — drop the
+   secondary "% del paso anterior" line and tighten the rhythm. */
+.kw-funnel-compact {
+  gap: 0.4rem;
+  justify-content: space-between;
+}
+.kw-funnel-compact .kw-funnel-head {
+  margin-bottom: 0.15rem;
+}
+.kw-funnel-compact .kw-funnel-value {
+  font-size: var(--text-sm);
+}
+.kw-funnel-compact .kw-funnel-track {
+  height: 0.8rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Silent touchpoints list.
+   --------------------------------------------------------------------------- */
+.kw-silent {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  overflow-y: auto;
+  padding: 0;
+}
+.kw-silent li {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  font-size: var(--text-sm);
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+.kw-silent li:last-child {
+  border-bottom: 0;
+}
+.kw-silent a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+.kw-silent a:hover {
+  color: var(--teal);
+  text-decoration: underline;
+}
+.kw-silent-kind {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+}
+
+/* ---------------------------------------------------------------------------
+   KPI cards on the board: the figure never gets cut. Whether the sparkline
+   itself shows is decided in JS (`KpiWidget`, from `widget.w` — 2 board
+   columns or narrower drops it, in every breakpoint alike); this container
+   query is only the last-resort safety net for a card squeezed narrower
+   than its content needs (a phone, or the sidebar open on a small laptop),
+   so the figure is never the thing that gets clipped.
+   --------------------------------------------------------------------------- */
+.db-widget-bare .kd-kpi-card {
+  container-type: inline-size;
+}
+.db-widget-bare .kd-kpi-body .sparkline {
+  flex: 0 1 80px;
+  min-width: 48px;
+}
+.db-widget-bare .status-card .kd-kpi-value {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+@container (max-width: 140px) {
+  .db-widget-bare .kd-kpi-body .sparkline {
+    display: none;
+  }
+}

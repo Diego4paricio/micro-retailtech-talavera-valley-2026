@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "kardo-poa-test-assets",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "workers_dev": true,
+  "vars": { "KARDO_ENV": "test", "CUSTOMER_APP_ORIGIN": "http://localhost:5173,http://localhost:5175,https://kardo-app-dev.pages.dev" },
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "r2_buckets": [
+    { "binding": "ORIGINALS", "bucket_name": "kardo-poa-test-originals" },
+    { "binding": "PUBLISHED_SNAPSHOTS", "bucket_name": "kardo-poa-test-published" }
+  ]
+}

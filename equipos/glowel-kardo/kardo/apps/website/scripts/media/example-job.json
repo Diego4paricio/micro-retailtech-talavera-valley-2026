@@ -1,0 +1,16 @@
+{
+  "source": "fuentes/hero-nuevo.png",
+  "output": "../../public/media/hero.webp",
+  "outputWidth": 1920,
+  "patches": [
+    {
+      "symbol": {
+        "cx": 963,
+        "cy": 696,
+        "scale": 3.82,
+        "squash": 0.47,
+        "glow": { "sigma": 14, "strength": 0.8 }
+      }
+    }
+  ]
+}

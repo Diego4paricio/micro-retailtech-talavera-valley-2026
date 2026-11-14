@@ -35,6 +35,6 @@ Los **dueños de comercios locales y cadenas pequeñas** (y distribuidores/aliad
 
 ## Ligas
 
-- Código: https://github.com/Weentl/Kardo *(repositorio principal del proyecto)*
+- Código: [./kardo](./kardo) (`https://github.com/EnSenas-AI/Glowel-Kardo/tree/main/equipos/glowel-kardo/kardo`)
 - Demo: https://total-everyone-comfort-feels.trycloudflare.com/t/f69930e706214bd4ad828387d38c4212 *(QR en vivo · Café Central Mesa 1)*
 - Presentación: https://www.canva.com/d/Z216L8Sb2hOg1Ue *(Pitch Deck + videos de demo en vivo)*

@@ -1,0 +1,437 @@
+/*
+  The public page a Kardo QR or NFC opens, as the Resolver renders it
+  (services/resolver/src/render.ts, `brandCss`), scoped under `.kp` so the
+  landing can show the real thing inside a phone. Keep the values in sync
+  with the Resolver: the demo must never promise a different page.
+  Deliberately unlayered, so Tailwind's preflight never overrides it.
+*/
+.kp {
+  --bg: #f7f5f0;
+  --text: #16232e;
+  --text-secondary: #52646d;
+  --accent: #0a6c78;
+  --accent-light: #4ec3ce;
+  --surface: #fffdf8;
+  --border: #d9ded8;
+  color: var(--text);
+  font-family:
+    var(--font-dm-sans), system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: left;
+}
+.kp * {
+  box-sizing: border-box;
+}
+.kp .page {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 16px 20px;
+  background: var(--t-bg, var(--bg));
+  background-size: var(--t-bg-size, auto);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.kp .card {
+  width: 100%;
+  max-width: 36rem;
+  background: var(--t-surface, var(--surface));
+  color: var(--t-text, var(--text));
+  border: 1px solid var(--t-border, var(--border));
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 1px 2px rgba(22, 35, 46, 0.06);
+}
+.kp h1 {
+  font-family: inherit;
+  font-size: 1.5rem;
+  line-height: 1.5;
+  margin: 0 0 4px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-wrap: wrap;
+}
+.kp h2 {
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  font-weight: 700;
+  margin: 0;
+}
+.kp p {
+  margin: 0;
+}
+.kp .headline,
+.kp .description {
+  color: var(--t-text-secondary, var(--text-secondary));
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+}
+.kp .bio {
+  white-space: pre-wrap;
+  color: var(--t-text, var(--text));
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+}
+.kp .links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kp .link-button,
+.kp .primary {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--t-accent, var(--accent));
+  color: var(--t-on-accent, #fff);
+  border: none;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: inherit;
+}
+.kp .avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--t-border, var(--border));
+  margin-bottom: 16px;
+  background: var(--t-surface, var(--bg));
+}
+.kp .avatar-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: var(--t-text, var(--text));
+  letter-spacing: 0.02em;
+}
+.kp .hero-image {
+  width: 100%;
+  border-radius: 14px;
+  display: block;
+  margin-bottom: 4px;
+  background: var(--bg);
+  overflow: hidden;
+}
+.kp .menu-section {
+  margin-top: 22px;
+}
+.kp .menu-section h2 {
+  border-bottom: 1px solid var(--t-border, var(--border));
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+.kp .menu-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.kp .menu-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--t-border, var(--border));
+}
+.kp .menu-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex: none;
+  background: var(--t-surface, var(--surface));
+}
+.kp .menu-text {
+  flex: 1;
+  min-width: 0;
+}
+.kp .menu-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  white-space: nowrap;
+}
+.kp .menu-item:last-child {
+  border-bottom: none;
+}
+.kp .menu-item .name {
+  font-weight: 600;
+}
+.kp .menu-item .desc {
+  color: var(--t-text-secondary, var(--text-secondary));
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+.kp .menu-item .price {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.kp .catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 6px;
+}
+.kp .catalog-card {
+  border: 1px solid var(--t-border, var(--border));
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--t-bg, var(--bg));
+  display: flex;
+  flex-direction: column;
+}
+.kp .catalog-card .catalog-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  background: var(--t-surface, var(--surface));
+}
+.kp .catalog-card .catalog-body {
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.kp .catalog-card .name {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.kp .catalog-card .desc {
+  color: var(--t-text-secondary, var(--text-secondary));
+  font-size: 0.8rem;
+}
+.kp .catalog-card .price {
+  font-weight: 700;
+  margin-top: auto;
+}
+.kp .catalog-card .link-button {
+  margin-top: 8px;
+  padding: 9px;
+  font-size: 0.85rem;
+}
+.kp .doc-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--t-accent, var(--accent));
+  color: var(--t-on-accent, #fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+.kp .form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 4px;
+}
+.kp .label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.kp .input {
+  font: inherit;
+  font-weight: 400;
+  height: 46px;
+  padding: 11px 12px;
+  border: 1px solid var(--t-border, var(--border));
+  border-radius: 10px;
+  background: var(--t-surface, var(--surface));
+  color: var(--t-text, var(--text));
+}
+.kp .consent {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--t-text-secondary, var(--text-secondary));
+}
+.kp .checkbox {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  border: 1px solid var(--t-text-secondary, var(--text-secondary));
+  border-radius: 3px;
+}
+/* Live availability (ADR 017): badges and sold-out items. */
+.kp .badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.kp .catalog-body .badge {
+  align-self: flex-start;
+}
+.kp .badge-sold-out {
+  background: rgba(22, 35, 46, 0.08);
+  color: var(--t-text-secondary, var(--text-secondary));
+}
+.kp .badge-low {
+  background: color-mix(
+    in srgb,
+    var(--t-accent, var(--accent)) 14%,
+    transparent
+  );
+  color: var(--t-accent, var(--accent));
+}
+.kp .theme-dark .badge-sold-out {
+  background: rgba(244, 246, 245, 0.14);
+}
+.kp .is-sold-out .name,
+.kp .is-sold-out .desc,
+.kp .is-sold-out .price {
+  opacity: 0.55;
+}
+.kp .is-sold-out .menu-thumb,
+.kp .is-sold-out .catalog-image {
+  filter: grayscale(1);
+  opacity: 0.6;
+}
+.kp .kardo-footer {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  color: var(--t-text-secondary, var(--text-secondary));
+  opacity: 0.75;
+}
+.kp .kardo-footer svg {
+  height: 15px;
+  width: auto;
+  display: block;
+}
+.kp .linkpage-card {
+  text-align: center;
+}
+.kp .linkpage-card .avatar {
+  margin-left: auto;
+  margin-right: auto;
+}
+.kp .socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 4px 0 20px;
+  padding: 0;
+}
+.kp .social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--t-accent, var(--accent));
+  color: var(--t-on-accent, #fff);
+}
+.kp .social-icon svg {
+  width: 18px;
+  height: 18px;
+}
+.kp .link-button--highlight {
+  box-shadow: 0 0 0 2px var(--t-accent, var(--accent)) inset;
+  font-weight: 700;
+}
+.kp .theme-light {
+  --t-surface: #fffdf8;
+  --t-text: #16232e;
+  --t-text-secondary: #52646d;
+  --t-border: #d9ded8;
+}
+.kp .theme-dark {
+  --t-surface: #1c232b;
+  --t-text: #f4f6f5;
+  --t-text-secondary: #aab4bb;
+  --t-border: #333d47;
+}
+.kp .btn-pill .link-button,
+.kp .btn-pill .primary,
+.kp .btn-pill .social-icon {
+  border-radius: 999px;
+}
+.kp .btn-rounded .link-button,
+.kp .btn-rounded .primary {
+  border-radius: 14px;
+}
+.kp .btn-square .link-button,
+.kp .btn-square .primary {
+  border-radius: 4px;
+}
+.kp .btn-square .social-icon {
+  border-radius: 8px;
+}
+.kp .btn-outline .link-button,
+.kp .btn-outline .primary {
+  background: transparent;
+  color: var(--t-accent, var(--accent));
+  border: 2px solid var(--t-accent, var(--accent));
+}
+.kp .font-sans {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.kp .font-serif {
+  font-family: Georgia, "Times New Roman", serif;
+}
+.kp .font-rounded {
+  font-family:
+    ui-rounded, "SF Pro Rounded", system-ui, -apple-system, sans-serif;
+}
+.kp .font-mono {
+  font-family:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Landing only: a published change flashes once on the phone. */
+.kp .kp-changed {
+  animation: kp-changed 1.6s ease-out;
+  border-radius: 6px;
+}
+@keyframes kp-changed {
+  0%,
+  35% {
+    background: color-mix(
+      in srgb,
+      var(--t-accent, var(--accent)) 22%,
+      transparent
+    );
+  }
+  100% {
+    background: transparent;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kp .kp-changed {
+    animation: none;
+  }
+}

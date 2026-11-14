@@ -1,0 +1,12 @@
+{
+  "confirmation.html": "Confirma tu correo en Kardo",
+  "magic_link.html": "Tu código de acceso a Kardo",
+  "recovery.html": "Restablece tu contraseña de Kardo",
+  "invite.html": "Te invitaron a Kardo",
+  "email_change.html": "Tu código para cambiar tu correo en Kardo",
+  "reauthentication.html": "Confirma que eres tú",
+  "password_changed_notification.html": "Tu contraseña de Kardo cambió",
+  "email_changed_notification.html": "El correo de tu cuenta de Kardo cambió",
+  "mfa_factor_enrolled_notification.html": "Agregaste un método de verificación en Kardo",
+  "mfa_factor_unenrolled_notification.html": "Quitaste un método de verificación en Kardo"
+}

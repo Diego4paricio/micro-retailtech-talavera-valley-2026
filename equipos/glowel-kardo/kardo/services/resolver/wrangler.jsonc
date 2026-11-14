@@ -1,0 +1,96 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "kardo-poa-test-resolver",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "vars": {
+    "KARDO_ENV": "test",
+    "KARDO_DIAGNOSTICS": "false"
+  },
+  // Estudio de Experiences (ADR 018): the OFL webfonts @kardo/page-render
+  // ships (see packages/page-render/fonts/), served at /_fonts/* with a long
+  // immutable cache (see serveFontAsset in index.ts). The public URL prefix
+  // intentionally differs from this directory's own layout, so a request to
+  // /_fonts/* never matches an asset directly — it always reaches the Worker
+  // first, which rewrites the path before reading from this binding.
+  "assets": {
+    "directory": "../../packages/page-render/fonts",
+    "binding": "FONT_ASSETS",
+    "not_found_handling": "none"
+  },
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "TOUCHPOINT_STATE",
+        "class_name": "TouchpointState"
+      },
+      {
+        "name": "ALIAS_STATE",
+        "class_name": "AliasState"
+      },
+      {
+        "name": "ITEM_AVAILABILITY_STATE",
+        "class_name": "ItemAvailabilityState"
+      },
+      {
+        "name": "BUSINESS_STATE",
+        "class_name": "BusinessState"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["TouchpointState"]
+    },
+    {
+      "tag": "v2",
+      "new_sqlite_classes": ["AliasState"]
+    },
+    {
+      "tag": "v3",
+      "new_sqlite_classes": ["ItemAvailabilityState"]
+    },
+    {
+      // Links, phase 3b (relevo 34): kardo.com.mx/<negocio>/<link>.
+      "tag": "v4",
+      "new_sqlite_classes": ["BusinessState"]
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PUBLISHED_SNAPSHOTS",
+      "bucket_name": "kardo-poa-test-published"
+    }
+  ],
+  "analytics_engine_datasets": [
+    {
+      "binding": "TAP_ANALYTICS",
+      "dataset": "kardo_poa_test_taps"
+    }
+  ],
+  "services": [
+    {
+      "binding": "LEAD_INTAKE",
+      "service": "kardo-poa-test-analytics"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "LEAD_RATE_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 5, "period": 60 }
+    },
+    {
+      "name": "INTERNAL_RATE_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 60, "period": 60 }
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+/* Contestar una solicitud (relevo 37, C3a/C3b): los tres botones de
+   contacto, la pregunta de confirmación y el resaltado al abrir una
+   solicitud desde la campana. El resto de Solicitudes reusa los
+   componentes y clases ya existentes (.segmented, .status-badge, .panel,
+   .lead-card, .data-table…), definidos fuera de esta carpeta. */
+
+.lead-contact-button {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.lead-contact-button svg {
+  display: block;
+  height: 15px;
+  width: 15px;
+}
+
+.lead-contact-button-icon {
+  border-color: var(--line-input);
+  flex: none;
+  height: 2.25rem;
+  min-width: 2.25rem;
+}
+
+/* Lleno en verde, como el prototipo (su «--wa»): texto blanco a 6.4:1 de
+   contraste sobre `--tone-success-text`, el tono más oscuro del sistema
+   que ya tiene Kardo para "success" (sin inventar un verde nuevo). */
+.lead-contact-whatsapp {
+  background: var(--tone-success-text);
+  border-color: var(--tone-success-text);
+  color: var(--on-solid);
+}
+
+.lead-contact-whatsapp:hover {
+  background: color-mix(in srgb, var(--tone-success-text) 85%, black);
+  border-color: color-mix(in srgb, var(--tone-success-text) 85%, black);
+}
+
+.lead-contact-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* En la tarjeta (celular), los tres botones en un renglón, del mismo
+   ancho, como el prototipo P4. `grid-auto-columns` reparte el ancho entre
+   los que de verdad aparezcan (1, 2 o 3), sin tener que contarlos. Clase
+   aparte de `.lead-contact-actions-compact` (abajo): nunca van juntas, para
+   que el `width: 100%` de aquí no se cuele en la tabla. */
+.lead-contact-actions-grid {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+.lead-contact-actions-grid .lead-contact-button {
+  justify-content: center;
+  width: 100%;
+}
+
+/* En la tabla (laptop), un renglón compacto en vez de columnas iguales:
+   «Llamar» se reduce a su ícono (.lead-contact-button-icon, arriba) para
+   que los tres quepan sin apilarse ni ensanchar la columna de más. */
+.lead-contact-actions-compact {
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+}
+
+.lead-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Celular: sin cajas dentro de cajas. Las tarjetas de solicitud van
+   directo sobre la página; el panel (fondo, borde, sombra) solo se queda
+   para la tabla, en laptop. */
+@media (max-width: 760px) {
+  .leads-list-panel {
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: var(--space-4);
+    padding: 0;
+  }
+}
+
+/* El resaltado al abrir una solicitud desde la campana: un tinte que se
+   apaga solo, para que la mirada la encuentre sin sobresaltar. Un fondo,
+   nunca `box-shadow`: en un <tr> no se pinta igual en todos los
+   navegadores (el modelo de tablas lo recorta), y un fondo sí. Sin
+   `forwards`: al terminar, el elemento vuelve solo a su fondo normal (lo
+   que sea que CSS fuera de aquí le dé), justo antes de que React quite la
+   clase. */
+@keyframes lead-highlight-fade {
+  from {
+    background-color: var(--tone-info-surface);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+/* Specificidad doble (".lead-card.lead-card-highlight") a propósito: pisa
+   cualquier `animation` de entrada que ya traigan `.lead-card`/`tr`, sin
+   tocar ese CSS (fuera de esta carpeta). */
+tr.lead-row-highlight,
+.lead-card.lead-card-highlight {
+  animation: lead-highlight-fade 3.5s var(--ease-out);
+}
+
+tr.lead-row-highlight td {
+  background-color: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  tr.lead-row-highlight,
+  .lead-card.lead-card-highlight {
+    animation: none;
+    background-color: var(--tone-info-surface);
+  }
+}
+
+/* «¿Ya la atendiste?» va justo debajo de la tarjeta o la fila que se
+   contestó (nunca arriba de toda la lista): en la tabla se funde con la
+   fila de arriba (sin su línea divisoria, con el mismo tinte). */
+.lead-cards li.lead-confirm-row {
+  margin-top: -0.4rem;
+}
+
+tr.lead-confirm-row td {
+  background: var(--tone-info-surface);
+  padding-top: 0.65rem;
+}
+
+tr:has(+ tr.lead-confirm-row) td {
+  border-bottom: 0;
+}
+
+/* Entrega por correo: la lista de personas del equipo (A2-51). */
+fieldset.kd-recipient-list {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+fieldset.kd-recipient-list legend {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  padding: 0;
+}
+fieldset.kd-recipient-list .kd-recipient-row {
+  cursor: pointer;
+}

@@ -1,0 +1,378 @@
+/* Subscriptions, invoices and plan catalog surfaces. */
+
+.billing-flag {
+  color: var(--danger-text);
+  font-weight: 700;
+}
+.billing-error-cell {
+  color: var(--danger-text);
+  font-size: 0.8rem;
+  max-width: 26rem;
+  overflow-wrap: anywhere;
+}
+.billing-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.8rem;
+}
+.billing-links a {
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* Usage meters */
+.billing-meters {
+  display: grid;
+  gap: 1.1rem 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.billing-meter {
+  display: grid;
+  gap: 0.45rem;
+}
+.billing-meter-head {
+  align-items: center;
+  display: flex;
+  font-size: 0.84rem;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+.billing-meter-head strong {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.billing-meter-track {
+  background: var(--mist);
+  border-radius: 2px;
+  height: 0.5rem;
+  overflow: hidden;
+}
+.billing-meter-track > span {
+  background: var(--teal);
+  display: block;
+  height: 100%;
+}
+.billing-meter-warning > span {
+  background: #b7791f;
+}
+.billing-meter-danger > span {
+  background: var(--danger);
+}
+
+/* Subscription cards */
+.billing-sub-list {
+  display: grid;
+  gap: 0.9rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.billing-sub {
+  border: 1px solid var(--line-warm);
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+}
+.billing-sub-head {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+  justify-content: space-between;
+}
+.billing-sub-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.billing-facts {
+  display: grid;
+  gap: 0.8rem 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin: 0;
+}
+.billing-facts dt {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.billing-facts dd {
+  font-size: 0.9rem;
+  margin: 0.15rem 0 0;
+}
+.billing-sub-actions {
+  flex-wrap: wrap;
+}
+.billing-choice {
+  display: grid;
+  gap: 0.7rem;
+}
+
+/* Plan cards */
+.plan-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+  margin-top: 1.25rem;
+}
+.plan-card {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  display: grid;
+  gap: 1rem;
+  grid-template-rows: auto auto 1fr auto;
+  padding: 1.1rem 1.2rem;
+}
+.plan-card h3 {
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+.plan-card-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+.plan-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.plan-card-description {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 0;
+}
+.plan-card h4 {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  margin: 0 0 0.45rem;
+  text-transform: uppercase;
+}
+.plan-limits,
+.plan-prices {
+  display: grid;
+  font-size: 0.84rem;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.plan-limits li,
+.plan-prices li {
+  align-items: baseline;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: space-between;
+}
+.plan-limits li span:first-child {
+  color: var(--text-muted);
+}
+.plan-limits li strong,
+.plan-prices li strong {
+  font-variant-numeric: tabular-nums;
+}
+.plan-price-tags {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.plan-card-foot {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.8rem;
+}
+.plan-form-limit {
+  align-items: end;
+  display: grid;
+  gap: 0.4rem 0.8rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+.plan-form-limit .checkbox-row {
+  min-height: 2.6rem;
+  align-items: center;
+  white-space: nowrap;
+}
+.plan-form-limit .field {
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  .plan-grid {
+    grid-template-columns: 1fr;
+  }
+  .plan-form-limit {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Access section (ADR 020) */
+.access-head {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+}
+.access-internal {
+  background: var(--tint);
+  border: 1px solid var(--line-warm);
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 1rem;
+}
+.access-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+}
+.access-switch {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.6rem;
+  padding: 0;
+}
+.access-switch-track {
+  background: var(--line-input);
+  border-radius: 999px;
+  display: inline-block;
+  height: 1.3rem;
+  position: relative;
+  width: 2.3rem;
+}
+.access-switch-track::after {
+  background: var(--paper);
+  border-radius: 50%;
+  content: "";
+  height: 1rem;
+  left: 0.15rem;
+  position: absolute;
+  top: 0.15rem;
+  transition: transform 0.15s;
+  width: 1rem;
+}
+.access-switch[aria-checked="true"] .access-switch-track {
+  background: var(--ink);
+}
+.access-switch[aria-checked="true"] .access-switch-track::after {
+  transform: translateX(1rem);
+}
+
+.cfdi-list {
+  display: grid;
+  gap: 1rem;
+}
+.cfdi-card {
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+.cfdi-card-overdue {
+  border-color: var(--danger-text);
+}
+.cfdi-card-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.cfdi-card-state {
+  text-align: right;
+}
+.cfdi-fiscal {
+  display: grid;
+  gap: 0.5rem 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  margin: 0;
+}
+.cfdi-fiscal dt {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.cfdi-fiscal dd {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cfdi-copy {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.25rem;
+}
+.cfdi-card-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Reporte para el contador: lista de puntos por revisar. */
+.accounting-warnings {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.account-rows {
+  display: grid;
+  margin: 0;
+}
+.account-rows > div {
+  border-top: 1px solid var(--border, rgba(127, 127, 127, 0.25));
+  display: grid;
+  gap: 0.2rem 1.5rem;
+  grid-template-columns: minmax(8rem, 12rem) 1fr;
+  padding: 0.7rem 0;
+}
+.account-rows > div:first-child {
+  border-top: 0;
+}
+.account-rows dt {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.account-rows dd {
+  font-size: 0.9rem;
+  margin: 0;
+}
+.account-orgs {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+.account-org-state {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: 0.8rem;
+  gap: 0.35rem;
+  margin-left: 0.6rem;
+}
+.account-dot {
+  background: currentColor;
+  border-radius: 50%;
+  height: 0.45rem;
+  width: 0.45rem;
+}

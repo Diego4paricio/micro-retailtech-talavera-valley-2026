@@ -1,0 +1,13 @@
+/* "Contenido" rail additions (relevo 37): "Cómo llegar" (C8c) and "Guisados
+   a elegir" (D1) sit beside the shared content editors without their own
+   boxed card, per the panel's "sin cajas dentro de cajas" rule. */
+
+.es-maps-shortcut {
+  justify-content: center;
+  margin-bottom: 0.75rem;
+  width: 100%;
+}
+
+.es-menu-choices {
+  margin-top: 1rem;
+}

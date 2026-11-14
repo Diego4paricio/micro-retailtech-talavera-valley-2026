@@ -1,0 +1,35 @@
+{
+  "name": "kardo",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@11.21.0",
+  "engines": {
+    "node": "22.22.2",
+    "pnpm": "11.21.0"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "lint": "pnpm -r --if-present lint",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "db:reset": "supabase db reset --local",
+    "test:database": "pnpm db:reset && supabase db query --local --file supabase/tests/schema_contract.sql",
+    "test:dev-database": "set -a && . ./.env && set +a && pnpm --filter @kardo/customer-api test:dev-database",
+    "beta:resolver-load": "node scripts/beta/load-resolver.mjs",
+    "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
+    "deploy:apis": "node scripts/deploy/cloud-run.mjs",
+    "deploy:web": "node scripts/deploy/pages.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.0",
+    "@cloudflare/vitest-plugin": "^1.1.8",
+    "@types/node": "^22.19.0",
+    "esbuild": "0.28.2",
+    "supabase": "^2.57.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0",
+    "wrangler": "^4.131.1"
+  }
+}

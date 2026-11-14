@@ -1,0 +1,332 @@
+/* ===========================================================================
+   Charts (research §5): recessive grid, 2 px lines, gradient washes,
+   crosshair + tooltip, draw-in on first load only.
+   =========================================================================== */
+
+.chart-panel {
+  overflow: visible;
+}
+.chart-plot {
+  border-radius: var(--radius-m);
+  margin: 0;
+  position: relative;
+  transition: opacity var(--motion-base) var(--ease-out);
+}
+.chart-plot[aria-busy="true"] {
+  opacity: 0.55;
+}
+.chart-plot:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 4px;
+}
+.chart-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.2rem;
+}
+.chart-svg {
+  display: block;
+  overflow: visible;
+  touch-action: pan-y;
+  user-select: none;
+}
+.chart-svg:not(.chart-svg-scroll) {
+  height: auto;
+  max-width: 100%;
+}
+.chart-scroll .chart-svg {
+  overflow: hidden;
+}
+.chart-frame {
+  width: 100%;
+}
+.chart-frame svg {
+  display: block;
+}
+
+.chart-grid {
+  shape-rendering: crispEdges;
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+}
+.chart-baseline {
+  shape-rendering: crispEdges;
+  stroke: var(--line-cool);
+  stroke-width: 1;
+}
+.chart-axis-label {
+  fill: var(--text-soft);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+/* What an axis measures («Visitas», «Día»), along it. */
+.chart-axis-title {
+  fill: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+/* Area + line: the line draws itself once; later data morphs in place
+   (where the browser can interpolate `d`). */
+.chart-line {
+  animation: draw-line var(--motion-deliberate) var(--ease-out) both;
+  fill: none;
+  stroke: var(--chart-line);
+  stroke-dasharray: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  transition: d var(--motion-base) var(--ease-standard);
+}
+.chart-area {
+  animation: fade-in var(--motion-deliberate) var(--ease-out) both;
+  transition: d var(--motion-base) var(--ease-standard);
+}
+.chart-previous {
+  stroke: var(--chart-previous);
+  stroke-dasharray: 5 5;
+  stroke-width: 1.5;
+  transition:
+    y1 var(--motion-base) var(--ease-standard),
+    y2 var(--motion-base) var(--ease-standard);
+}
+.chart-end-dot {
+  animation: fade-in var(--motion-fast) var(--ease-out) var(--motion-deliberate)
+    both;
+  fill: var(--chart-line);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+.chart-crosshair {
+  shape-rendering: crispEdges;
+  stroke: var(--chart-crosshair);
+  stroke-width: 1;
+}
+.chart-active-dot {
+  fill: var(--chart-line);
+  stroke: var(--surface);
+  stroke-width: 2.5;
+}
+.chart-cursor {
+  pointer-events: none;
+}
+
+/* Columns grow from the baseline, lightly staggered. */
+.chart-column-bars {
+  animation: grow-up var(--motion-deliberate) var(--ease-out) both;
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+.chart-svg[data-active]
+  .chart-column:not(.chart-column-active)
+  .chart-column-bars {
+  opacity: 0.45;
+}
+.chart-column-highlight {
+  fill: var(--teal-wash);
+  pointer-events: none;
+}
+
+/* Tooltip: paper card, value first, line keys. */
+.chart-tooltip {
+  animation: fade-in var(--motion-fast) var(--ease-out) both;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  font-size: var(--text-xs);
+  gap: 0.3rem;
+  min-width: 9.5rem;
+  padding: 0.6rem 0.75rem;
+  pointer-events: none;
+  position: absolute;
+  transition:
+    left var(--motion-fast) var(--ease-out),
+    top var(--motion-fast) var(--ease-out);
+  white-space: nowrap;
+  z-index: 5;
+}
+.chart-tooltip-center.chart-tooltip-above {
+  transform: translate(-50%, calc(-100% - 14px));
+}
+.chart-tooltip-start.chart-tooltip-above {
+  transform: translate(-18px, calc(-100% - 14px));
+}
+.chart-tooltip-end.chart-tooltip-above {
+  transform: translate(calc(-100% + 18px), calc(-100% - 14px));
+}
+.chart-tooltip-center.chart-tooltip-below {
+  transform: translate(-50%, 14px);
+}
+.chart-tooltip-start.chart-tooltip-below {
+  transform: translate(-18px, 14px);
+}
+.chart-tooltip-end.chart-tooltip-below {
+  transform: translate(calc(-100% + 18px), 14px);
+}
+/* Beside a column: 16 px clears the widest (24 px) bar from its center. */
+.chart-tooltip-side-right {
+  transform: translateX(16px);
+}
+.chart-tooltip-side-left {
+  transform: translateX(calc(-100% - 16px));
+}
+.chart-tooltip-title {
+  color: var(--text-soft);
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.chart-tooltip-row {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.45rem;
+}
+.chart-tooltip-row strong {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Keys: short strokes (tooltips, line legends). */
+.chart-key {
+  border-top: 2px solid var(--chart-line);
+  border-radius: 2px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0;
+  width: 0.9rem;
+}
+.chart-key-dashed {
+  border-top: 2px dashed var(--chart-previous);
+}
+.chart-key-nfc {
+  border-top-color: var(--teal);
+}
+.chart-key-qr {
+  border-top-color: var(--aqua);
+}
+.chart-key-link {
+  border-top-color: var(--ink);
+}
+
+.chart-delta {
+  align-items: center;
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  gap: 0.25rem;
+  justify-self: start;
+  padding: 0.15rem 0.5rem;
+}
+.chart-delta-up {
+  background: var(--tone-success-surface);
+  color: var(--tone-success-text);
+}
+.chart-delta-down {
+  background: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+.chart-legend li {
+  align-items: center;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  gap: 0.45rem;
+}
+.chart-legend-swatch {
+  border-radius: 3px;
+  display: inline-block;
+  height: 0.65rem;
+  width: 0.65rem;
+}
+.chart-legend-nfc {
+  background: var(--teal);
+}
+.chart-legend-qr {
+  background: var(--aqua);
+}
+.chart-legend-link {
+  background: var(--ink);
+}
+.chart-hint {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  margin: 0.8rem 0 0;
+  min-height: 2.9em;
+}
+.chart-bar-hit {
+  cursor: pointer;
+}
+/* Legacy live readout, still used by some panels. */
+.chart-tooltip-live {
+  background: var(--tint);
+  border-radius: var(--radius-m);
+  box-shadow: inset 3px 0 0 var(--teal);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  gap: 0.3rem 0.9rem;
+  margin: 0.9rem 0 0;
+  padding: 0.6rem 0.8rem;
+}
+.chart-tooltip-hint {
+  font-size: var(--text-xs);
+  margin: 0.9rem 0 0;
+}
+
+/* Sparklines. */
+.sparkline {
+  color: var(--teal);
+  display: block;
+  flex: 0 0 auto;
+  overflow: visible;
+}
+.sparkline-aqua {
+  color: var(--aqua);
+}
+.sparkline-ink {
+  color: var(--ink);
+}
+.sparkline-line {
+  animation: draw-line var(--motion-deliberate) var(--ease-out) both;
+  fill: none;
+  stroke: currentColor;
+  stroke-dasharray: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
+}
+.sparkline-area {
+  animation: fade-in var(--motion-deliberate) var(--ease-out) both;
+}
+.sparkline-dot {
+  animation: fade-in var(--motion-fast) var(--ease-out) var(--motion-deliberate)
+    both;
+  fill: currentColor;
+  stroke: var(--surface);
+  stroke-width: 1.5;
+}
+
+/* Empty chart state lives inside the panel. */
+.chart-panel .empty-state {
+  margin-top: 0.25rem;
+}

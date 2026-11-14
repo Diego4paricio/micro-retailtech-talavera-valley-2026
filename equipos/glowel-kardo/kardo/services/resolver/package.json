@@ -1,0 +1,21 @@
+{
+  "name": "@kardo/resolver",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "lint": "biome check src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --config vitest.config.ts",
+    "types": "wrangler types",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@kardo/contracts": "workspace:*",
+    "@kardo/domain": "workspace:*",
+    "@kardo/page-render": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260914.1"
+  }
+}

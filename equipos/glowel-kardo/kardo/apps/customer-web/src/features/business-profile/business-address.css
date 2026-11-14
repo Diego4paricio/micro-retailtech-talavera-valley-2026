@@ -1,0 +1,140 @@
+/* An address field: a fixed prefix (kardo.com.mx/ or kardo.com.mx/negocio/),
+   only the last part to type, and «Libre» at the right edge. */
+.business-address {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.business-address-input {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  display: flex;
+  min-height: 2.75rem;
+  min-width: 0;
+  padding: 0 0.75rem;
+}
+.business-address-input:focus-within {
+  border-color: var(--teal);
+  outline: 2px solid var(--focus-ring, var(--aqua));
+  outline-offset: 1px;
+}
+.field-invalid .business-address-input {
+  border-color: var(--danger);
+}
+.address-prefix {
+  color: var(--text-muted);
+  flex: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+/* A long prefix gives way first, cut from its start: «…negocio/». */
+.link-address-prefix {
+  direction: rtl;
+  flex: 0 1 auto;
+  min-width: 2.5rem;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+/* Stronger than the dialog and form input styles: one box, not two. */
+.business-address .business-address-input input.business-address-control {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  flex: 1 1 4rem;
+  min-height: 0;
+  /* The part being typed keeps room; the prefix gives way first. */
+  min-width: min(9rem, 50%);
+  outline: none;
+  padding: 0.6rem 0 0.6rem 0.05rem;
+}
+.address-status {
+  align-items: center;
+  color: var(--text-soft);
+  display: inline-flex;
+  flex: none;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+.address-status-free {
+  color: var(--tone-success-text);
+}
+.business-address-suggestion {
+  justify-self: start;
+}
+
+/* The link's address in full, with Copiar (LinkAddressCopy). */
+.link-address-copy {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  justify-content: space-between;
+}
+.link-address-copy-text {
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* One line under a field or in a dialog: no more. */
+.address-note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+.business-address-input.is-locked {
+  background: var(--paper);
+}
+
+/* «Revisa el cambio»: before, now, and every link with its new address. */
+.address-review {
+  display: grid;
+  gap: 0.5rem;
+}
+.address-review-row {
+  align-items: baseline;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  margin: 0;
+}
+.address-review-row span {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.address-review-row strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: var(--display-weight);
+  overflow-wrap: anywhere;
+}
+.address-review-row.is-before strong {
+  color: var(--text-soft);
+  font-weight: 400;
+}
+.address-review-links {
+  border-top: 1px solid var(--line);
+  color: var(--text-muted);
+  display: grid;
+  font-size: var(--text-sm);
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0.7rem 0 0;
+}
+.address-review-links li {
+  overflow-wrap: anywhere;
+}
+.address-review-links strong {
+  color: var(--ink);
+}

@@ -1,0 +1,333 @@
+/* Configuración, Equipo and Ayuda (ADR 023 §2): groups of rows separated by
+ * hairlines, no cards, no boxes inside boxes. Shared tokens only. */
+
+.settings-intro {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.settings-intro h2 {
+  font-size: clamp(1.4rem, 1.2rem + 0.6vw, 1.75rem);
+  margin: 0;
+}
+
+.settings-intro p {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  margin: 0.45rem 0 0;
+  max-width: 40rem;
+}
+
+.settings-intro-actions,
+.settings-group-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.settings-group {
+  margin-top: 3rem;
+}
+
+.settings-group-head {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  margin-bottom: 0.85rem;
+}
+
+/* Group titles read as titles, not as one more option: Geist, a size up. */
+.settings-group-head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1rem + 0.3vw, 1.25rem);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+.settings-group-head p {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  margin: 0.3rem 0 0;
+  max-width: 40rem;
+}
+
+.settings-rows {
+  border-bottom: 1px solid var(--line);
+}
+
+.settings-row {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 0.35rem 1.5rem;
+  grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr) auto;
+  min-height: 4.25rem;
+  padding: 0.85rem 0;
+}
+
+.settings-row-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.settings-row-label strong {
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+.settings-row-label small {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+}
+
+.settings-row-value {
+  color: var(--text);
+  font-size: var(--text-sm);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.settings-row-value .muted {
+  color: var(--text-soft);
+}
+
+.settings-row-action {
+  align-items: center;
+  display: flex;
+  gap: 0.25rem 1rem;
+  justify-content: flex-end;
+}
+
+.settings-row-danger .settings-row-label strong {
+  color: var(--tone-danger-text);
+}
+
+.settings-group-footer {
+  align-items: center;
+  color: var(--text-soft);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-xs);
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+  line-height: 1.5;
+  padding-top: 0.75rem;
+}
+
+/* A short tag next to a value («Esta sesión»): text, not a pill. */
+.settings-tag {
+  color: var(--teal);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin-left: 0.5rem;
+  white-space: nowrap;
+}
+
+.status-text {
+  align-items: center;
+  display: inline-flex;
+  font-size: var(--text-sm);
+  gap: 0.5rem;
+}
+
+.status-text-dot {
+  background: var(--text-faint);
+  border-radius: 50%;
+  flex: none;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.status-text-on .status-text-dot {
+  background: var(--tone-success-accent);
+}
+
+.status-text-warning .status-text-dot {
+  background: var(--tone-warning-accent);
+}
+
+/* Steps inside a dialog (change email, add an authenticator app). */
+.dialog-steps {
+  color: var(--text-soft);
+  display: flex;
+  font-size: var(--text-xs);
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.dialog-steps li[aria-current="step"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.dialog-form {
+  display: grid;
+  gap: 1rem;
+}
+
+/* On/off that saves at once (a permission, not a form field). */
+.settings-switch {
+  background: var(--line-input);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  flex: none;
+  height: 1.5rem;
+  padding: 0;
+  position: relative;
+  transition: background-color var(--motion-fast) var(--ease-out);
+  width: 2.6rem;
+}
+
+.settings-switch[data-state="checked"] {
+  background: var(--teal);
+}
+
+.settings-switch:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.settings-switch-thumb {
+  background: var(--surface);
+  border-radius: 50%;
+  box-shadow: var(--shadow-xs);
+  display: block;
+  height: 1.15rem;
+  transform: translateX(0.18rem);
+  transition: transform var(--motion-fast) var(--ease-out);
+  width: 1.15rem;
+}
+
+.settings-switch-thumb[data-state="checked"] {
+  transform: translateX(1.27rem);
+}
+
+/* Three short choices side by side (hour format). */
+.settings-segmented {
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  display: inline-flex;
+  flex-wrap: wrap;
+  padding: 0.2rem;
+}
+
+.settings-segmented-item {
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--text-xs);
+  padding: 0.4rem 0.75rem;
+}
+
+.settings-segmented-item:hover {
+  color: var(--text);
+}
+
+.settings-segmented-item[data-state="checked"] {
+  background: var(--teal-wash-strong);
+  color: var(--teal-deep);
+  font-weight: 600;
+}
+
+.settings-segmented-item:focus-visible,
+.settings-switch:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
+.dialog-done {
+  line-height: var(--leading-body);
+  margin: 0;
+}
+
+/* A secondary dialog action placed at the start of the footer («Quitar»). */
+.settings-dialog-start {
+  margin-right: auto;
+}
+
+@media (max-width: 720px) {
+  .settings-row {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .settings-row-value {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .settings-row-action {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* Adding an authenticator app: the QR next to the manual key and the code. */
+.two-factor-steps {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.two-factor-scan-body {
+  align-items: start;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 11rem minmax(0, 1fr);
+}
+
+.two-factor-qr-image {
+  background: var(--on-solid);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  display: block;
+  height: 11rem;
+  padding: 0.5rem;
+  width: 11rem;
+}
+
+.two-factor-secret {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 560px) {
+  .two-factor-scan-body {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+}
+
+/* Borrar mi cuenta: what goes, or what has to be solved first. */
+.delete-account-list {
+  color: var(--text-muted);
+  display: grid;
+  font-size: var(--text-sm);
+  gap: 0.45rem;
+  line-height: var(--leading-body);
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}

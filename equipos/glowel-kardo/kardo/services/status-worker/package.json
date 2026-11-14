@@ -1,0 +1,21 @@
+{
+  "name": "@kardo/status-worker",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev -c wrangler.dev.jsonc --port 8797 --test-scheduled",
+    "lint": "biome check src test",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --config vitest.config.ts",
+    "types": "wrangler types",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@kardo/contracts": "workspace:*",
+    "@sinclair/typebox": "^0.34.41"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260914.1"
+  }
+}

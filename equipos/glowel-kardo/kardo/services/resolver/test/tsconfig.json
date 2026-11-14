@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "rootDir": "..",
+    "types": ["@cloudflare/vitest-plugin/types", "node"]
+  },
+  "include": ["./**/*.ts", "../worker-configuration.d.ts"]
+}

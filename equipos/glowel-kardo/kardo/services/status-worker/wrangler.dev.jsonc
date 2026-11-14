@@ -1,0 +1,36 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Desarrollo local (pnpm dev, puerto 8797): sin service bindings, cada
+  // Worker por su dirección pública. Los secretos van en .dev.vars. El
+  // panel en desarrollo lo usa solo (http://127.0.0.1:8797) si no hay
+  // VITE_STATUS_URL. Sin STATUS_PROBE_KEY en .dev.vars, al API solo se le
+  // pregunta GET /health.
+  "name": "kardo-dev-status",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-09-14",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "KARDO_ENV": "local",
+    // El Customer API local del dueño.
+    "CUSTOMER_API_URL": "http://127.0.0.1:3001",
+    "CUSTOMER_APP_URL": "",
+    "RESOLVER_URL": "https://kardo-poa-test-resolver.glowel-dev.workers.dev",
+    "PUBLISHER_URL": "https://kardo-poa-test-publisher.glowel-dev.workers.dev",
+    // Vacío hasta desplegar el Assets Worker con GET /health:
+    // "https://kardo-poa-test-assets.glowel-dev.workers.dev"
+    "ASSETS_URL": "",
+    "ANALYTICS_URL": "https://kardo-poa-test-analytics.glowel-dev.workers.dev",
+    // QR de prueba en kardo-dev (espacio personal de la cuenta E2E Owner),
+    // creado con scripts/dev/status-probe-touchpoint.mjs.
+    "STATUS_PROBE_PUBLIC_ID": "4b407c8a40cf4d99b0c9f938009ad8d7",
+    "STATUS_PROBE_MARKER": "Kardo estado OK",
+    "PROVIDERS_ENABLED": "true"
+  },
+  "triggers": {
+    "crons": ["* * * * *"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "STATUS_STATE", "class_name": "StatusState" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["StatusState"] }]
+}

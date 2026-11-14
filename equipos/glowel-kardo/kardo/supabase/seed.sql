@@ -1,0 +1,2 @@
+-- This seed is intentionally empty. Development and test fixtures are added by
+-- explicit, deterministic test setup; production migrations never run seeds.

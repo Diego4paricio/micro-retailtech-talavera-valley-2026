@@ -1,0 +1,1349 @@
+/* ===========================================================================
+   Estudio de Experiences, modo HTML (loaded with the HtmlStudio chunk, only
+   when HTML mode opens): the code (HTML, CSS, Imágenes) next to the preview,
+   and the Ayuda de la IA onboarding (3 steps: Qué quieres · Tu marca · Quién
+   la diseña, always endind in the editor). The bar's Bloques | HTML switch
+   and the HTML slot live in styles/studio.css. Panel colors only from
+   tokens.css; the customer's own colors live inside the preview.
+   =========================================================================== */
+.esh {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--es-gap);
+  min-height: 0;
+}
+.esh > .notice {
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Ayuda de la IA: a guided dialog, full-height sheet on phones
+   --------------------------------------------------------------------------- */
+.dialog:has(.esh-ai) {
+  width: 56rem;
+}
+@media (max-width: 30rem) {
+  .dialog:has(.esh-ai) {
+    border-radius: 0;
+    height: 100dvh;
+    inset: 0;
+    margin: 0;
+    max-height: 100dvh;
+    max-width: 100vw;
+    width: 100vw;
+  }
+}
+.esh-ai {
+  display: grid;
+}
+
+/* Progress: a 3-segment bar, labeled below (the current step in teal). */
+.esh-ob-progress {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1.15rem;
+}
+.esh-ob-progress-track {
+  display: flex;
+  gap: 0.35rem;
+}
+.esh-ob-progress-seg {
+  background: var(--line-warm);
+  border-radius: var(--radius-pill);
+  flex: 1 1 0;
+  height: 0.3rem;
+}
+.esh-ob-progress-seg[data-state="current"] {
+  background: var(--teal);
+}
+.esh-ob-progress-seg[data-state="done"] {
+  background: var(--tone-success-line);
+}
+.esh-ob-progress-caption {
+  color: var(--text-faint);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin: 0;
+  text-transform: uppercase;
+}
+.esh-ob-progress-caption span:not(:first-child)::before {
+  color: var(--line-cool);
+  content: " · ";
+  margin: 0 0.05rem;
+}
+.esh-ob-progress-caption [data-state="current"] {
+  color: var(--teal-deep);
+}
+.esh-ob-progress-caption [data-state="done"] {
+  color: var(--text-soft);
+}
+
+/* One step at a time */
+.esh-ob-step {
+  display: grid;
+  gap: 0.9rem;
+}
+.esh-ob-step h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+}
+.esh-ob-step h3:focus-visible {
+  border-radius: var(--radius-s);
+  outline-offset: 3px;
+}
+.esh-ob-step-lead {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  margin: -0.55rem 0 0;
+}
+
+/* Paso 1: concepto + chips de objetivo */
+.esh-concept {
+  display: grid;
+  gap: 1.1rem;
+}
+.esh-description {
+  line-height: 1.55;
+  min-height: 8rem;
+  resize: vertical;
+}
+.esh-tone-ideas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.esh-tone-ideas .qrs-chip {
+  min-height: 1.85rem;
+  padding: 0.15rem 0.65rem;
+}
+.esh-objectives {
+  display: grid;
+  gap: 0.4rem;
+}
+.esh-objectives-label {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  margin: 0;
+}
+.esh-objective-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.esh-objective-chip {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.35rem;
+  min-height: 2.15rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.6rem;
+}
+.esh-objective-chip .icon {
+  color: var(--text-soft);
+}
+.esh-objective-chip:hover:not(:disabled) {
+  background: var(--tint);
+  border-color: var(--teal-soft-line);
+}
+.esh-objective-chip[data-checked] {
+  background: var(--tint);
+  border-color: var(--teal);
+  box-shadow: inset 0 0 0 1px var(--teal);
+  color: var(--teal-deep);
+}
+.esh-objective-chip[data-checked] .icon {
+  color: var(--teal);
+}
+.esh-objective-chip:disabled {
+  opacity: 0.5;
+}
+
+/* Paso 2: Tu marca (colores, imágenes, tipografías) */
+.esh-brand {
+  display: grid;
+  gap: 1.1rem;
+}
+@media (min-width: 48rem) {
+  .esh-brand {
+    align-items: start;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+.esh-fieldset {
+  border: 0;
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  min-inline-size: 0;
+  padding: 0;
+}
+.esh-fieldset legend {
+  align-items: baseline;
+  color: var(--ink);
+  display: flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  padding: 0;
+  width: 100%;
+}
+.esh-fieldset legend .field-counter {
+  margin-left: auto;
+}
+.esh-colors,
+.esh-brand-images {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.esh-color {
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-pill);
+  display: inline-flex;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.2rem 0.3rem 0.2rem 0.2rem;
+}
+.esh-color-well {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, transparent);
+  display: inline-block;
+  flex: none;
+  height: 1.7rem;
+  overflow: hidden;
+  position: relative;
+  width: 1.7rem;
+}
+.esh-color-well input {
+  cursor: pointer;
+  height: 100%;
+  inset: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+}
+.esh-color-hex {
+  color: var(--text-note);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+}
+.esh-chip-remove {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: var(--text-soft);
+  display: inline-flex;
+  height: 1.5rem;
+  justify-content: center;
+  width: 1.5rem;
+}
+.esh-chip-remove:hover {
+  background: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+.esh-add {
+  align-items: center;
+  background: transparent;
+  border: 1px dashed var(--line-input);
+  border-radius: var(--radius-pill);
+  color: var(--teal-deep);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.3rem;
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+}
+.esh-add:hover {
+  background: var(--tint);
+  border-color: var(--teal-soft-line);
+}
+.esh-thumb {
+  align-items: center;
+  background: var(--paper);
+  border-radius: var(--radius-m);
+  box-shadow: inset 0 0 0 1px var(--line-warm);
+  color: var(--text-faint);
+  display: inline-flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.esh-thumb img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.esh-brand-image {
+  position: relative;
+}
+.esh-brand-image .esh-thumb {
+  height: 3.25rem;
+  width: 3.25rem;
+}
+.esh-brand-image .esh-chip-remove {
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  height: 1.35rem;
+  position: absolute;
+  right: -0.35rem;
+  top: -0.35rem;
+  width: 1.35rem;
+}
+.esh-add-image {
+  border-radius: var(--radius-m);
+  flex-direction: column;
+  gap: 0.15rem;
+  height: 3.25rem;
+  justify-content: center;
+  padding: 0 0.6rem;
+  width: 4.25rem;
+}
+.esh-fonts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.esh-font {
+  align-items: baseline;
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-pill);
+  color: var(--ink);
+  display: inline-flex;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.8rem 0.3rem 0.65rem;
+}
+.esh-font:hover:not(:disabled) {
+  background: var(--tint);
+  border-color: var(--teal-soft-line);
+}
+.esh-font[data-checked] {
+  background: var(--tint);
+  border-color: var(--teal);
+  box-shadow: inset 0 0 0 1px var(--teal);
+  color: var(--teal-deep);
+}
+.esh-font:disabled:not([data-checked]) {
+  opacity: 0.5;
+}
+.esh-font-sample {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1;
+}
+.esh-font-name {
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
+/* Paso 3: dos caminos, como tarjetas */
+.esh-ob-cards {
+  display: grid;
+  gap: 1rem;
+}
+/* Side by side whenever the dialog is wide enough (a container can't query
+   its own width, so this follows the screen the dialog sits on). */
+@media (min-width: 48rem) {
+  .esh-ob-cards {
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.esh-ob-card {
+  align-content: start;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xs);
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.1rem 1.15rem 1.25rem;
+}
+.esh-ob-card[data-tone="kardo"] {
+  background: color-mix(in srgb, var(--tint) 55%, var(--surface));
+  border-color: var(--teal-soft-line);
+}
+.esh-ob-card[data-disabled] {
+  opacity: 0.65;
+}
+.esh-ob-card-head {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+.esh-ob-card-head h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.esh-ob-card-icon {
+  align-items: center;
+  color: var(--teal);
+  display: inline-flex;
+}
+.esh-ob-card-lead {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.esh-tag {
+  flex: none;
+  background: var(--tone-success-surface);
+  border: 1px solid var(--tone-success-line);
+  border-radius: var(--radius-pill);
+  color: var(--tone-success-text);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.2rem 0.6rem;
+  text-transform: uppercase;
+  width: fit-content;
+}
+.esh-step-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+}
+.esh-ai-links {
+  gap: 0.4rem;
+}
+.esh-step-note {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.esh-check {
+  align-items: center;
+  color: var(--text-note);
+  display: inline-flex;
+  font-size: var(--text-xs);
+  gap: 0.45rem;
+}
+.esh-ai-button {
+  justify-content: center;
+  width: 100%;
+}
+.esh-ob-card-paste {
+  border-top: 1px solid var(--line-warm);
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.15rem;
+  padding-top: 0.8rem;
+}
+.esh-ob-card-paste-label {
+  color: var(--text-soft);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Saltar, ya tengo código: the same paste box, on its own screen */
+.esh-ob-paste {
+  display: grid;
+  gap: 0.85rem;
+}
+.esh-ob-paste h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+
+/* Footer: recap chips · Atrás · Saltar */
+.esh-ob-footer {
+  align-items: center;
+  border-top: 1px solid var(--line-warm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: space-between;
+  margin-top: 1.15rem;
+  padding-top: 0.9rem;
+}
+.esh-ob-recap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-width: 0;
+}
+.esh-ob-recap-chip {
+  background: var(--paper);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-pill);
+  color: var(--text-note);
+  font-size: var(--text-2xs);
+  padding: 0.2rem 0.6rem;
+}
+.esh-ob-recap-empty {
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  font-style: italic;
+}
+.esh-ob-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+@media (max-width: 30rem) {
+  .esh-ob-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .esh-ob-actions {
+    justify-content: space-between;
+    margin-left: 0;
+  }
+}
+
+/* Paste box */
+.esh-paste {
+  display: grid;
+  gap: 0.5rem;
+}
+.esh-paste-area,
+.esh-prompt {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  resize: vertical;
+  width: 100%;
+}
+.esh-paste-area {
+  min-height: 6.5rem;
+}
+.esh-paste[data-compact] .esh-paste-area {
+  min-height: 14rem;
+}
+.esh-paste-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  justify-content: space-between;
+}
+.esh-paste-hint {
+  color: var(--text-soft);
+  font-size: var(--text-2xs);
+  line-height: 1.45;
+  margin: 0;
+  max-width: 24rem;
+}
+.esh-prompt {
+  background: var(--paper);
+  min-height: 22rem;
+}
+.esh-dialog-meta {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+  margin-right: auto;
+}
+
+/* Library grid (brand images, connecting an image) */
+.esh-library {
+  display: grid;
+  gap: 0.85rem;
+}
+.esh-library-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  list-style: none;
+  margin: 0;
+  max-height: min(52vh, 28rem);
+  overflow-y: auto;
+  padding: 0.2rem;
+}
+.esh-library-item {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  color: var(--ink);
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+.esh-library-item .esh-thumb {
+  aspect-ratio: 1;
+  width: 100%;
+}
+.esh-library-item:hover:not(:disabled) {
+  border-color: var(--teal-soft-line);
+  box-shadow: var(--shadow-sm);
+}
+.esh-library-item[data-selected] {
+  border-color: var(--teal);
+  box-shadow: inset 0 0 0 1px var(--teal);
+}
+.esh-library-item:disabled:not([data-selected]) {
+  opacity: 0.5;
+}
+.esh-library-name {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  overflow: hidden;
+  padding: 0 0.15rem 0.1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.esh-library-check {
+  align-items: center;
+  background: var(--teal);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  color: var(--on-solid);
+  display: inline-flex;
+  height: 1.4rem;
+  justify-content: center;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 1.4rem;
+}
+.esh-library-empty {
+  background: var(--paper);
+  border: 1px dashed var(--line-cool);
+  border-radius: var(--radius-m);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+  padding: 1.25rem;
+  text-align: center;
+}
+.esh-upload {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+}
+.esh-upload-button {
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   Editor view: code column · preview column
+   --------------------------------------------------------------------------- */
+.esh-editor-view {
+  display: grid;
+  flex: 1 1 auto;
+  gap: var(--es-gap);
+  grid-template-columns: minmax(0, 1fr) var(--esh-preview-width, 25rem);
+  min-height: 0;
+}
+.esh[data-layout="medium"] {
+  --esh-preview-width: 21.5rem;
+}
+.esh[data-layout="compact"] {
+  --esh-preview-width: 17.5rem;
+}
+/* The computer preview renders a real 768 to 1440 px screen: give it the
+   larger share of the width so it stays readable. Same for "Ambos", which
+   shows the computer next to the phone. */
+.esh:is([data-device="desktop"], [data-device="both"]):not(
+  [data-layout="phone"]
+) .esh-editor-view {
+  grid-template-columns: minmax(20rem, 0.85fr) minmax(0, 1.15fr);
+}
+.esh-code-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-height: 0;
+  min-width: 0;
+}
+.esh-code-col > .notice {
+  margin: 0;
+}
+.esh-preview-col {
+  container: es-stage / inline-size;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+.esh-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.esh-notice-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+/* Ayuda de la IA: the way in, a touch of teal. */
+.esh-ai-open {
+  border-color: var(--teal-soft-line);
+  color: var(--teal-deep);
+}
+.esh-ai-open .icon {
+  color: var(--teal);
+}
+.esh-ai-open:not(:disabled):hover {
+  background: var(--tint);
+  border-color: var(--teal);
+}
+.esh[data-layout="compact"] .esh-label {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.esh-editor {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-xs);
+  container: esh-editor / inline-size;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 14rem;
+  overflow: hidden;
+}
+.esh-tabs {
+  align-items: stretch;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-warm);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 0.75rem 0 0.5rem;
+}
+.esh-tab-list {
+  display: flex;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.esh-tab {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  display: inline-flex;
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  gap: 0.4rem;
+  letter-spacing: 0.04em;
+  margin-bottom: -1px;
+  min-height: 2.5rem;
+  padding: 0 0.8rem;
+}
+.esh-tab-images {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+}
+.esh-tab:hover {
+  color: var(--ink);
+}
+.esh-tab[data-state="active"] {
+  border-bottom-color: var(--teal);
+  color: var(--teal-deep);
+}
+.esh-tab:focus-visible {
+  border-radius: var(--radius-s);
+  outline-offset: -2px;
+}
+.esh-badge {
+  align-items: center;
+  background: var(--tone-warning-surface);
+  border: 1px solid var(--tone-warning-line);
+  border-radius: var(--radius-pill);
+  color: var(--tone-warning-text);
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  height: 1.2rem;
+  justify-content: center;
+  min-width: 1.2rem;
+  padding: 0 0.3rem;
+}
+.esh-counter {
+  align-self: center;
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.esh-counter[data-level="near"] {
+  color: var(--tone-warning-text);
+}
+.esh-counter[data-level="over"] {
+  color: var(--tone-danger-text);
+  font-weight: 700;
+}
+@container esh-editor (max-width: 23rem) {
+  .esh-counter-limit {
+    display: none;
+  }
+}
+.esh-editor-panes {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+}
+.esh-pane {
+  inset: 0;
+  position: absolute;
+}
+.esh-pane[data-state="inactive"],
+.esh-pane[hidden] {
+  display: none;
+}
+.esh-pane:focus-visible {
+  outline-offset: -2px;
+}
+.esh-code {
+  height: 100%;
+}
+
+/* An empty editor: the placeholder shows through; three ways to start. */
+.esh-empty {
+  display: grid;
+  inset: 6.75rem 0 0;
+  justify-items: center;
+  overflow-y: auto;
+  padding: 0 0.85rem 0.85rem;
+  pointer-events: none;
+  position: absolute;
+}
+.esh-empty-card {
+  align-self: start;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  gap: 0.35rem;
+  max-width: 24rem;
+  padding: 1rem;
+  pointer-events: auto;
+  width: 100%;
+}
+.esh-empty-card[data-quiet] {
+  box-shadow: none;
+  text-align: center;
+}
+.esh-empty-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.esh-empty-lead {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.esh-empty-options {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+.esh-empty-option {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  color: var(--text-soft);
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0.55rem 0.65rem;
+  text-align: left;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+  width: 100%;
+}
+.esh-empty-option:hover {
+  background: var(--tint);
+  border-color: var(--teal-soft-line);
+  color: var(--teal-deep);
+}
+.esh-empty-icon {
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-s);
+  color: var(--teal);
+  display: inline-flex;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+.esh-empty-text {
+  display: grid;
+  gap: 0.05rem;
+  line-height: 1.3;
+}
+.esh-empty-text strong {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.esh-empty-text small {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+}
+
+/* ---------------------------------------------------------------------------
+   Imágenes: how it works · por conectar · upload · the library
+   --------------------------------------------------------------------------- */
+.esh-pane-images {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.esh-images {
+  container: esh-images / inline-size;
+  display: grid;
+  gap: 1.1rem;
+  padding: 0.9rem 0.9rem 1.25rem;
+}
+.esh-images-intro {
+  align-items: flex-start;
+  background: var(--paper);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  color: var(--teal);
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.7rem 0.8rem;
+}
+.esh-images-intro p {
+  color: var(--text-note);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+  margin: 0;
+}
+.esh-images-intro strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.esh-images-head {
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 0.6rem;
+}
+.esh-images-head h3 {
+  align-items: center;
+  display: flex;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--display-weight);
+  gap: 0.4rem;
+  margin: 0;
+}
+.esh-images-head p {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.esh-count {
+  background: var(--paper);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  padding: 0.05rem 0.45rem;
+}
+.esh-slots .esh-count {
+  background: var(--tone-warning-surface);
+  border-color: var(--tone-warning-line);
+  color: var(--tone-warning-text);
+}
+.esh-slot-list {
+  border: 1px solid var(--tone-warning-line);
+  border-radius: var(--radius-m);
+  display: grid;
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.esh-slot {
+  align-items: center;
+  background: var(--surface);
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 0.6rem 0.7rem;
+}
+.esh-slot + .esh-slot {
+  border-top: 1px solid var(--line-warm);
+}
+.esh-slot-icon {
+  align-items: center;
+  background: var(--tone-warning-surface);
+  border-radius: var(--radius-s);
+  color: var(--tone-warning-text);
+  display: inline-flex;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+.esh-slot-text {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+.esh-slot-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.esh-slot-meta {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+}
+.esh-slot-alt {
+  color: var(--text-note);
+  font-size: var(--text-2xs);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+@container esh-images (max-width: 22rem) {
+  .esh-slot {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .esh-slot > .button {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+.esh-drop {
+  align-items: center;
+  background: var(--paper);
+  border: 1px dashed var(--line-input);
+  border-radius: var(--radius-m);
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  padding: 0.85rem 0.9rem;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+.esh-drop[data-dragging] {
+  background: var(--tint);
+  border-color: var(--teal);
+}
+.esh-drop-icon {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: 50%;
+  color: var(--teal);
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  width: 2.5rem;
+}
+.esh-drop-text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.esh-drop-text p {
+  color: var(--ink);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+.esh-drop-text small {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+}
+.esh-drop-pick {
+  border-radius: var(--radius-xs);
+  color: var(--teal);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.esh-drop-pick:hover {
+  color: var(--teal-deep);
+}
+.esh-drop-pick:focus-within {
+  box-shadow: 0 0 0 3px var(--focus-halo);
+}
+.esh-image-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.esh-image {
+  align-content: start;
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  padding: 0.4rem 0.4rem 0.55rem;
+}
+.esh-image .esh-thumb {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+.esh-image-name {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  overflow: hidden;
+  padding: 0 0.15rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.esh-image-insert {
+  justify-content: center;
+  width: 100%;
+}
+.esh-image-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  justify-content: center;
+}
+.esh-image-more .link-button {
+  font-size: var(--text-2xs);
+}
+/* Narrow (phones): one image per row, the thumbnail beside its actions. */
+@container esh-images (max-width: 24rem) {
+  .esh-image-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .esh-image {
+    align-items: center;
+    column-gap: 0.75rem;
+    grid-template-columns: 4.75rem minmax(0, 1fr);
+    padding: 0.45rem;
+  }
+  .esh-image .esh-thumb {
+    aspect-ratio: 1;
+    grid-row: 1 / span 3;
+  }
+  .esh-image-insert {
+    justify-self: start;
+    width: auto;
+  }
+  .esh-image-more {
+    justify-content: flex-start;
+  }
+}
+.esh-connect-alt {
+  align-items: flex-start;
+  background: var(--tone-info-surface);
+  border: 1px solid var(--tone-info-line);
+  border-radius: var(--radius-m);
+  color: var(--tone-info-text);
+  display: flex;
+  font-size: var(--text-xs);
+  gap: 0.5rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+}
+.esh-connect-alt .icon {
+  flex: none;
+  margin-top: 0.15rem;
+}
+.esh-connect-alt strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.esh-insert-menu {
+  min-width: 17rem;
+}
+.esh-menu-text {
+  display: grid;
+  gap: 0.05rem;
+  line-height: 1.3;
+}
+.esh-menu-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.esh-menu-hint {
+  color: var(--text-soft);
+  font-size: var(--text-2xs);
+}
+
+/* Report: calm, one sentence, the why on demand */
+.esh-report {
+  align-items: flex-start;
+  background: var(--tone-info-surface);
+  border: 1px solid var(--tone-info-line);
+  border-radius: var(--radius-l);
+  color: var(--tone-info-text);
+  display: grid;
+  flex: none;
+  gap: 0.6rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  max-height: 40%;
+  overflow-y: auto;
+  padding: 0.65rem 0.85rem;
+}
+.esh-report > .icon {
+  margin-top: 0.1rem;
+}
+.esh-report[data-clean] {
+  background: var(--surface);
+  border-color: var(--line-warm);
+  color: var(--tone-success-text);
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.esh-report p {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  margin: 0;
+}
+.esh-report-detail {
+  color: var(--text-muted);
+}
+.esh-report-body {
+  display: grid;
+  gap: 0.55rem;
+}
+.esh-report-groups {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.esh-report-groups li {
+  background: var(--surface);
+  border: 1px solid var(--tone-info-line);
+  border-radius: var(--radius-m);
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.45rem 0.6rem;
+}
+.esh-report-reason {
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.esh-report-items {
+  color: var(--tone-info-text);
+  font-size: var(--text-xs);
+}
+.esh-report-why {
+  color: var(--text-muted);
+  font-size: var(--text-2xs);
+  line-height: 1.45;
+}
+.esh-report-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  justify-content: flex-end;
+}
+.esh-report-toggle {
+  color: var(--tone-info-text);
+  font-weight: 600;
+}
+
+/* Preview: the same device frame as Bloques (`stage/DeviceFrame.tsx`, see
+   `studio.css`'s `.es-device`/`.es-screen`/… rules), just inside modo HTML's
+   own two-pane layout. */
+.esh-stage {
+  flex: 1;
+}
+
+/* Phones: code or preview, one at a time; nothing wider than the screen. */
+.esh-editor-view[data-phone] {
+  display: flex;
+  flex-direction: column;
+}
+.esh-editor-view[data-phone] .esh-editor {
+  flex: none;
+  height: 64dvh;
+  min-height: 22rem;
+}
+.esh-editor-view[data-phone] .esh-preview-col {
+  height: 72dvh;
+  min-height: 24rem;
+}
+.esh[data-layout="phone"] .esh-toolbar > .esh-ai-open {
+  flex: 1 1 100%;
+  justify-content: center;
+}
+.esh[data-layout="phone"] .esh-toolbar > :not(.esh-ai-open) {
+  flex: 1 1 0;
+  justify-content: center;
+}
+.esh[data-layout="phone"] .esh-report {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+.esh[data-layout="phone"] .esh-report-actions {
+  grid-column: 1 / -1;
+  justify-content: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .esh-empty-option,
+  .esh-drop {
+    transition: none;
+  }
+}

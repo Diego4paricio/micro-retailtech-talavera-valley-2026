@@ -1,0 +1,50 @@
+/* Kardo palette — identical values to the original panel, now named. */
+:root {
+  --ink: #16232e;
+  --ink-raised: #20323d;
+  --ink-line: #31454d;
+  --ink-muted: #577078;
+  --ink-text: #d7e4e2;
+  --ink-text-soft: #a9c3c3;
+  --ink-text-faint: #b3c5c4;
+  --ink-text-bright: #dce8e6;
+  --ink-copy: #c7d7d5;
+
+  --paper: #f7f5f0;
+  --surface: #fffdf8;
+  --mist: #dceced;
+  --tint: #e6f3f3;
+
+  --teal: #0a6c78;
+  --teal-hover: #075b65;
+  --teal-deep: #064d56;
+  --aqua: #4ec3ce;
+  --teal-soft-line: #a8c7c6;
+
+  --text: #16232e;
+  --text-muted: #52646d;
+  --text-soft: #66777f;
+  --text-faint: #82928f;
+  --text-note: #20414a;
+
+  --line: #d9ded8;
+  --line-warm: #e2ded4;
+  --line-cool: #cbd6d4;
+  --line-input: #b8c6c3;
+
+  --success: #176b5b;
+  --danger: #9b2c16;
+  --danger-text: #6c2417;
+  --danger-surface: #fceae5;
+
+  --radius-s: 0.25rem;
+  --radius-m: 0.35rem;
+  --shadow-pop: 0 18px 50px -18px rgba(22, 35, 46, 0.35);
+  --focus: 3px solid var(--aqua);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--text);
+  background: var(--paper);
+  font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  font-synthesis: none;
+}
