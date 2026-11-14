@@ -1,50 +1,40 @@
-# Micro-RetailTech · Talavera Valley Hackathon 2026
+# Glowel
 
-**Tec de Monterrey Puebla · 13 y 14 de noviembre de 2026**
+## Integrantes
 
-> **Tecnología que el mostrador sí adopta.**
-> ¿Cómo creamos tecnología que los negocios de retail adopten de verdad, y no solo descarguen?
+| Nombre | Rol | GitHub |
+|Andre |COO|AndreGCarvajal|
+|Mateo|CTO|MateoCruzMedina|
+|Angel|CEO|Weentl|
 
-## El reto
 
-No falta software, falta adopción. Cada año salen cientos de herramientas para el pequeño retail, y la mayoría muere en la segunda semana, cuando el negocio vuelve al cuaderno, a la memoria y a WhatsApp.
+## La idea, en una línea
 
-**Su reto:** crear tecnología que los negocios de retail **sí adopten**.
+**Kardo** convierte cualquier QR físico en un menú o catálogo vivo: se da de alta en segundos con una **foto** de tu carta o pizarrón y se opera todos los días con **notas de voz o mensajes en Telegram** (agotados en 1 toque, cambios de precio, promociones y plantillas), sin abrir paneles web ni volver a reimprimir el QR.
 
-- **El problema:** el cuaderno no se cae, no pide contraseña y no cobra mensualidad. Contra eso compite cualquier herramienta nueva.
-- **La vara:** si no le sirve al mostrador el lunes a las 7 de la mañana, todavía no es solución.
+## ¿Para quién es? (tiendita, fonda, abarrotes, etc.)
 
-**Pregunta guía:** si tuvieran 24 horas y un equipo de cuatro, ¿qué construirían para la tiendita… o para la fonda de la esquina? ¿Y quién pagaría por eso?
+Micro y pequeños comercios físicos en México — **cafeterías, fondas, taquerías, panaderías, loncherías y tienditas** — que operan detrás del mostrador con el celular en la bolsa y necesitan actualizar precios, platillos agotados y promociones al instante sin perder tiempo frente a una computadora.
 
-### El retail de México, en números
+## ¿Por qué sí lo adoptarían?
 
-- **1.05 M** de tienditas en el país.
-- **736 mil** establecimientos de alimentos y bebidas.
-- **28%** de los alimentos se desperdicia en la cadena.
+- **Cero curva de aprendizaje ("Cero Panel"):** El 90.6% de los usuarios de smartphone en México ya usa mensajería todos los días; en Kardo, operar el menú es mandar una foto, una nota de voz (*"Se acabó el Cold Brew"*, *"Pon promo 2x1 hoy"*) o tocar un botón dentro de Telegram.
+- **Un QR que nunca muere:** El código QR impreso en la mesa o mostrador es permanente; el contenido, la disponibilidad y hasta la plantilla visual cambian en segundos en tiempo real (< 50 ms en el borde).
+- **Alta mágica en 10 segundos:** Tomar una foto al menú impreso o pizarrón basta para que la IA extraiga secciones, platillos y precios y los publique listos para escanear.
+- **Datos reales del mostrador:** Registra escaneos por punto, horarios pico, productos más consultados y leads, consultables directo por chat (`/resumen`) o en el panel web cuando el negocio crece.
 
-## Cómo registrar a tu equipo
+## ¿Quién pagaría y cuánto?
 
-1. Haz un **fork** de este repositorio (botón *Fork*, arriba a la derecha).
-2. Copia la carpeta `equipos/_plantilla` y renómbrala con el nombre de tu equipo, en minúsculas y con guiones. Ejemplo: `equipos/los-del-mostrador`.
-3. Llena el `README.md` de tu carpeta con integrantes, idea y liga a tu código o demo.
-4. Abre un **Pull Request** hacia `main` con el título `Equipo: <nombre>`.
-5. Lo aprobamos y tu equipo queda registrado.
+Los **dueños de comercios locales y cadenas pequeñas** (y distribuidores/aliados comerciales de punto de venta):
 
-Pueden tener su código en su propio repositorio y solo poner la liga, o subirlo dentro de su carpeta.
+- **Entrada · Kit físico opcional:** Kits QR/mostrador desde **$799 MXN** (venta directa y por distribuidores).
+- **Recurrente · Suscripción SaaS mensual (IVA incluido):**
+  - **Básico — $199/mes:** 1 punto de contacto · menú o catálogo · operación por chat.
+  - **Pro — $449/mes:** Multipunto · analítica por punto y canal · captura de leads.
+  - **Negocio — $1,199/mes:** Sucursales · roles de equipo · horarios · seguridad avanzada.
 
-## Reglas básicas
+## Ligas
 
-- Solo modifiquen la carpeta de su equipo.
-- Nada de contraseñas, llaves de API ni datos personales de clientes en el repositorio.
-- Todo lo que se presente debe construirse durante el hackathon (pueden usar librerías y servicios existentes).
-
-## Panelistas
-
-- **Guilebaldo Ruiz**: Cosme Tortas y LCH Autopartes.
-- **Erik Rivera**: Kimetrics.
-- **Erick Meléndez**: Aflorear.
-- **Moderador: Diego Aparicio**: Llévele y Centrali.
-
-## Equipos registrados
-
-Revisen la carpeta [`equipos/`](./equipos).
+- Código: https://github.com/Weentl/Kardo
+- Demo: https://total-everyone-comfort-feels.trycloudflare.com/t/f69930e706214bd4ad828387d38c4212
+- Presentación: https://www.canva.com/d/Z216L8Sb2hOg1Ue
