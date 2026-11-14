@@ -1,0 +1,52 @@
+/* ---------------------------------------------------------------------------
+   HoursPicker (relevo 37 C1a, 2026-10-08): one-tap day templates, «Cierro a
+   mediodía» and «Un día distinto». `.hours-picker`, `.hours-row`,
+   `.hours-times`, `.hours-time-label`, `.hours-add` and `.hours-preview`
+   keep the rules in styles/profile-fields.css; these are the new pieces.
+   --------------------------------------------------------------------------- */
+
+.hours-templates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.hours-chip {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+}
+.hours-chip:hover {
+  border-color: var(--teal);
+}
+.hours-chip[aria-pressed="true"] {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--paper);
+}
+.hours-chip-add {
+  justify-self: start;
+}
+
+.hours-distinct-day {
+  display: grid;
+  gap: 0.25rem;
+  max-width: 12rem;
+}
+
+.hours-break {
+  align-items: center;
+  color: var(--text-note);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.4rem;
+}
+.hours-break select {
+  max-width: 7rem;
+}

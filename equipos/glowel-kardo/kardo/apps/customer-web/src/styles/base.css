@@ -1,0 +1,471 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  background: var(--paper);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  margin: 0;
+  min-width: 320px;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+a {
+  color: var(--teal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+::selection {
+  background: var(--mist);
+  color: var(--ink);
+}
+.skip-link {
+  background: var(--ink);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-md);
+  color: var(--paper);
+  font-weight: 600;
+  left: 1rem;
+  padding: 0.7rem 0.9rem;
+  position: fixed;
+  text-decoration: none;
+  top: -4rem;
+  transition: top var(--motion-fast) var(--ease-out);
+  z-index: 60;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--aqua);
+  outline-offset: 2px;
+}
+main:focus {
+  outline: none;
+}
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.icon {
+  flex: 0 0 auto;
+}
+.muted {
+  color: var(--text-soft);
+}
+
+/* ---------------------------------------------------------------------------
+   Type scale — Geist carries titles and figures; DM Sans the interface.
+   --------------------------------------------------------------------------- */
+.eyebrow {
+  color: var(--teal);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.3;
+  margin: 0 0 0.65rem;
+  text-transform: uppercase;
+}
+.eyebrow-light {
+  color: var(--aqua);
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: var(--display-weight);
+}
+h1 {
+  font-size: var(--text-3xl);
+  letter-spacing: -0.025em;
+  line-height: 1.04;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.25rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+h3,
+h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: var(--leading-snug);
+}
+.display-number {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Buttons: primary · secondary · ghost · danger · dark. Hover lifts by 1 px,
+   press settles back with a slight scale; both on --motion-instant.
+   --------------------------------------------------------------------------- */
+.button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-m);
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.45rem;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1.2;
+  min-height: 2.625rem;
+  padding: 0 1.05rem;
+  position: relative;
+  text-decoration: none;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+  user-select: none;
+  white-space: nowrap;
+}
+.button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+.button:not(:disabled):active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: var(--motion-instant);
+}
+.button-primary {
+  background: var(--teal);
+  box-shadow: var(--shadow-inset-highlight), var(--shadow-teal-sm);
+  color: var(--paper);
+}
+.button-primary:not(:disabled):hover {
+  background: var(--teal-hover);
+  box-shadow: var(--shadow-inset-highlight), var(--shadow-teal-md);
+}
+.button-primary:not(:disabled):active {
+  background: var(--teal-deep);
+}
+.button-dark {
+  background: var(--ink);
+  box-shadow: var(--shadow-inset-highlight), var(--shadow-xs);
+  color: var(--paper);
+}
+.button-dark:not(:disabled):hover {
+  background: var(--ink-raised);
+}
+.button-secondary {
+  background: var(--surface);
+  border-color: var(--line-input);
+  box-shadow: var(--shadow-xs);
+  color: var(--ink);
+}
+.button-secondary:not(:disabled):hover {
+  background: var(--tint);
+  border-color: var(--teal-soft-line);
+  color: var(--teal-deep);
+}
+.button-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+.button-ghost:not(:disabled):hover {
+  background: var(--teal-wash);
+  color: var(--ink);
+  transform: none;
+}
+.button-danger {
+  background: var(--tone-danger-solid);
+  box-shadow: var(--shadow-inset-highlight), var(--shadow-danger-sm);
+  color: var(--on-solid);
+}
+.button-danger:not(:disabled):hover {
+  background: var(--tone-danger-solid-hover);
+}
+.button-danger-quiet {
+  background: transparent;
+  border-color: var(--tone-danger-line);
+  color: var(--tone-danger-text);
+}
+.button-danger-quiet:not(:disabled):hover {
+  background: var(--tone-danger-surface);
+  border-color: var(--tone-danger-accent);
+}
+.button-small {
+  border-radius: var(--radius-s);
+  font-size: var(--text-xs);
+  gap: 0.35rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+}
+.button-large {
+  font-size: var(--text-base);
+  min-height: 3rem;
+  padding: 0 1.4rem;
+}
+.button-block {
+  width: 100%;
+}
+.button[aria-busy="true"] {
+  cursor: progress;
+}
+.button-spinner {
+  animation: spin 700ms linear infinite;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-right-color: transparent;
+  display: inline-block;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.icon-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-m);
+  color: inherit;
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    transform var(--motion-instant) var(--ease-out);
+}
+.icon-button:not(:disabled):hover {
+  background: var(--teal-wash);
+  border-color: var(--line-cool);
+}
+.icon-button:not(:disabled):active {
+  transform: scale(0.94);
+}
+.icon-button-danger {
+  color: var(--tone-danger-text);
+}
+.icon-button-danger:not(:disabled):hover {
+  background: var(--tone-danger-surface);
+  border-color: var(--tone-danger-line);
+}
+.text-action,
+.link-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-xs);
+  color: var(--teal);
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  padding: 0;
+  text-decoration: none;
+  transition: color var(--motion-fast) var(--ease-out);
+  white-space: nowrap;
+}
+.link-button {
+  font-size: var(--text-xs);
+  min-height: auto;
+}
+.text-action:not(:disabled):hover,
+.link-button:hover {
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+.mode-switch {
+  background: transparent;
+  border: 0;
+  color: var(--teal);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  padding: 0;
+  text-align: left;
+}
+.mode-switch:not(:disabled):hover {
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+.mode-switch-secondary {
+  color: var(--text-soft);
+  font-weight: 500;
+  margin-top: 0.7rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Form controls shared by every form surface.
+   --------------------------------------------------------------------------- */
+:is(.creation-form, .editor-form, .form-grid, .dialog, .help-drawer)
+:is(
+  input:not(
+    [type="radio"],
+    [type="checkbox"],
+    [type="color"],
+    [type="file"],
+    [type="range"]
+  ),
+  select,
+  textarea
+),
+.toolbar select,
+.search-field input,
+.input {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-xs);
+  color: var(--ink);
+  min-height: 2.75rem;
+  padding: 0 0.85rem;
+  transition:
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out),
+    background-color var(--motion-fast) var(--ease-out);
+  width: 100%;
+}
+:is(.creation-form, .editor-form, .form-grid, .dialog, .help-drawer)
+  :is(input, select, textarea):hover:not(:disabled, :focus),
+.toolbar select:hover:not(:focus),
+.search-field input:hover:not(:focus) {
+  border-color: var(--text-faint);
+}
+/* Same specificity as the shared control rule above, so it must stay after it. */
+:is(.creation-form, .editor-form, .form-grid) textarea:not([hidden]) {
+  line-height: 1.5;
+  min-height: 6rem;
+  padding: 0.7rem 0.85rem;
+  resize: vertical;
+}
+:is(.creation-form, .editor-form, .form-grid, .dialog, .help-drawer)
+  :is(input, select, textarea):focus,
+.toolbar select:focus,
+.search-field input:focus,
+.input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--focus-halo);
+  outline: none;
+}
+:is(.creation-form, .editor-form, .form-grid) :is(input, textarea)[readonly] {
+  background: var(--paper);
+  box-shadow: none;
+  color: var(--text-muted);
+}
+::placeholder {
+  color: var(--text-faint);
+  opacity: 1;
+}
+select:not([multiple]) {
+  cursor: pointer;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--teal);
+}
+.optional-label {
+  color: var(--text-soft);
+  font-weight: 500;
+}
+.form-note {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  margin: 0.25rem 0 0;
+}
+.form-notice {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+  background: var(--tone-info-surface);
+  border: 1px solid var(--tone-info-line);
+  border-radius: var(--radius-m);
+  color: var(--tone-info-text);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  margin: 0.8rem 0 0;
+  padding: 0.7rem 0.85rem;
+}
+
+/* iOS zooms into inputs under 16 px: keep controls at 16 px on phones. */
+@media (max-width: 760px) {
+  input:not([type="checkbox"], [type="radio"], [type="range"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Every animation and transition collapses to (almost) zero. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-instant: 0.01ms;
+    --motion-fast: 0.01ms;
+    --motion-base: 0.01ms;
+    --motion-slow: 0.01ms;
+    --motion-deliberate: 0.01ms;
+    --motion-exit-base: 0.01ms;
+    --motion-exit-slow: 0.01ms;
+    --motion-stagger: 0ms;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,599 @@
+/* Links: the Página de enlaces editor bits, then the section itself. */
+
+.handle-input {
+  align-items: center;
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  display: flex;
+  gap: 0.2rem;
+  padding: 0 0.7rem;
+}
+.handle-input span {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+.handle-input input {
+  border: 0;
+  padding-left: 0.1rem;
+}
+.handle-input input:focus {
+  outline: none;
+}
+
+.avatar-picker {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+.avatar-picker-preview {
+  align-items: center;
+  background: var(--mist);
+  border: 1px solid var(--line-cool);
+  border-radius: 50%;
+  color: var(--teal);
+  display: flex;
+  flex: 0 0 auto;
+  height: 4rem;
+  justify-content: center;
+  overflow: hidden;
+  width: 4rem;
+}
+.avatar-picker-fields {
+  flex: 1;
+  min-width: 0;
+}
+
+.social-row {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.8rem 0.9rem 1rem;
+}
+.social-row-header {
+  align-items: center;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: minmax(0, 10rem) auto;
+}
+.social-network-picker {
+  align-items: center;
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  display: flex;
+  gap: 0.4rem;
+  padding: 0 0.6rem;
+}
+.social-network-picker select {
+  border: 0;
+  padding-left: 0.1rem;
+}
+.social-network-picker select:focus {
+  outline: none;
+}
+
+@media (max-width: 760px) {
+  .social-row-header {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Links (redesign, relevo 34): «Tu dirección» on top, the list, one link,
+   and its dialogs. Short texts; explanations live in Ayuda.
+   --------------------------------------------------------------------------- */
+
+/* «Tu dirección»: the one thing to paste in a bio. */
+.link-address-card {
+  align-items: center;
+  display: grid;
+  gap: 1rem 1.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-top: 0;
+}
+.link-address-card-label {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  margin: 0;
+}
+.link-address-card-url {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1rem + 1.1vw, 1.9rem);
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0.2rem 0 0.3rem;
+  overflow-wrap: anywhere;
+}
+.link-address-card-url span {
+  color: var(--text-soft);
+}
+.link-address-card-opens {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  margin: 0;
+}
+.link-address-card-opens a {
+  color: var(--teal);
+  font-weight: 600;
+  text-decoration: none;
+}
+.link-address-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+/* «Cambiar la dirección de tu negocio» (C7a): long on purpose, so it is
+   never mistaken for a link's own address. Let it wrap instead of
+   overflowing. */
+.link-address-card-change {
+  text-align: center;
+  white-space: normal;
+}
+.link-address-choose {
+  grid-template-columns: minmax(0, 1fr);
+}
+.link-address-choose-title {
+  font-size: 1.2rem;
+  margin: 0 0 0.25rem;
+}
+.link-address-choose-row {
+  align-items: end;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+/* The list: one row per link, the address first. */
+.link-list {
+  margin-top: 1rem;
+}
+.link-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.link-row {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+.link-row + .link-row {
+  border-top: 1px solid var(--line);
+}
+.link-row:hover {
+  background: var(--surface-hover);
+}
+.link-row-main {
+  align-items: center;
+  border-radius: var(--radius-s);
+  color: inherit;
+  display: flex;
+  gap: 0.9rem;
+  min-width: 0;
+  text-decoration: none;
+}
+.link-row-main:focus-visible {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+.link-row-thumb {
+  height: 3.9rem;
+  width: 2.9rem;
+}
+.link-thumb-empty {
+  align-items: center;
+  background: var(--paper);
+  color: var(--text-soft);
+  display: flex;
+  justify-content: center;
+}
+.link-row-text {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.link-row-address {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: var(--display-weight);
+  gap: 0.2rem 0.7rem;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.link-row-shows {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.link-main-mark {
+  align-items: center;
+  color: var(--teal);
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  gap: 0.25rem;
+  letter-spacing: 0;
+}
+.link-main-mark .icon {
+  fill: currentColor;
+}
+/* A plain dot and a word: no box, no halo (owner, 2026-10-03). */
+.link-state {
+  align-items: center;
+  color: var(--tone-warning-text);
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  gap: 0.35rem;
+  letter-spacing: 0;
+}
+.link-state::before {
+  background: var(--tone-warning-accent);
+  border-radius: 50%;
+  content: "";
+  height: 7px;
+  width: 7px;
+}
+.link-row-visits {
+  display: grid;
+  justify-items: end;
+  line-height: 1.15;
+  min-width: 6.5rem;
+}
+.link-row-visits strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--display-weight);
+}
+.link-row-visits small {
+  color: var(--text-soft);
+  font-size: 0.75rem;
+}
+.link-row-actions {
+  align-items: center;
+  display: flex;
+  gap: 0.15rem;
+}
+.link-row.is-retired .link-row-address,
+.link-row.is-retired .link-row-shows {
+  color: var(--text-soft);
+}
+.link-retired {
+  margin-top: 1rem;
+}
+.link-retired summary {
+  align-items: center;
+  color: var(--teal);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  gap: 0.3rem;
+  list-style: none;
+}
+.link-retired summary::-webkit-details-marker {
+  display: none;
+}
+.link-retired[open] summary .icon {
+  transform: rotate(90deg);
+}
+.link-rows-retired {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-l);
+  margin-top: 0.75rem;
+}
+/* «¿QR o etiquetas para tu local?» (S9): one discreet line to Touchpoints. */
+.links-touchpoints-hint {
+  margin-top: 1.25rem;
+}
+
+/* «Nuevo link»: the tiles above, the address and the buttons pinned below. */
+.new-link-form {
+  display: grid;
+  gap: 1rem;
+}
+.new-link-foot {
+  align-items: end;
+  display: grid;
+  flex: 1;
+  gap: 0.75rem 1.25rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-width: 0;
+}
+.new-link-foot-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.new-link-empty {
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+/* «Tu link está listo». */
+.link-ready {
+  display: grid;
+  gap: 1rem;
+}
+.link-copybox {
+  align-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--line-input);
+  border-radius: 12px;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.6rem 0.6rem 0.6rem 0.9rem;
+}
+.link-copybox span {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: var(--display-weight);
+  line-height: 1.25;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.link-ready-actions {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.link-ready-actions .button {
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 4.25rem;
+}
+.link-ready-main {
+  align-items: center;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  gap: 0.35rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.link-ready-main .icon {
+  color: var(--teal);
+  fill: currentColor;
+}
+
+/* One link. */
+.link-page-header .link-address-copy {
+  justify-content: flex-start;
+  margin-top: 0.6rem;
+}
+.link-page-header .link-address-copy-text {
+  color: var(--text-muted);
+  font-size: var(--text-md);
+  font-weight: 500;
+}
+.link-also {
+  color: var(--text-soft);
+  font-size: var(--text-sm);
+  margin: 0.35rem 0 0;
+  overflow-wrap: anywhere;
+}
+.link-more {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+}
+.link-paused {
+  align-items: center;
+  background: var(--tone-warning-surface);
+  border: 1px solid var(--tone-warning-line);
+  border-radius: var(--radius-l);
+  color: var(--tone-warning-text);
+  display: flex;
+  font-weight: 600;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding: 0.65rem 0.9rem;
+}
+.link-paused-dot {
+  background: var(--tone-warning-accent);
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  margin-right: 0.3rem;
+  width: 8px;
+}
+.link-detail {
+  align-items: start;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) 20rem;
+}
+.link-detail .panel,
+.link-visits .panel {
+  margin-top: 0;
+}
+.link-shows,
+.link-visits,
+.link-share {
+  grid-column: 1;
+  min-width: 0;
+}
+.link-detail-preview {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  position: sticky;
+  top: 1.5rem;
+}
+.link-section-title {
+  font-size: 1.15rem;
+  margin: 0 0 0.9rem;
+}
+.link-shows-row {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+.link-shows-thumb {
+  height: 6rem;
+  width: 4.4rem;
+}
+.link-shows-text strong {
+  display: block;
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+.link-shows-text small {
+  color: var(--text-soft);
+  display: block;
+  font-size: var(--text-sm);
+  margin-top: 0.15rem;
+}
+.link-shows-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.link-visits-kpi {
+  align-items: baseline;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.link-visits-kpi strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: var(--display-weight);
+  letter-spacing: -0.02em;
+}
+.link-delta {
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.12rem 0.5rem;
+}
+.link-delta-up {
+  background: var(--tone-success-surface);
+  color: var(--tone-success-text);
+}
+.link-delta-down {
+  background: var(--tone-danger-surface);
+  color: var(--tone-danger-text);
+}
+.link-share-row {
+  display: grid;
+  gap: 0.75rem;
+}
+.link-share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+/* A code to print is a QR of «QR y etiquetas» (domain audit A9-1). */
+.link-share-print {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* Dialogs. */
+.link-address-form {
+  display: grid;
+}
+.link-retire-pause {
+  margin-right: auto;
+}
+.link-retire-text {
+  font-size: var(--text-md);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1100px) {
+  .link-detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .link-detail-preview {
+    grid-column: 1;
+    grid-row: auto;
+    position: static;
+  }
+}
+@media (max-width: 760px) {
+  .link-address-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .link-address-card-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .link-address-choose-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .link-row {
+    gap: 0.6rem;
+    padding: 0.7rem 0.4rem 0.7rem 0.8rem;
+  }
+  .link-row-thumb {
+    height: 3.4rem;
+    width: 2.5rem;
+  }
+  .link-row-type,
+  .link-row-days,
+  .link-row-copy {
+    display: none;
+  }
+  .link-row-visits {
+    min-width: 0;
+  }
+  .new-link-foot {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .new-link-foot-actions .button {
+    flex: 1;
+  }
+  .new-link-foot-actions .button-secondary {
+    display: none;
+  }
+  .link-shows-row {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .link-shows-actions {
+    grid-column: 1 / -1;
+  }
+  .link-shows-actions .button {
+    flex: 1;
+  }
+  .link-detail-preview {
+    display: none;
+  }
+}
+
+/* A WhatsApp link inside a «⋯» menu reads like the other items. */
+.kd-dropdown-content a.kd-dropdown-item {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 760px) {
+  /* The title and «Nuevo link» (or «⋯») share one line. */
+  .links-page .page-header,
+  .link-page .page-header {
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .link-page .page-header {
+    align-items: flex-start;
+  }
+}

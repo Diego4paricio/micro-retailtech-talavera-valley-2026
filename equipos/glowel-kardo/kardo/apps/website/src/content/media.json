@@ -1,0 +1,107 @@
+{
+  "negocio-alimentos": {
+    "width": 825,
+    "height": 1024,
+    "widths": [640, 825]
+  },
+  "negocio-tiendas": {
+    "width": 1800,
+    "height": 1208,
+    "widths": [640, 1200, 1800]
+  },
+  "negocio-servicios": {
+    "width": 1800,
+    "height": 1208,
+    "widths": [640, 1200, 1800]
+  },
+  "como-funciona": {
+    "width": 1800,
+    "height": 1208,
+    "widths": [640, 1200, 1800]
+  },
+  "pieza-stand": {
+    "width": 1200,
+    "height": 896,
+    "widths": [640, 1200]
+  },
+  "pieza-card": {
+    "width": 1264,
+    "height": 848,
+    "widths": [640, 1200, 1264]
+  },
+  "pieza-magnet": {
+    "width": 1024,
+    "height": 764,
+    "widths": [640, 1024]
+  },
+  "pieza-sticker": {
+    "width": 1024,
+    "height": 687,
+    "widths": [640, 1024]
+  },
+  "panel-publicar": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-conectar": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-medir": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-completo": {
+    "width": 1800,
+    "height": 1125,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-resumen": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-qr-etiquetas": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-ficha": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-diseno-qr": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-paginas": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-disponibilidad": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-analitica": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-solicitudes": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  },
+  "panel-links": {
+    "width": 1800,
+    "height": 1251,
+    "widths": [640, 1200, 1800]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@kardo/analytics-worker",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "lint": "biome check src test",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "types": "wrangler types",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "postgres": "^3.4.9"
+  }
+}

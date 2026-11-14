@@ -1,0 +1,26 @@
+{
+  "name": "@kardo/staff-api",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "lint": "biome check src test",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --testTimeout=20000",
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@kardo/billing": "workspace:*",
+    "@kardo/config": "workspace:*",
+    "@kardo/contracts": "workspace:*",
+    "@kardo/observability": "workspace:*",
+    "fastify": "^5.6.0",
+    "jose": "6.2.12",
+    "postgres": "3.4.7"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.6"
+  }
+}

@@ -1,0 +1,29 @@
+.DS_Store
+node_modules/
+.pnpm-store/
+.next/
+out/
+coverage/
+dist/
+.env
+.env.*
+!.env.example
+!.env.*.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+*.pfx
+.wrangler/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+e2e-report-*.json
+.deploy/
+
+# Demo video takes (scripts/video): accounts, webm, mp4 and contact sheets.
+scripts/video/.out/
+
+# Claude Code runtime state (per session).
+.claude/scheduled_tasks.lock

@@ -1,0 +1,46 @@
+{
+  "source": "../fuentes/inmobiliaria.webp",
+  "output": "../../../public/media/inmobiliaria.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 496.5, "cy": 492.5, "rx": 86, "ry": 86 }],
+        "feather": 8,
+        "degree": 2,
+        "sample": {
+          "ellipse": { "cx": 496.5, "cy": 492.5, "rx": 97, "ry": 97 }
+        }
+      },
+      "brand": {
+        "cx": 515,
+        "cy": 486,
+        "scale": 0.34,
+        "rotate": 0,
+        "squash": 1,
+        "box": [560, 340],
+        "items": [
+          { "type": "icon", "x": 280, "y": 64, "size": 66 },
+          {
+            "type": "text",
+            "x": 280,
+            "y": 218,
+            "text": "Roble",
+            "fontFamily": "Optima",
+            "fontWeight": 700,
+            "fontSize": 120
+          },
+          {
+            "type": "text",
+            "x": 280,
+            "y": 288,
+            "text": "Inmobiliaria",
+            "fontFamily": "Optima",
+            "fontWeight": 400,
+            "fontSize": 54
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

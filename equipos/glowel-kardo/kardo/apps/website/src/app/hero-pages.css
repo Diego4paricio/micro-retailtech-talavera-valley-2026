@@ -1,0 +1,697 @@
+/* biome-ignore-all lint/style/noDescendingSpecificity: each page's rules live under its own root class (.hp-jacaranda, .hp-nacar…), so a later "b" or "svg" rule never meets an earlier one. */
+/*
+  Pages of the businesses in the hero's phone (components/hero/
+  HeroPages.tsx), laid out at 390 px wide like a phone. Each business has
+  its own palette and one of the Estudio's webfonts; nothing here is
+  Kardo's look except the small mark at the end of every page.
+*/
+.hp {
+  position: relative;
+  min-height: 100%;
+  width: 390px;
+  font-family: var(--font-dm-sans), "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hp img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hp h2 {
+  font-family: inherit;
+  text-wrap: balance;
+}
+
+.hp-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hp-kardo {
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 40px;
+  color: rgba(22, 35, 46, 0.45);
+}
+
+.hp-kardo-light {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Jacaranda, taller floral ------------------------------------------- */
+.hp-jacaranda {
+  background: #f6f1ea;
+  color: #2f2340;
+}
+
+.hp-j-hero {
+  position: relative;
+  height: 356px;
+}
+
+.hp-j-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 200px;
+  background: linear-gradient(
+    rgba(33, 22, 44, 0.78) 0%,
+    rgba(33, 22, 44, 0.45) 45%,
+    rgba(33, 22, 44, 0) 100%
+  );
+}
+
+.hp-j-brand {
+  position: absolute;
+  top: 58px;
+  left: 22px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-shadow: 0 1px 12px rgba(33, 22, 44, 0.45);
+}
+
+.hp-j-mark {
+  width: 36px;
+  height: 36px;
+  color: #b9a3e3;
+}
+
+.hp-j-brand b {
+  display: block;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.hp-j-brand small {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  opacity: 0.88;
+}
+
+.hp-j-tag {
+  position: absolute;
+  bottom: 44px;
+  left: 18px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 10px 30px -12px rgba(33, 22, 44, 0.5);
+  font-size: 13.5px;
+}
+
+.hp-j-tag b {
+  font-weight: 600;
+}
+
+.hp-j-tag em {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: #f7e3c7;
+  color: #8a5413;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.hp-j-body {
+  position: relative;
+  z-index: 2;
+  margin-top: -26px;
+  padding: 26px 22px 0;
+  border-radius: 26px 26px 0 0;
+  background: #f6f1ea;
+}
+
+.hp-j-body h2 {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 29px;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
+
+.hp-j-body p {
+  margin-top: 8px;
+  color: #6b5f78;
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.hp-j-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.hp-j-grid figure {
+  overflow: hidden;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(47, 35, 64, 0.06);
+}
+
+.hp-j-grid img {
+  height: 150px;
+}
+
+.hp-j-grid figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px 12px;
+  font-size: 13.5px;
+}
+
+.hp-j-grid figcaption b {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hp-j-button {
+  margin-top: 18px;
+  background: #4b3470;
+  color: #fff;
+}
+
+/* Nácar, estudio de uñas --------------------------------------------- */
+.hp-nacar {
+  padding: 62px 26px 0;
+  background:
+    radial-gradient(ellipse 90% 40% at 50% 0%, #3a2c27 0%, transparent 70%),
+    #1e1714;
+  color: #f1e7dd;
+  text-align: center;
+}
+
+.hp-n-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hp-n-mark {
+  width: 34px;
+  height: 34px;
+  color: #d8b49a;
+}
+
+.hp-n-brand b {
+  margin-top: 6px;
+  font-family: var(--font-poppins), sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-indent: 0.2em;
+}
+
+.hp-n-brand small {
+  margin-top: 6px;
+  color: #b9a597;
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+}
+
+.hp-n-arch {
+  width: 250px;
+  height: 250px;
+  margin: 22px auto 0;
+  overflow: hidden;
+  border-radius: 125px 125px 20px 20px;
+  box-shadow: 0 0 0 1px rgba(216, 180, 154, 0.35);
+}
+
+.hp-nacar h2 {
+  margin-top: 22px;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+}
+
+.hp-n-list {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.hp-n-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 2px;
+  border-bottom: 1px solid rgba(216, 180, 154, 0.22);
+  font-size: 14.5px;
+}
+
+.hp-n-list b {
+  color: #d8b49a;
+  font-weight: 600;
+}
+
+.hp-n-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.hp-n-primary {
+  background: #d8b49a;
+  color: #1e1714;
+}
+
+.hp-n-ghost {
+  height: 46px;
+  box-shadow: inset 0 0 0 1px rgba(241, 231, 221, 0.3);
+  color: #f1e7dd;
+}
+
+/* Tamarindo, cocina de barrio ----------------------------------------- */
+.hp-tamarindo {
+  padding: 58px 18px 0;
+  background: #f3e9d8;
+  color: #3a2616;
+}
+
+.hp-t-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.hp-t-mark {
+  width: 38px;
+  height: 38px;
+  color: #7a4a24;
+}
+
+.hp-t-head b {
+  display: block;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.hp-t-head small {
+  display: block;
+  margin-top: 3px;
+  color: #8a6a4d;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+
+.hp-t-hero {
+  position: relative;
+  height: 230px;
+  margin-top: 16px;
+  overflow: hidden;
+  border-radius: 22px;
+}
+
+.hp-t-hero div {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 40px 16px 14px;
+  background: linear-gradient(rgba(30, 16, 6, 0), rgba(30, 16, 6, 0.72));
+  color: #fff;
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 19px;
+}
+
+.hp-t-hero b {
+  font-weight: 600;
+}
+
+.hp-t-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.hp-t-tabs span {
+  padding: 8px 15px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(122, 74, 36, 0.28);
+  color: #7a4a24;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.hp-t-tabs span[data-on] {
+  background: #b5452b;
+  box-shadow: none;
+  color: #fff;
+}
+
+.hp-t-list {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hp-t-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 2px;
+  border-bottom: 1px solid rgba(122, 74, 36, 0.16);
+}
+
+.hp-t-list img,
+.hp-t-blank {
+  flex: none;
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+}
+
+.hp-t-blank {
+  display: grid;
+  place-items: center;
+  background: #e8dcc6;
+  color: #a88a68;
+}
+
+.hp-t-blank svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.8;
+}
+
+.hp-t-list li > span:not(.hp-t-blank) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hp-t-list b {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 16.5px;
+  font-weight: 600;
+}
+
+.hp-t-list small {
+  color: #8a6a4d;
+  font-size: 13px;
+}
+
+.hp-t-list em {
+  font-family: var(--font-lora), Georgia, serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.hp-t-list i {
+  margin-top: 3px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.hp-t-low {
+  background: #f7e3c7;
+  color: #8a5413;
+}
+
+.hp-t-sold {
+  background: #f3d9d3;
+  color: #9b3530;
+}
+
+.hp-t-out b,
+.hp-t-out em {
+  opacity: 0.5;
+}
+
+/* Arista, bienes raíces ----------------------------------------------- */
+.hp-arista {
+  background: #f3f0eb;
+  color: #1d2327;
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+.hp-a-hero {
+  position: relative;
+  height: 318px;
+}
+
+.hp-a-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 140px;
+  background: linear-gradient(rgba(15, 18, 20, 0.6), rgba(15, 18, 20, 0));
+}
+
+.hp-a-brand {
+  position: absolute;
+  top: 58px;
+  left: 22px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+}
+
+.hp-a-mark {
+  width: 30px;
+  height: 30px;
+  color: #d9b779;
+}
+
+.hp-a-brand b {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.hp-a-price {
+  position: absolute;
+  bottom: 16px;
+  left: 18px;
+  z-index: 2;
+  padding: 7px 13px;
+  border-radius: 10px;
+  background: #1d2327;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hp-a-body {
+  padding: 20px 20px 0;
+}
+
+.hp-a-body h2 {
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.hp-a-specs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.hp-a-specs span {
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #e1dbd1;
+  color: #4a5257;
+  font-size: 13px;
+}
+
+.hp-a-specs b {
+  color: #1d2327;
+  font-weight: 600;
+}
+
+.hp-a-thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  height: 104px;
+  margin-top: 14px;
+}
+
+.hp-a-thumbs img {
+  border-radius: 12px;
+}
+
+.hp-a-form {
+  display: grid;
+  gap: 9px;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px #e1dbd1;
+}
+
+.hp-a-form > b {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.hp-a-field {
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px #d3ccc0;
+  color: #8a8f92;
+  font-size: 14px;
+}
+
+.hp-a-consent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5d6468;
+  font-size: 12px;
+}
+
+.hp-a-consent i {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 1.5px #b9b1a4;
+}
+
+.hp-a-button {
+  height: 48px;
+  border-radius: 10px;
+  background: #b08d57;
+  color: #fff;
+}
+
+/* Cifra, despacho contable -------------------------------------------- */
+.hp-cifra {
+  padding: 58px 22px 0;
+  background: linear-gradient(#eaf4ef, #f8faf9 300px);
+  color: #16273f;
+  font-family: var(--font-geist), sans-serif;
+}
+
+.hp-c-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hp-c-mark {
+  width: 32px;
+  height: 32px;
+  color: #1f3a5f;
+}
+
+.hp-c-head b {
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.hp-c-head small {
+  margin-left: auto;
+  color: #5c6b7f;
+  font-size: 12px;
+}
+
+.hp-c-photo {
+  height: 200px;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.hp-cifra h2 {
+  margin-top: 18px;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.hp-cifra > p {
+  margin-top: 6px;
+  color: #51607a;
+  font-size: 14.5px;
+  line-height: 1.45;
+}
+
+.hp-c-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 18px 0 16px;
+}
+
+.hp-c-grid span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 1px #dfe7e3,
+    0 1px 2px rgba(22, 39, 63, 0.04);
+  color: #5c6b7f;
+  font-size: 12.5px;
+}
+
+.hp-c-grid b {
+  color: #16273f;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hp-c-primary {
+  background: #1f3a5f;
+  color: #fff;
+}
+
+.hp-c-ghost {
+  height: 46px;
+  margin-top: 10px;
+  box-shadow: inset 0 0 0 1px #c9d6d0;
+  color: #1f3a5f;
+}

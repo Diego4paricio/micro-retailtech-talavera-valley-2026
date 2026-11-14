@@ -1,0 +1,112 @@
+/* ---------------------------------------------------------------------------
+   QuickItemsEditor (relevo 37 C5a/C5b, 2026-10-08): «Escribir uno por uno»
+   and «Pegar mi lista» as tabs, above the list, and a bigger «Otro …»
+   button. Primeros pasos and «Editar productos y precios».
+   --------------------------------------------------------------------------- */
+
+.qie-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.qie-tab {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+}
+.qie-tab:hover {
+  border-color: var(--teal);
+}
+.qie-tab[aria-selected="true"] {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--paper);
+}
+
+/* «Otro platillo» / «Otro producto»: a real button, not a thin link, so
+   it is easy to find and tap (relevo 37 C5b: Javier, "cansa"). */
+.qie-add-row {
+  justify-self: start;
+  min-height: 3rem;
+  padding-inline: 1.25rem;
+}
+
+/* D1 (comida corrida) and D3 (product photos), relevo 37: compact extras
+   below each row — a photo and, on a Menú, "Tiene guisados a elegir" —
+   so the row itself never grows on a phone (Javier wanted photos, Doña
+   Rosa needed guisados that sell out on their own). */
+.qie-item {
+  display: grid;
+  gap: 0.35rem;
+}
+.qie-item-tools {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+.qie-item-photo summary {
+  min-height: auto;
+}
+.qie-photo-thumb {
+  border-radius: 4px;
+  display: inline-flex;
+  flex: none;
+  height: 16px;
+  overflow: hidden;
+  width: 16px;
+}
+.qie-photo-thumb img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+.qie-choices {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.1rem;
+  max-width: 24rem;
+}
+.qie-choices-title {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin: 0;
+}
+.qie-choices-label .input {
+  max-width: 14rem;
+}
+.qie-choice-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.qie-choice-chip {
+  align-items: center;
+  background: var(--tint);
+  border-radius: 999px;
+  display: flex;
+  font-size: var(--text-sm);
+  gap: 0.15rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.7rem;
+}
+.qie-choice-chip .icon-button {
+  border-radius: 999px;
+  height: 1.5rem;
+  min-width: 1.5rem;
+}
+.qie-choice-add .input {
+  max-width: 16rem;
+}
+.qie-choices-remove {
+  justify-self: start;
+}

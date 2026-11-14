@@ -1,0 +1,279 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+a {
+  color: var(--teal);
+}
+code {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+}
+.skip-link {
+  background: var(--paper);
+  color: var(--ink);
+  left: 1rem;
+  padding: 0.7rem 0.9rem;
+  position: fixed;
+  top: -4rem;
+  z-index: 30;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: var(--focus);
+  outline-offset: 3px;
+}
+main:focus {
+  outline: none;
+}
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+.icon {
+  flex: 0 0 auto;
+}
+.muted {
+  color: var(--text-soft);
+}
+
+.eyebrow {
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.6rem;
+  text-transform: uppercase;
+}
+.eyebrow-light {
+  color: var(--aqua);
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1 {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+  margin-bottom: 0;
+}
+h2 {
+  font-size: clamp(1.7rem, 3.3vw, 2.7rem);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+/* Buttons */
+.button {
+  align-items: center;
+  border: 0;
+  border-radius: var(--radius-m);
+  display: inline-flex;
+  font-weight: 700;
+  gap: 0.45rem;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0 1.15rem;
+  text-decoration: none;
+  transition:
+    background 150ms ease,
+    border-color 150ms ease,
+    transform 150ms ease;
+  white-space: nowrap;
+}
+.button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+.button-primary {
+  background: var(--teal);
+  color: var(--paper);
+}
+.button-primary:not(:disabled):hover {
+  background: var(--teal-hover);
+}
+.button-dark {
+  background: var(--ink);
+  color: var(--paper);
+}
+.button-secondary {
+  background: transparent;
+  border: 1px solid var(--line-input);
+  color: var(--ink);
+}
+.button-secondary:not(:disabled):hover {
+  background: var(--tint);
+  border-color: var(--teal);
+}
+.button-danger {
+  background: var(--danger);
+  color: var(--paper);
+}
+.button-small {
+  font-size: 0.82rem;
+  min-height: 2.35rem;
+  padding: 0 0.8rem;
+}
+.icon-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-m);
+  color: inherit;
+  display: inline-flex;
+  height: 2.5rem;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0;
+}
+.icon-button:not(:disabled):hover {
+  background: var(--tint);
+  border-color: var(--line-cool);
+}
+.text-action,
+.link-button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--teal);
+  display: inline-flex;
+  font-size: 0.85rem;
+  font-weight: 700;
+  gap: 0.3rem;
+  min-height: 2.75rem;
+  padding: 0;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.link-button {
+  font-size: 0.78rem;
+  min-height: auto;
+}
+.text-action:not(:disabled):hover,
+.link-button:hover {
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+.mode-switch {
+  background: transparent;
+  border: 0;
+  color: var(--teal);
+  font-size: 0.84rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  padding: 0;
+  text-align: left;
+}
+.mode-switch:not(:disabled):hover {
+  color: var(--teal-deep);
+  text-decoration: underline;
+}
+.mode-switch-secondary {
+  color: var(--text-soft);
+  font-weight: 600;
+  margin-top: 0.7rem;
+}
+
+/* Form controls shared by every form surface */
+:is(.creation-form, .editor-form, .form-grid, .dialog)
+:is(
+  input:not(
+    [type="radio"],
+    [type="checkbox"],
+    [type="color"],
+    [type="file"],
+    [type="range"]
+  ),
+  select,
+  textarea
+),
+.toolbar select,
+.search-field input {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-s);
+  color: var(--ink);
+  min-height: 3rem;
+  padding: 0 0.8rem;
+  width: 100%;
+}
+/* Same specificity as the shared control rule above, so it must stay after it. */
+:is(.creation-form, .editor-form, .form-grid) textarea:not([hidden]) {
+  line-height: 1.5;
+  min-height: 6rem;
+  padding: 0.7rem 0.8rem;
+  resize: vertical;
+}
+:is(.creation-form, .editor-form, .form-grid, .dialog)
+  :is(input, select, textarea):focus {
+  border-color: var(--teal);
+}
+:is(.creation-form, .editor-form, .form-grid) :is(input, textarea)[readonly] {
+  background: var(--paper);
+  color: var(--text-muted);
+}
+.optional-label {
+  color: var(--text-soft);
+  font-weight: 500;
+}
+.form-note {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  margin: 0.25rem 0 0;
+}
+.form-notice {
+  background: var(--tint);
+  border-left: 3px solid var(--teal);
+  color: var(--text-note);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  margin: 0.8rem 0 0;
+  padding: 0.7rem 0.8rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: must override every component's own animation timing, regardless of selector specificity */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must override every component's own scroll behavior, regardless of selector specificity */
+    scroll-behavior: auto !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must override every component's own transition timing, regardless of selector specificity */
+    transition-duration: 0.01ms !important;
+  }
+}

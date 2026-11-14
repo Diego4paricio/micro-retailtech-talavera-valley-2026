@@ -1,0 +1,146 @@
+/* ---------------------------------------------------------------------------
+   The organization's WhatsApp, hours and city (owner, 2026-10-03): numbers
+   only, hours picked and the city searched. Primeros pasos and
+   Configuración → Organización.
+   --------------------------------------------------------------------------- */
+
+/* WhatsApp: the country code beside the number. */
+.phone-input {
+  align-items: stretch;
+  display: flex;
+}
+.phone-input-code {
+  align-items: center;
+  background: var(--tint);
+  border: 1px solid var(--line-input);
+  border-radius: var(--radius-m) 0 0 var(--radius-m);
+  border-right: 0;
+  color: var(--text-muted);
+  display: inline-flex;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  padding: 0 0.75rem;
+}
+/* As specific as the dialogs' input rule, so the left corners stay square. */
+.phone-input input.input {
+  border-radius: 0 var(--radius-m) var(--radius-m) 0;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* Hours: day chips, opening and closing times. */
+.hours-picker,
+.hours-days {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+.hours-picker {
+  display: grid;
+  gap: 0.75rem;
+}
+.hours-row {
+  display: grid;
+  gap: 0.6rem;
+}
+.hours-row + .hours-row {
+  border-top: 1px dashed var(--line);
+  padding-top: 0.75rem;
+}
+/* Seven days always on one line, also on a phone. */
+.hours-days {
+  display: grid;
+  gap: 0.35rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  max-width: 22rem;
+}
+.hours-day {
+  background: var(--surface);
+  border: 1px solid var(--line-input);
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  height: 2.75rem;
+  padding: 0;
+}
+.hours-day:hover {
+  border-color: var(--teal);
+}
+.hours-day[aria-pressed="true"] {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--paper);
+}
+.hours-times {
+  align-items: end;
+  display: flex;
+  gap: 0.6rem;
+}
+.hours-times label {
+  display: grid;
+  flex: 1;
+  gap: 0.25rem;
+  max-width: 9rem;
+}
+.hours-time-label {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+.hours-add {
+  justify-self: start;
+}
+.hours-preview {
+  color: var(--text-note);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* City: the list of cities under the field. */
+.city-combobox {
+  position: relative;
+}
+/* Below the sticky bar of Primeros pasos when it scrolls up on a phone. */
+.city-combobox .input {
+  scroll-margin-top: 9rem;
+}
+.city-combobox-list {
+  background: var(--surface);
+  border: 1px solid var(--line-warm);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-pop);
+  left: 0;
+  list-style: none;
+  margin: 0.3rem 0 0;
+  max-height: 16rem;
+  overflow-y: auto;
+  padding: 0.3rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 10;
+}
+.city-combobox-option {
+  align-items: baseline;
+  border-radius: var(--radius-s, 0.4rem);
+  cursor: pointer;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.55rem 0.65rem;
+}
+.city-combobox-option:hover,
+.city-combobox-option[aria-selected="true"] {
+  background: var(--teal-wash);
+}
+.city-combobox-option strong {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+.city-combobox-state {
+  color: var(--text-soft);
+  font-size: var(--text-xs);
+}

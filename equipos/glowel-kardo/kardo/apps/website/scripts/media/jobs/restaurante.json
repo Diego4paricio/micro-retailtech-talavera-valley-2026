@@ -1,0 +1,35 @@
+{
+  "source": "../fuentes/restaurante.webp",
+  "output": "../../../public/media/restaurante.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 430, "cy": 521, "rx": 131, "ry": 131 }],
+        "feather": 12,
+        "degree": 2,
+        "sample": { "ellipse": { "cx": 430, "cy": 521, "rx": 148, "ry": 148 } }
+      },
+      "brand": {
+        "cx": 460,
+        "cy": 515,
+        "scale": 0.46,
+        "rotate": 0,
+        "squash": 1,
+        "box": [520, 300],
+        "items": [
+          { "type": "icon", "x": 260, "y": 68, "size": 78 },
+          {
+            "type": "text",
+            "x": 260,
+            "y": 225,
+            "text": "Cocina Maru",
+            "fontFamily": "Georgia",
+            "fontWeight": 700,
+            "fontSize": 100
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

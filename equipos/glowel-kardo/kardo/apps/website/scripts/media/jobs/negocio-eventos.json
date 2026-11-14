@@ -1,0 +1,46 @@
+{
+  "source": "../fuentes/negocio-eventos.png",
+  "output": "../../../public/media/eventos.webp",
+  "outputWidth": 1200,
+  "patches": [
+    {
+      "brand": {
+        "cx": 676,
+        "cy": 800,
+        "ex": [1, 0],
+        "ey": [0.015, 1],
+        "scale": 1,
+        "box": [560, 620],
+        "soften": 0.8,
+        "items": [
+          {
+            "type": "icon",
+            "x": 280,
+            "y": 200,
+            "size": 78,
+            "color": "#F7F5F0"
+          },
+          {
+            "type": "text",
+            "x": 280,
+            "y": 330,
+            "text": "Taller Barro",
+            "fontFamily": "Georgia",
+            "fontWeight": 700,
+            "fontSize": 64,
+            "color": "#F7F5F0"
+          },
+          {
+            "type": "text",
+            "x": 280,
+            "y": 395,
+            "text": "Acerca tu celular",
+            "fontFamily": "Optima",
+            "fontSize": 30,
+            "color": "#F7F5F0"
+          }
+        ]
+      }
+    }
+  ]
+}

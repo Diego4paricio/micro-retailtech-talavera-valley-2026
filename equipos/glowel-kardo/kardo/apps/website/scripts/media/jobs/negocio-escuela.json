@@ -1,0 +1,62 @@
+{
+  "source": "../fuentes/negocio-escuela.png",
+  "output": "../../../public/media/escuela.webp",
+  "outputWidth": 1200,
+  "patches": [
+    {
+      "brand": {
+        "cx": 989.7,
+        "cy": 802.0,
+        "ex": [1.00041, 0.00246],
+        "ey": [-0.00136, 1.0],
+        "scale": 1,
+        "box": [1218, 880],
+        "soften": 0.6,
+        "items": [
+          {
+            "type": "text",
+            "x": 110,
+            "y": 250,
+            "text": "Academia Lumen",
+            "fontFamily": "Georgia",
+            "fontWeight": 700,
+            "fontSize": 104,
+            "anchor": "start",
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 112,
+            "y": 330,
+            "text": "Cursos de fotografía, música y diseño",
+            "fontFamily": "Optima",
+            "fontSize": 46,
+            "anchor": "start",
+            "color": "#52646D"
+          },
+          {
+            "type": "text",
+            "x": 112,
+            "y": 640,
+            "text": "Escanea el código",
+            "fontFamily": "Optima",
+            "fontWeight": 700,
+            "fontSize": 50,
+            "anchor": "start",
+            "color": "#16232E"
+          },
+          {
+            "type": "text",
+            "x": 112,
+            "y": 705,
+            "text": "y pide informes",
+            "fontFamily": "Optima",
+            "fontSize": 50,
+            "anchor": "start",
+            "color": "#16232E"
+          }
+        ]
+      }
+    }
+  ]
+}

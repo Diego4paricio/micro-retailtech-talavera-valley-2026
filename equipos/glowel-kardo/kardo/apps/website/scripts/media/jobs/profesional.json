@@ -1,0 +1,57 @@
+{
+  "source": "../fuentes/profesional.webp",
+  "output": "../../../public/media/profesional.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 533.5, "cy": 440.5, "rx": 58, "ry": 58 }],
+        "feather": 8,
+        "degree": 2,
+        "sample": {
+          "ellipse": { "cx": 533.5, "cy": 440.5, "rx": 72, "ry": 72 }
+        }
+      },
+      "brand": {
+        "cx": 533.5,
+        "cy": 440.5,
+        "scale": 0.48,
+        "rotate": -19,
+        "squash": 1,
+        "box": [100, 100],
+        "items": [{ "type": "icon", "x": 50, "y": 50, "size": 70 }],
+        "soften": 0.6
+      }
+    },
+    {
+      "brand": {
+        "cx": 468,
+        "cy": 430,
+        "scale": 0.34,
+        "rotate": -19,
+        "squash": 1,
+        "box": [380, 170],
+        "items": [
+          {
+            "type": "text",
+            "x": 190,
+            "y": 58,
+            "text": "Ana Treviño",
+            "fontFamily": "Optima",
+            "fontWeight": 700,
+            "fontSize": 56
+          },
+          {
+            "type": "text",
+            "x": 190,
+            "y": 118,
+            "text": "Asesora inmobiliaria",
+            "fontFamily": "Optima",
+            "fontWeight": 400,
+            "fontSize": 32
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

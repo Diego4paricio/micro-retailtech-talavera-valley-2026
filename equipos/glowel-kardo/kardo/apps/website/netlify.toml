@@ -1,0 +1,23 @@
+# Kardo Website on Netlify (ADR 010). In the Netlify site settings use
+# "apps/website" as the base directory; the monorepo lockfile is found above.
+# Public values only: PUBLIC_WEBSITE_URL, PUBLIC_CUSTOMER_APP_URL,
+# PUBLIC_WHATSAPP and, if wanted, PUBLIC_CONTACT_EMAIL are set in the site's
+# environment variables.
+[build]
+  command = "pnpm build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22.22.2"
+  PNPM_VERSION = "11.21.0"
+
+# Only the production context builds with KARDO_ENV=production: it requires
+# HTTPS origins, allows indexing and refuses localhost links.
+[context.production.environment]
+  KARDO_ENV = "production"
+
+[context.deploy-preview.environment]
+  KARDO_ENV = "test"
+
+[context.branch-deploy.environment]
+  KARDO_ENV = "test"

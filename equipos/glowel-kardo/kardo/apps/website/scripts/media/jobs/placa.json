@@ -1,0 +1,35 @@
+{
+  "source": "../fuentes/placa.webp",
+  "output": "../../../public/media/placa.webp",
+  "patches": [
+    {
+      "erase": {
+        "mask": [{ "cx": 402, "cy": 505, "rx": 196, "ry": 196 }],
+        "feather": 18,
+        "degree": 2,
+        "sample": { "ellipse": { "cx": 402, "cy": 505, "rx": 220, "ry": 220 } }
+      },
+      "brand": {
+        "cx": 445,
+        "cy": 495,
+        "scale": 0.65,
+        "rotate": 0,
+        "squash": 1,
+        "box": [520, 300],
+        "items": [
+          { "type": "icon", "x": 260, "y": 68, "size": 78 },
+          {
+            "type": "text",
+            "x": 260,
+            "y": 225,
+            "text": "Estudio Noa",
+            "fontFamily": "Optima",
+            "fontWeight": 400,
+            "fontSize": 100
+          }
+        ],
+        "soften": 0.6
+      }
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+/* ===========================================================================
+   Motion system (research §3).
+   - Entrances: opacity + 4–8 px, --ease-out. Exits: ~70 %, --ease-in.
+   - Lists stagger 30 ms, capped at 6 rows.
+   - Every duration is a token, so `prefers-reduced-motion` (base.css) turns
+     the whole system instant in one place.
+   =========================================================================== */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.99);
+  }
+}
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes slide-out-right {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes slide-in-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes slide-out-left {
+  from {
+    transform: none;
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateX(0.75rem);
+  }
+}
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes grow-up {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes grow-right {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Page entrance: every section mounts with a quiet rise. */
+.workspace-main .page,
+.workspace-main > .state-panel {
+  animation: rise-in var(--motion-slow) var(--ease-out) both;
+}
+
+/* List stagger: 30 ms per row, capped at 6 rows (180 ms). */
+.stagger > *,
+.row-list > li,
+.asset-grid > li,
+.lead-cards > li,
+.status-grid > *,
+.help-concepts > li {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+  animation-delay: calc(var(--motion-stagger) * 6);
+}
+.stagger > :nth-child(1),
+.row-list > li:nth-child(1),
+.asset-grid > li:nth-child(1),
+.lead-cards > li:nth-child(1),
+.status-grid > :nth-child(1),
+.help-concepts > li:nth-child(1) {
+  animation-delay: 0ms;
+}
+.stagger > :nth-child(2),
+.row-list > li:nth-child(2),
+.asset-grid > li:nth-child(2),
+.lead-cards > li:nth-child(2),
+.status-grid > :nth-child(2),
+.help-concepts > li:nth-child(2) {
+  animation-delay: var(--motion-stagger);
+}
+.stagger > :nth-child(3),
+.row-list > li:nth-child(3),
+.asset-grid > li:nth-child(3),
+.lead-cards > li:nth-child(3),
+.status-grid > :nth-child(3),
+.help-concepts > li:nth-child(3) {
+  animation-delay: calc(var(--motion-stagger) * 2);
+}
+.stagger > :nth-child(4),
+.row-list > li:nth-child(4),
+.asset-grid > li:nth-child(4),
+.lead-cards > li:nth-child(4),
+.status-grid > :nth-child(4),
+.help-concepts > li:nth-child(4) {
+  animation-delay: calc(var(--motion-stagger) * 3);
+}
+.stagger > :nth-child(5),
+.row-list > li:nth-child(5),
+.asset-grid > li:nth-child(5),
+.lead-cards > li:nth-child(5),
+.status-grid > :nth-child(5),
+.help-concepts > li:nth-child(5) {
+  animation-delay: calc(var(--motion-stagger) * 4);
+}
+.stagger > :nth-child(6),
+.row-list > li:nth-child(6),
+.asset-grid > li:nth-child(6),
+.lead-cards > li:nth-child(6),
+.status-grid > :nth-child(6),
+.help-concepts > li:nth-child(6) {
+  animation-delay: calc(var(--motion-stagger) * 5);
+}
+
+/* Utility: fade/rise a block in when it mounts. */
+.enter-rise {
+  animation: rise-in var(--motion-base) var(--ease-out) both;
+}
+.enter-fade {
+  animation: fade-in var(--motion-base) var(--ease-out) both;
+}

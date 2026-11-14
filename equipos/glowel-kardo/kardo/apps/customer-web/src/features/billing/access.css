@@ -1,0 +1,115 @@
+/* Franja de acceso: un renglón compacto bajo la barra superior (ADR 020). */
+.access-strip {
+  align-items: center;
+  border-bottom: 1px solid var(--line-warm);
+  color: var(--teal-deep);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  gap: 0.35rem 0.9rem;
+  justify-content: space-between;
+  line-height: 1.4;
+  padding: 0.45rem clamp(1rem, 4vw, 3.5rem);
+}
+.access-strip-info {
+  background: var(--tint);
+  border-bottom-color: var(--teal-soft-line);
+}
+.access-strip-warning {
+  background: var(--tone-warning-surface);
+  border-bottom-color: var(--tone-warning-line);
+  color: var(--tone-warning-text);
+}
+.access-strip p {
+  margin: 0;
+  min-width: 0;
+}
+.access-strip-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.9rem;
+}
+.access-strip-hint {
+  font-weight: 500;
+}
+.access-strip-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-s);
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  justify-content: center;
+  opacity: 0.7;
+  padding: 0.25rem;
+}
+.access-strip-close:hover {
+  opacity: 1;
+}
+.access-strip-close:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--aqua));
+  outline-offset: 1px;
+}
+.access-strip .button {
+  min-height: 1.85rem;
+  padding: 0 0.7rem;
+}
+.access-strip-warning .button-primary {
+  background: var(--teal);
+}
+.access-strip .button-secondary {
+  border-color: currentColor;
+  color: inherit;
+}
+.access-strip .button:focus-visible {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
+/* Confirmación de "?elegir=" en Configuración → Plan. */
+.plan-choice {
+  margin-bottom: 1.25rem;
+}
+.plan-choice-summary {
+  font-size: var(--text-base);
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+}
+.plan-choice-invoice {
+  display: grid;
+  gap: 12px;
+  margin: 4px 0 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line, rgba(22, 35, 46, 0.12));
+}
+
+.plan-choice-offer {
+  color: var(--teal-deep);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin: 0 0 0.9rem;
+}
+.plan-choice-actions,
+.billing-tools {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.9rem;
+}
+
+/* Checkout de Stripe dentro del panel (relevo 20, T1). Stripe dibuja el
+   formulario en un iframe que se ajusta solo; el fondo crema es el mismo
+   que le pasamos en branding_settings, así no se nota la orilla. */
+.plan-checkout {
+  margin-bottom: 1.25rem;
+}
+.plan-checkout-frame {
+  background: #f7f5f0;
+  border-radius: 12px;
+  margin-top: 0.9rem;
+  min-height: 420px;
+  overflow: hidden;
+}
