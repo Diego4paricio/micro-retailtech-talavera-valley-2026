@@ -1,12 +1,12 @@
-# Glowel-Kardo (Kardo)
+# Glowel
 
 ## Integrantes
 
 | Nombre | Rol | GitHub |
 |---|---|---|
-| André Carvajal | Desarrollo · Bot IA y Arquitectura | [@AndreGCarvajal](https://github.com/AndreGCarvajal) |
-| Angel Colorado | Desarrollo · Plataforma y Edge | [@Weentl](https://github.com/Weentl) |
-| Sonnia Flores Delgado | Producto, Diseño y Pitch | [@Gloweldev](https://github.com/Gloweldev) |
+| Andre | COO | [@AndreGCarvajal](https://github.com/AndreGCarvajal) |
+| Mateo | CTO | [@MateoCruzMedina](https://github.com/MateoCruzMedina) |
+| Angel | CEO | [@Weentl](https://github.com/Weentl) |
 
 ## La idea, en una línea
 
